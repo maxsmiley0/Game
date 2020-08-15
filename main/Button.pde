@@ -1,40 +1,64 @@
 public class Button
 {
-  private boolean selected;    //True or false if the button is selected
-  private PVector position;    //Stores x and y coordinate of midpoint of button 
-  private PVector dimensions;  //Stores width and height data of dimensions of button
-  
-  public Button(boolean selected, PVector position, PVector dimensions)
+  private boolean displayButton;//True or false if we want the button to display a box around the text
+  private boolean selected;     //True or false if the button is selected
+
+  private PVector position;     //Stores x and y coordinate of midpoint of button 
+  private PVector dimensions;   //Stores width and height data of dimensions of button
+
+  private String tag;           //Stores what the button will display
+
+  public Button(String tag, boolean displayButton, PVector position, PVector dimensions)
   {
-    this.selected = selected;
+    selected = false;
+
+    this.tag = tag;
+    this.displayButton = displayButton;
     this.position = position;
     this.dimensions = dimensions;
   }
-  
-  public void display()        //To be called when we want to see the buttons
-  {
-    if (selected)              //If the button is selected, we want it to be shinier
+
+  public void display()        //To be called when we want to see the buttons / tags
+  { 
+    if (displayButton)         //If we want to see the button's "border"
     {
-      fill(255, 0, 0);         //Fill golden
-      strokeWeight(10);        //Thick edges of selected box
-    }
-    else                       //Case not selected
+      if (selected)            //If the button is selected, we want it to have a golden, thick border
+      {
+        stroke(#C6B323);           
+        strokeWeight(5);        
+      } 
+      else                     //If the button is not selected, we want it to have a black, thin border
+      {
+        stroke(#FFFFFF);           
+        strokeWeight(1);         
+      }
+      fill(#000000);           //Drawing the border
+      rect(position.x, position.y, dimensions.x, dimensions.y);
+      fill(#FFFFFF);
+    } 
+    else                       //If we don't want to see the button's "border"
     {
-      fill(0, 0, 0);           //Dull coloring
-      strokeWeight(1);         //Thin edges of deselected box
+      if (selected)            //If the button is selected, we want the text to have a nice purple sheen
+      {
+        fill(#BC145A);
+      } 
+      else                     //If the button is not selected, we want the text to be plain white
+      {
+        fill(#FFFFFF);           
+      }
     }
-    
-    rect(position.x, position.y, dimensions.x, dimensions.y);
+
+    textSize(20);              //Writing out the text
+    text(tag, position.x, position.y);
   }
-  
+
   public void press()
   {
     selected = !selected;      //Reverses the "selected" status of the button
   }
-  
+
   public boolean isSelected()
   {
     return selected;           //Simple accessor
   }
 }
-  
