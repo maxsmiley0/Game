@@ -7,7 +7,7 @@ void setup()
   imageMode(CENTER);
   size(800, 600);
   
-  font = createFont("data/pusab.ttf", 30);
+  font = createFont("data/fonts/pusab.ttf", 30);
   textFont(font);
 }
 
@@ -27,6 +27,9 @@ void draw()
   
   bl.display();
   e.display();
+  
+  Struct s = new Struct("data/images/wall.png", new PVector(300, 300), new PVector(100, 200), false);
+  s.display();
   /*
   //pushMatrix();
   translate(100, 0);
