@@ -4,6 +4,7 @@ void setup()
 {
   rectMode(CENTER);
   textAlign(CENTER);
+  imageMode(CENTER);
   size(800, 600);
   
   font = createFont("data/pusab.ttf", 30);
