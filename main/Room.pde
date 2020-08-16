@@ -24,4 +24,22 @@ public class Room
       li.get(i).display();
     }
   }
+  
+  //Spawnpoint mutator method - may be called if a Player leaves a room via different doors
+  public void setSpawnpoint(PVector spawnpoint)
+  {
+    this.spawnpoint = spawnpoint;
+  }
+  
+  //Simple spawnpoint accessor
+  public PVector getSpawnpoint()
+  {
+    return spawnpoint;
+  }
+  
+  //Simple dimensions accessor
+  public PVector getDimensions()
+  {
+    return dimensions;
+  }
 }

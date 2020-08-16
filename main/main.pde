@@ -11,11 +11,11 @@ void setup()
   font = createFont("data/fonts/pusab.ttf", 30);
   textFont(font);
   
-  p = new Player(new PVector(-100, -100));
+  p = new Player(new PVector(0, 0));
   
   Struct s = new Struct("data/images/wall.png", new PVector(0, 0), new PVector(200, 200), false);
   
-  Room r = new Room(null, null);
+  Room r = new Room(new PVector(0, 0), new PVector(1500, 500));
   r.addStruct(s);
   
   p.setRoom(r);
@@ -28,5 +28,16 @@ void draw()
   
   background(#FFFFFF);
   
-  p.getRoom().display();                    
+  p.displayRoom();
+  if (mousePressed)
+  {
+    if (mouseButton == LEFT)
+    {
+      p.move(new PVector(8, 0));
+    }
+    else 
+    {
+      p.move(new PVector(-8, 0));
+    }
+  }
 }
