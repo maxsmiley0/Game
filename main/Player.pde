@@ -1,6 +1,6 @@
 public class Player extends Entity
 {
-  private int speed = 4;
+  private Room currentRoom;
   
   public Player(PVector position)
   {
@@ -13,9 +13,13 @@ public class Player extends Entity
     rect(getPosition().x, getPosition().y, 10, 10);
   }
   
-  public int getSpeed()
+  public void setRoom(Room room)
   {
-    return speed;
+    currentRoom = room;
   }
   
+  public Room getRoom()
+  {
+    return currentRoom;
+  }
 }

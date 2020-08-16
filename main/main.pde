@@ -1,4 +1,5 @@
 PFont font;
+Player p;
 
 void setup()
 {
@@ -9,31 +10,23 @@ void setup()
   
   font = createFont("data/fonts/pusab.ttf", 30);
   textFont(font);
+  
+  p = new Player(new PVector(-100, -100));
+  
+  Struct s = new Struct("data/images/wall.png", new PVector(0, 0), new PVector(200, 200), false);
+  
+  Room r = new Room(null, null);
+  r.addStruct(s);
+  
+  p.setRoom(r);
 }
 
-String[] names = {"One", "Two", "Tree", "Four", "Five"};
-ButtonList bl = new ButtonList(names, true, new PVector(100, 100), new PVector(120, 80), 5, 200, true);
-Entity e = new Player(new PVector(100, 100));
 
 void draw()
 {
+  translate(width/2, height/2);
+  
   background(#FFFFFF);
   
-  if (mousePressed)
-  {
-    bl.changeButton(true);
-    e.move(new PVector(1, 1));
-  }
-  
-  bl.display();
-  e.display();
-  
-  Struct s = new Struct("data/images/wall.png", new PVector(300, 300), new PVector(100, 200), false);
-  s.display();
-  /*
-  //pushMatrix();
-  translate(100, 0);
-  //popMatrix();
-  rect(100, 100, 100, 100);
-  */                      
+  p.getRoom().display();                    
 }
