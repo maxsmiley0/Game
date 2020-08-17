@@ -14,9 +14,11 @@ void setup()
   p = new Player(new PVector(0, 0));
   
   Struct s = new Struct("data/images/wall.png", new PVector(0, 0), new PVector(200, 200), false);
+  Struct s1 = new Struct("data/images/wall.png", new PVector(200, 300), new PVector(100, 100), false);
   
-  Room r = new Room(new PVector(0, 0), new PVector(1500, 500));
+  Room r = new Room(new PVector(0, 0), new PVector(1000, 900));
   r.addStruct(s);
+  r.addStruct(s1);
   
   p.setRoom(r);
 }
@@ -29,15 +31,24 @@ void draw()
   background(#FFFFFF);
   
   p.displayRoom();
-  if (mousePressed)
+
+  if (keyPressed)
   {
-    if (mouseButton == LEFT)
+    if (keyCode == LEFT)
+    {
+      p.move(new PVector(-8, 0));
+    }
+    else if (keyCode == RIGHT)
     {
       p.move(new PVector(8, 0));
     }
-    else 
+    else if (keyCode == UP)
     {
-      p.move(new PVector(-8, 0));
+      p.move(new PVector(0, -8));
+    }
+    else if (keyCode == DOWN)
+    {
+      p.move(new PVector(0, 8));
     }
   }
 }
