@@ -3,6 +3,7 @@ public class ButtonList
   private ArrayList<Button> li = new ArrayList<Button>();
   private int currentButton;
   private int maxButtons;
+  private boolean expandVert;
   
   public ButtonList(String[] tags, boolean displayButton,  PVector firstButtonPos, PVector dimensions, int maxButtons, int buttonSpacing, boolean expandVert)        
   {
@@ -21,6 +22,7 @@ public class ButtonList
     
     currentButton = 0;
     this.maxButtons = maxButtons;
+    this.expandVert = expandVert;
     
     //Inserting the buttons into the button list
     for (int i = 0; i < maxButtons; i++)
@@ -91,5 +93,10 @@ public class ButtonList
         li.get(currentButton).press();
       }
     }
+  }
+  
+  public boolean isExpandedVert()
+  {
+    return expandVert;
   }
 }

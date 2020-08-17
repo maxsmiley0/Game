@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 PFont font;
 
 PImage friskRestLeft;
@@ -7,6 +9,8 @@ PImage friskRestForward;
 Animation friskWalkLeft;
 Animation friskWalkRight;
 Animation friskWalkForward;
+
+ButtonList bl;
 
 Player p;
 
@@ -28,6 +32,9 @@ void setup()
   friskWalkRight = new Animation("friskWalkRight", 2, 2);
   friskWalkForward = new Animation("friskWalkForward", 4, 1);
   
+  String buttons[] = {"One", "Two", "Three"};
+  bl = new ButtonList(buttons, true, new PVector(100, 100), new PVector (100, 50), 3, 80, false);
+  
   p = new Player(new PVector(-300, 400));
   p.setStill(friskRestForward);
   
@@ -39,6 +46,7 @@ void setup()
   r.addStruct(s1);
   
   p.setRoom(r);
+  //p.getBlStack().push(bl);
 }
 
 
@@ -48,54 +56,10 @@ void draw()
   
   background(#FFFFFF);
   
+  p.implementArrowKeys();
+  
   p.displayRoom();
-
-  if (keyPressed)
-  {
-    p.isMoving = true;
-    if (keyCode == LEFT)
-    {
-      p.setAnimation(friskWalkLeft);
-      p.move(new PVector(-8, 0));
-    }
-    else if (keyCode == RIGHT)
-    {
-      p.setAnimation(friskWalkRight);
-      p.move(new PVector(8, 0));
-    }
-    else if (keyCode == UP)
-    {
-      p.setAnimation(friskWalkForward);
-      p.move(new PVector(0, -8));
-    }
-    else if (keyCode == DOWN)
-    {
-      p.setAnimation(friskWalkForward);
-      p.move(new PVector(0, 8));
-    }
-  }
-}
-
-void keyReleased()
-{
-  p.isMoving = false;
-  if (keyCode == LEFT)
-    {
-      p.setStill(friskRestLeft);
-      p.move(new PVector(-8, 0));
-    }
-    else if (keyCode == RIGHT)
-    {
-      p.setStill(friskRestRight);
-      p.move(new PVector(8, 0));
-    }
-    else if (keyCode == UP)
-    {
-      p.move(new PVector(0, -8));
-    }
-    else if (keyCode == DOWN)
-    {
-      p.setStill(friskRestForward);
-      p.move(new PVector(0, 8));
-    }
+  p.display();
+  
+  bl.display();
 }

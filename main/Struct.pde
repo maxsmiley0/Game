@@ -6,7 +6,7 @@ public class Struct            //Structure: To be implemented inside of Rooms
   
   private boolean rigidBody;   //If true, then entities collide with it
   
-  //Constructor for shape
+  //Constructor for image
   public Struct(String imgFilePath, PVector position, PVector dimensions, boolean rigidBody)
   {
     img = loadImage(imgFilePath);

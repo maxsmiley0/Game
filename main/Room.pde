@@ -1,7 +1,7 @@
 public class Room
 {
   private ArrayList<Struct> li = new ArrayList<Struct>();  //A room is comprised of an arbitrary number of structs
-  private PVector spawnpoint;    //where we spawn
+  private PVector spawnpoint;    //spawnpoint of Player
   private PVector dimensions;    //dimensions of room
   
   public Room(PVector spawnpoint, PVector dimensions)
