@@ -25,7 +25,8 @@ public class Player extends Entity
   {
     super(position);             //Passing position vector to Entity superclass
     camera = new Camera();       //Instantiating a new camera
-    isMoving = false;
+    isMoving = false; 
+    currentStill = friskRestForward;     //Need to have a current still setup as soon as player is instantiated for rigidBody reasons
   }
   
   //Setting the key "keyNum" to boolean b
@@ -107,6 +108,11 @@ public class Player extends Entity
   public void setRoom(Room room)
   {
     currentRoom = room;
+  }
+  
+  public PVector getDimensions()
+  {
+    return new PVector(currentStill.width, currentStill.height);
   }
   
   public Room getRoom()

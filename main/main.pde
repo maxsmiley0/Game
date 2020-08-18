@@ -39,7 +39,7 @@ void setup()
   p.setStill(friskRestForward);
   
   Struct s = new Struct("data/images/wall.png", new PVector(0, 0), new PVector(200, 200), false);
-  Struct s1 = new Struct("data/images/wall.png", new PVector(200, 300), new PVector(100, 100), false);
+  Struct s1 = new Struct("data/images/wall.png", new PVector(200, 300), new PVector(100, 100), true);
   
   Room r = new Room(new PVector(0, 0), new PVector(2000, 2000));
   r.addStruct(s);
@@ -61,5 +61,6 @@ void draw()
   p.displayRoom();
   p.display();
   
-  bl.display();
+  //bl.display();
+  println("reinke");
 }
