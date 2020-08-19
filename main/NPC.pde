@@ -16,3 +16,6 @@ public class NPC extends Entity
     
   }
 }
+
+//scheme for entering different rooms..?
+//work out text... is it going to be in a bubble, or a window..?
