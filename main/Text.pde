@@ -8,7 +8,7 @@ public class Text
   }
   
   //displayPeriod is the total time it will take to display the text
-  public void display(String text, int x, int y, int displayPeriod)
+  public void display(String text, PVector position, int displayPeriod)
   {
     //In the stage where we haven't yet displayed the whole text
     if (currentLetter < text.length())
@@ -34,12 +34,12 @@ public class Text
           break;
       }
       //Displaying the partial string
-      text(text.substring(0, (int)currentLetter), x, y);
+      text(text.substring(0, (int)currentLetter), position.x, position.y);
     }
     else 
     {
       //If we want to display the whole text, don't bother calculating displayDifferential, simply display the whole string
-      text(text, x, y);
+      text(text, position.x, position.y);
     }
   }
   

@@ -94,7 +94,7 @@ void draw()
   rect(mouseX, mouseY, 2*x, x);
   fill(#000000);
   textSize(x/5);
-  t.display("Hello, my name \nis Frisk. What is\nyours?\n\n\nd", mouseX, mouseY, 3);
+  t.display("Hello, my name \nis Frisk. What is\nyours?\n\n\nd", new PVector(mouseX, mouseY), 3);
   if (x < (endSize * .99))
   {
     x += (endSize/20)*(1 - x/endSize);
