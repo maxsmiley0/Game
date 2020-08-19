@@ -3,7 +3,7 @@ Note: This code was adapted from the Processing.org example for an animated spri
 https://processing.org/examples/animatedsprite.html
 */
 
-class Animation 
+public class Animation 
 {
   PImage[] images;      //The images an animation will cycle through
   int imageCount;       //The number of images in the animation

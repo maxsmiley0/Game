@@ -1,6 +1,6 @@
 public class ButtonList
 {
-  private ArrayList<Button> li = new ArrayList<Button>();
+  private ArrayList<Button> li;
   private int currentButton;
   private int maxButtons;
   private boolean expandVert;
@@ -20,6 +20,7 @@ public class ButtonList
       exit();
     }
     
+    li = new ArrayList<Button>();
     currentButton = 0;
     this.maxButtons = maxButtons;
     this.expandVert = expandVert;

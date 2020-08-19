@@ -13,6 +13,7 @@ Animation friskWalkForward;
 Animation hP;
 
 ButtonList bl;
+NPC npc;
 
 Bubble b;
 String strs[] = {"Hello, my name is\nFrisk. What is\nyours?", "Nice to meet you!"};
@@ -42,6 +43,7 @@ void setup()
   hP = new Animation("hP", 8, .5);
   
   b = new Bubble(strs, displayPeriods, new PVector(200, 200), new PVector(200, 150), 2);
+  npc = new NPC(new PVector(100, 100), friskRestForward);
   
   String buttons[] = {"One", "Two", "Three"};
   bl = new ButtonList(buttons, true, new PVector(100, 100), new PVector (100, 50), 3, 80, false);
@@ -65,9 +67,11 @@ void setup()
   r.addStruct(s4);
   r.addStruct(s5);
   r.addStruct(s6);
+  r.addNpc(npc);
   
   p.setRoom(r);
   //p.getBlStack().push(bl);
+
 }
 
 float x = 0;
@@ -95,5 +99,9 @@ void draw()
 Before we implement NPCs, we have to
 Figure out speech mechanics
 Room transitions?
+
+boolean method in Text, true if rolling effect is done
+
 Room spawnpoints?
+make a text file explaining how to use each class
 */

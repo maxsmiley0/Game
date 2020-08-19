@@ -1,8 +1,11 @@
 public class NPC extends Entity
 {
-  public NPC(PVector position)
+  private PImage currentStill;     //might change..? depending on if player interacts from a given side..?
+  
+  public NPC(PVector position, PImage currentStill)
   {
     super(position);
+    this.currentStill = currentStill;
   }
   
   //What will an NPC have?
@@ -13,7 +16,7 @@ public class NPC extends Entity
   //shop
   public void display()
   {
-    
+    image(currentStill, getPosition().x, getPosition().y);
   }
 }
 
