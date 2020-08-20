@@ -6,6 +6,8 @@ PImage friskRestLeft;
 PImage friskRestRight;
 PImage friskRestForward;
 
+PImage hPStill;
+
 Animation friskWalkLeft;
 Animation friskWalkRight;
 Animation friskWalkForward;
@@ -32,6 +34,7 @@ void setup()
   font = createFont("data/fonts/pusab.ttf", 30);
   textFont(font);
   
+  hPStill = loadImage("data/images/hP.png");
   friskRestLeft = loadImage("data/images/friskRestLeft.png");
   friskRestRight = loadImage("data/images/friskRestRight.png");
   friskRestForward = loadImage("data/images/friskRestForward.png");
@@ -43,7 +46,7 @@ void setup()
   hP = new Animation("hP", 8, .5);
   
   b = new Bubble(strs, displayPeriods, new PVector(200, 200), new PVector(200, 150), 2);
-  npc = new NPC(new PVector(100, 100), friskRestForward);
+  npc = new NPC(new PVector(100, 100), hPStill);
   
   String buttons[] = {"One", "Two", "Three"};
   bl = new ButtonList(buttons, true, new PVector(100, 100), new PVector (100, 50), 3, 80, false);
@@ -89,10 +92,10 @@ void draw()
   
   p.displayRoom();
   p.display();
-  
+  //b.display();
   popMatrix();
   
-  b.display();
+  
 }
 
 /*
