@@ -1,13 +1,19 @@
 public class NPC extends Entity
 {
   private PImage currentStill;     //might change..? depending on if player interacts from a given side..?
+  private ArrayList<Bubble> quests;
+  
   private boolean inInteractionRange;
+  private boolean displayQuest;
   
   public NPC(PVector position, PImage currentStill)
   {
     super(position);
     this.currentStill = currentStill;
+    quests = new ArrayList<Bubble>();
+    
     inInteractionRange = false;
+    displayQuest = false;
   }
   
   //What will an NPC have?
@@ -16,6 +22,17 @@ public class NPC extends Entity
   //Sometimes: talk to you
   //questgiving
   //shop
+  //For now add bubbles, but later on, maybe have a quest class, and bubbles be a member of that?
+  public void addQuest(Bubble quest)
+  {
+    quests.add(quest);
+  }
+  
+  public Bubble getQuest(int i)
+  {
+    return quests.get(i);
+  }
+  
   public void display()
   {
     image(currentStill, getPosition().x, getPosition().y);
@@ -58,10 +75,35 @@ public class NPC extends Entity
     {
       inInteractionRange = false;
     }
+    //temp tester
   if (inInteractionRange)
   {
     rect(p.getPosition().x, p.getPosition().y, 55, 126);
+    p.setInteractor(this);
   }
+  else
+  {
+    if (p.getInteractor() == this)
+    {
+      p.setInteractor(null);
+    }
+  }
+  
+  if (displayQuest)
+  {
+    getQuest(0).display();
+    if (p.getBlStack().empty())
+    {
+      p.getBlStack().add(getQuest(0).getBl());
+      p.stopMoving();
+    }
+  
+  }
+  }
+  
+  public void setDisplayQuest(boolean b)
+  {
+    displayQuest = b;
   }
 }
 

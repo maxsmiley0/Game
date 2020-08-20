@@ -1,6 +1,8 @@
 public class Bubble
 {
   private Text text;            //Text object, responsible for the "rolling text" effect
+  private ButtonList bl;        //Will be pushed into the player buttonlist stack to signify player is interacting with someone/thing
+                                //Perhaps later could also signify responses / choices?
   
   private String[] strings;     //Stores the strings to be displayed, will have "numSlides" objects
   private int[] displayPeriods; //Stores period of each text slide, will have "numSlides" ints
@@ -21,7 +23,10 @@ public class Bubble
      exit();
     }
     
+    String temp[] = {""};
+    bl = new ButtonList(temp, false, new PVector(0, 0), new PVector(0, 0), 1, 0, false);
     text = new Text();
+    
     
     this.strings = strings;
     this.displayPeriods = displayPeriods;
@@ -33,6 +38,11 @@ public class Bubble
     currentSlide = 0;
     //The bubble starts out small
     sizeFactor = 0;
+  }
+  
+  public boolean atEnd()
+  {
+    return currentSlide == numSlides - 1;
   }
   
   public void display()
@@ -61,18 +71,25 @@ public class Bubble
   
   public void nextSlide()
   {
-    if (currentSlide == numSlides - 1)
+    //We won't allow the Player to skip dialogue
+    if (text.isFinished())
     {
-      //close out of bubble
-    }
-    else 
-    {
-      text.reset();
-      currentSlide++;
+      if (atEnd())
+      {
+        //close out of bubble in key
+      }
+      else 
+      {
+        text.reset();
+        currentSlide++;
+      }
     }
   }
   
-  
+  public ButtonList getBl()
+  {
+    return bl;
+  }
   //is it first slide or not?
 }
 

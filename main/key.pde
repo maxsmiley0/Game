@@ -1,7 +1,12 @@
 void keyPressed()
-{
+{ 
   if (p.getBlStack().empty())  //Case we can move
   {
+    if (key == 'x' && p.getInteractor() != null)
+    {
+    p.getInteractor().setDisplayQuest(true);
+    }
+    
     p.startMoving();       //Display animation
     if (keyCode == LEFT)
     {
@@ -50,6 +55,25 @@ void keyPressed()
     }
     p.getCurrentBl().display();
   }
+  
+  if (key == 'x' && p.getInteractor() != null)
+    {
+      if (!p.getInteractor().getQuest(0).atEnd())
+      {
+        p.getInteractor().getQuest(0).nextSlide();
+      }
+      else 
+      {
+        //needs to make sure we are at the end
+        p.getInteractor().setDisplayQuest(false);
+        if (!p.getBlStack().empty())
+        {
+          p.getBlStack().pop();
+        }
+        //also set slide to 0?
+      }
+      
+    }
 }
 
 void keyReleased()

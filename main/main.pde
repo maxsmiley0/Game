@@ -19,7 +19,7 @@ NPC npc;
 
 Bubble b;
 String strs[] = {"Hello, my name is\nFrisk. What is\nyours?", "Nice to meet you!"};
-int displayPeriods[] = {3, 3};
+int displayPeriods[] = {3, 1};
 
 
 Player p;
@@ -47,19 +47,20 @@ void setup()
   
   b = new Bubble(strs, displayPeriods, new PVector(200, 200), new PVector(200, 150), 2);
   npc = new NPC(new PVector(100, 100), hPStill);
+  npc.addQuest(b);
   
   String buttons[] = {"One", "Two", "Three"};
   bl = new ButtonList(buttons, true, new PVector(100, 100), new PVector (100, 50), 3, 80, false);
   
   p = new Player(new PVector(-300, 400));
   p.setStill(friskRestForward);
-  
+  //Big structs lag?
   Struct s = new Struct("data/images/wall.png", new PVector(0, 0), new PVector(200, 200), false);
   Struct s1 = new Struct("data/images/wall.png", new PVector(-600, 400), new PVector(100, 200), false);
   Struct s2 = new Struct("data/images/wall.png", new PVector(-100, 700), new PVector(200, 100), false);
   Struct s3 = new Struct("data/images/wall.png", new PVector(200, -300), new PVector(300, 100), false);
   Struct s4 = new Struct("data/images/wall.png", new PVector(100, -900), new PVector(100, 300), false);
-  Struct s5 = new Struct("data/images/wall.png", new PVector(700, 200), new PVector(400, 400), false);
+  Struct s5 = new Struct("data/images/wall.png", new PVector(700, 200), new PVector(100, 100), false);
   Struct s6 = new Struct("data/images/wall.png", new PVector(-600, 1600), new PVector(100, 100), false);
   
   Room r = new Room(new PVector(0, 0), new PVector(2000, 2000));
@@ -93,9 +94,17 @@ void draw()
   p.displayRoom();
   p.display();
   //b.display();
+  
   popMatrix();
   
-  
+  if (p.getInteractor() != null)
+  {
+    text(p.getInteractor().toString(), mouseX, mouseY);
+  }
+  else 
+  {
+    text("null", mouseX, mouseY);
+  }
 }
 
 /*

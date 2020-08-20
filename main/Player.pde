@@ -5,6 +5,7 @@ public class Player extends Entity
   private Animation currentAnimation;   //Animation to be displayed when moving
   private PImage currentStill;          //Image to be displayed when still
   private boolean isMoving;             //If true, the moving animation will be displayed instead of the still
+  private NPC currentInteractor; //Stores the NPC that the player is currently interacting with
   
   /*
   The heiarchy of ButtonLists is implemented as a stack, because if you enter a new interface within a separate interface, we want
@@ -26,7 +27,19 @@ public class Player extends Entity
     super(position);             //Passing position vector to Entity superclass
     camera = new Camera();       //Instantiating a new camera
     isMoving = false; 
+    currentInteractor = null;
     currentStill = friskRestForward;     //Need to have a current still setup as soon as player is instantiated for rigidBody reasons
+  }
+  
+  //Sets the Player's current interactor
+  public void setInteractor(NPC npc)
+  {
+    currentInteractor = npc;
+  }
+  
+  public NPC getInteractor()
+  {
+    return currentInteractor;
   }
   
   //Setting the key "keyNum" to boolean b
