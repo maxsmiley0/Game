@@ -72,17 +72,10 @@ public class Bubble
   public void nextSlide()
   {
     //We won't allow the Player to skip dialogue
-    if (text.isFinished())
+    if (text.isFinished() && !atEnd())
     {
-      if (atEnd())
-      {
-        //close out of bubble in key
-      }
-      else 
-      {
-        text.reset();
-        currentSlide++;
-      }
+      text.reset();
+      currentSlide++;
     }
   }
   
@@ -90,7 +83,19 @@ public class Bubble
   {
     return bl;
   }
-  //is it first slide or not?
+  
+  public void reset()
+  {
+    //Resets the Bubble
+    text.reset();
+    sizeFactor = 0;
+    currentSlide = 0;
+  }
+  
+  public Text getText()
+  {
+    return text;
+  }
 }
 
 //Other things about buttons:

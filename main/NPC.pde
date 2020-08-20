@@ -1,36 +1,28 @@
 public class NPC extends Entity
 {
-  private PImage currentStill;     //might change..? depending on if player interacts from a given side..?
-  private ArrayList<Bubble> quests;
+  private PImage currentStill;     //Current image of NPC
+  private Bubble bubble;           //Speech bubble
   
-  private boolean inInteractionRange;
-  private boolean displayQuest;
+  private boolean inInteractionRange;  //True if Player is sufficiently close
+  private boolean displayBubble;       //True if Player interacts with NPC
   
   public NPC(PVector position, PImage currentStill)
   {
     super(position);
     this.currentStill = currentStill;
-    quests = new ArrayList<Bubble>();
     
     inInteractionRange = false;
-    displayQuest = false;
+    displayBubble = false;
+  }
+
+  public void setBubble(Bubble bubble)
+  {
+    this.bubble = bubble;
   }
   
-  //What will an NPC have?
-  //Always: a position, a display
-  
-  //Sometimes: talk to you
-  //questgiving
-  //shop
-  //For now add bubbles, but later on, maybe have a quest class, and bubbles be a member of that?
-  public void addQuest(Bubble quest)
+  public Bubble getBubble()
   {
-    quests.add(quest);
-  }
-  
-  public Bubble getQuest(int i)
-  {
-    return quests.get(i);
+    return bubble;
   }
   
   public void display()
@@ -75,35 +67,36 @@ public class NPC extends Entity
     {
       inInteractionRange = false;
     }
-    //temp tester
-  if (inInteractionRange)
-  {
-    rect(p.getPosition().x, p.getPosition().y, 55, 126);
-    p.setInteractor(this);
-  }
-  else
-  {
-    if (p.getInteractor() == this)
+    //Temporary box so we know player is by NPC
+    if (inInteractionRange)
     {
-      p.setInteractor(null);
+      rect(p.getPosition().x, p.getPosition().y, 55, 126);
+      //Setting Player's interactor to this object
+      p.setInteractor(this);
     }
-  }
-  
-  if (displayQuest)
-  {
-    getQuest(0).display();
-    if (p.getBlStack().empty())
+    else
     {
-      p.getBlStack().add(getQuest(0).getBl());
-      p.stopMoving();
+      if (p.getInteractor() == this)
+      {
+        //Yhe reason we don't always want to setInteractor to null if not in range is because it could be in range of other NPCs
+        p.setInteractor(null);
+      }
     }
   
-  }
+    if (displayBubble)
+    {
+      bubble.display();
+      if (p.getBlStack().empty())
+      {
+        p.getBlStack().add(bubble.getBl());
+        p.stopMoving();
+      }
+    }
   }
   
   public void setDisplayQuest(boolean b)
   {
-    displayQuest = b;
+    displayBubble = b;
   }
 }
 

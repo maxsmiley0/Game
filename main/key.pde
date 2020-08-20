@@ -58,21 +58,21 @@ void keyPressed()
   
   if (key == 'x' && p.getInteractor() != null)
     {
-      if (!p.getInteractor().getQuest(0).atEnd())
+      if (!p.getInteractor().getBubble().atEnd())
       {
-        p.getInteractor().getQuest(0).nextSlide();
+        p.getInteractor().getBubble().nextSlide();
       }
       else 
       {
         //needs to make sure we are at the end
-        p.getInteractor().setDisplayQuest(false);
-        if (!p.getBlStack().empty())
+        if (p.getInteractor().getBubble().getText().isFinished())
         {
+          //Stops displaying, resets bubble, and pops BL off stack
+          p.getInteractor().setDisplayQuest(false);
+          p.getInteractor().getBubble().reset();
           p.getBlStack().pop();
         }
-        //also set slide to 0?
       }
-      
     }
 }
 

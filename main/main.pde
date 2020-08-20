@@ -18,7 +18,7 @@ ButtonList bl;
 NPC npc;
 
 Bubble b;
-String strs[] = {"Hello, my name is\nFrisk. What is\nyours?", "Nice to meet you!"};
+String strs[] = {"Alex Hadidi\nis a gentleman\nand a scholar", "Nice to meet you!"};
 int displayPeriods[] = {3, 1};
 
 
@@ -45,12 +45,12 @@ void setup()
   
   hP = new Animation("hP", 8, .5);
   
-  b = new Bubble(strs, displayPeriods, new PVector(200, 200), new PVector(200, 150), 2);
+  b = new Bubble(strs, displayPeriods, new PVector(100, -50), new PVector(200, 100), 2);
   npc = new NPC(new PVector(100, 100), hPStill);
-  npc.addQuest(b);
+  npc.setBubble(b);
   
   String buttons[] = {"One", "Two", "Three"};
-  bl = new ButtonList(buttons, true, new PVector(100, 100), new PVector (100, 50), 3, 80, false);
+  bl = new ButtonList(buttons, true, new PVector(0, 0), new PVector (0, 0), 3, 80, false);
   
   p = new Player(new PVector(-300, 400));
   p.setStill(friskRestForward);
