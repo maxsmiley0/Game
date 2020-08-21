@@ -22,9 +22,11 @@ public class Button
   { 
     if (displayButton)         //If we want to see the button's "border"
     {
+      fill(#000000);           //Drawing the border
       if (selected)            //If the button is selected, we want it to have a golden, thick border
       {
-        stroke(#C6B323);           
+        fill(#C6B323);
+        stroke(#FF4500);          
         strokeWeight(5);        
       } 
       else                     //If the button is not selected, we want it to have a black, thin border
@@ -32,7 +34,6 @@ public class Button
         stroke(#FFFFFF);           
         strokeWeight(1);         
       }
-      fill(#000000);           //Drawing the border
       rect(position.x, position.y, dimensions.x, dimensions.y);
       fill(#FFFFFF);
     } 
@@ -48,7 +49,7 @@ public class Button
       }
     }
 
-    textSize(20);              //Writing out the text
+    textSize(30);              //Writing out the text
     text(tag, position.x, position.y);
   }
 

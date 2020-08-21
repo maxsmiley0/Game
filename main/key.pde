@@ -4,7 +4,12 @@ void keyPressed()
   {
     if (key == 'x' && p.getInteractor() != null)
     {
-    p.getInteractor().setDisplayQuest(true);
+      p.getInteractor().setInteract(true);
+      
+      if (p.getInteractor().isShopkeeper())
+      {
+        p.enterShop();
+      }
     }
     
     p.startMoving();       //Display animation
@@ -53,7 +58,46 @@ void keyPressed()
         p.getCurrentBl().changeButton(true);
       }
     }
-    p.getCurrentBl().display();
+    
+    if (p.isInShop())
+    {
+      if (key == 'x')
+      {
+        switch (p.getBlStack().size())
+        {
+          case 1:
+            switch (p.getCurrentBl().getButton())
+            {
+              case 0:
+                String choices[] = {"Gun","Sword","Shield"};
+                p.getBlStack().add(new ButtonList(choices, true, new PVector(350, 130), new PVector(150, 45), 3, 60, true));
+                break;
+              case 1:
+                break;
+              case 2:
+                break;
+              case 3:
+                p.exitShop();
+                //p.getBlStack().pop();
+                break;
+            }
+              break;
+            case 2:
+            {
+              switch (p.getCurrentBl().getButton())
+              {
+                case 0:
+                  break;
+                case 1:
+                  break;
+                case 2:
+                  p.getBlStack().pop();
+             
+              }
+            }
+        }
+      }
+    }
   }
   
   if (key == 'x' && p.getInteractor() != null)
@@ -68,7 +112,7 @@ void keyPressed()
         if (p.getInteractor().getBubble().getText().isFinished())
         {
           //Stops displaying, resets bubble, and pops BL off stack
-          p.getInteractor().setDisplayQuest(false);
+          p.getInteractor().setInteract(false);
           p.getInteractor().getBubble().reset();
           p.getBlStack().pop();
         }

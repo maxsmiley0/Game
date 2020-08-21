@@ -4,7 +4,8 @@ public class NPC extends Entity
   private Bubble bubble;           //Speech bubble
   
   private boolean inInteractionRange;  //True if Player is sufficiently close
-  private boolean displayBubble;       //True if Player interacts with NPC
+  private boolean isInteracting;       //True if Player interacts with NPC
+  private boolean isShopkeeper;        //True if interacting will result in the shop interface, rather than a bubble
   
   public NPC(PVector position, PImage currentStill)
   {
@@ -12,7 +13,18 @@ public class NPC extends Entity
     this.currentStill = currentStill;
     
     inInteractionRange = false;
-    displayBubble = false;
+    isInteracting = false;
+    isShopkeeper = false;
+  }
+  
+  public boolean isShopkeeper()
+  {
+    return isShopkeeper;
+  }
+  
+  public void setShopkeeper(boolean b)
+  {
+    isShopkeeper = true;
   }
 
   public void setBubble(Bubble bubble)
@@ -83,20 +95,32 @@ public class NPC extends Entity
       }
     }
   
-    if (displayBubble)
+    if (isInteracting)
     {
-      bubble.display();
-      if (p.getBlStack().empty())
+      if (isShopkeeper)
       {
-        p.getBlStack().add(bubble.getBl());
-        p.stopMoving();
+        p.enterShop();
+      }
+      else 
+      {
+        bubble.display();
+        if (p.getBlStack().empty())
+        {
+          p.getBlStack().add(bubble.getBl());
+          p.stopMoving();
+        }
       }
     }
   }
   
-  public void setDisplayQuest(boolean b)
+  public void setInteract(boolean b)
   {
-    displayBubble = b;
+    isInteracting = b;
+  }
+  
+  public boolean getInteract()
+  {
+    return isInteracting;
   }
 }
 

@@ -41,8 +41,8 @@ public class ButtonList
         li.add(b);
       }
       //The first button in a button list starts out selected
-      li.get(0).press();
     }
+    li.get(0).press();
   }
   
   public void display()
@@ -99,5 +99,10 @@ public class ButtonList
   public boolean isExpandedVert()
   {
     return expandVert;
+  }
+  
+  public int getButton()
+  {
+    return currentButton;
   }
 }

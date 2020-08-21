@@ -3,9 +3,12 @@ public class Player extends Entity
   private Room currentRoom;      //The room the player is currently in
   private Camera camera;         //Camera to keep display and center the player and room
   private Animation currentAnimation;   //Animation to be displayed when moving
-  private PImage currentStill;          //Image to be displayed when still
-  private boolean isMoving;             //If true, the moving animation will be displayed instead of the still
   private NPC currentInteractor; //Stores the NPC that the player is currently interacting with
+  
+  private PImage currentStill;          //Image to be displayed when still
+  
+  private boolean inShop;               //If true, displays shop instead of room and character
+  private boolean isMoving;             //If true, the moving animation will be displayed instead of the still
   
   /*
   The heiarchy of ButtonLists is implemented as a stack, because if you enter a new interface within a separate interface, we want
@@ -26,7 +29,10 @@ public class Player extends Entity
   {
     super(position);             //Passing position vector to Entity superclass
     camera = new Camera();       //Instantiating a new camera
+    
     isMoving = false; 
+    inShop = false;
+    
     currentInteractor = null;
     currentStill = friskRestForward;     //Need to have a current still setup as soon as player is instantiated for rigidBody reasons
   }
@@ -121,6 +127,27 @@ public class Player extends Entity
   public void setRoom(Room room)
   {
     currentRoom = room;
+  }
+  
+  public void enterShop()
+  {
+    inShop = true;
+    numPress++;
+    String choices[] = {"Buy","Sell","Talk","Leave"};
+    blStack.add(new ButtonList(choices, true, new PVector(350, 130), new PVector(150, 45), 4, 60, true));
+    //other stuff here like push BL
+  }
+  
+  public void exitShop()
+  {
+    inShop = false;
+    currentInteractor.setInteract(false);
+    blStack.pop();
+  }
+  
+  public boolean isInShop()
+  {
+    return inShop;
   }
   
   public PVector getDimensions()
