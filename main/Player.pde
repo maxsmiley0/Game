@@ -129,15 +129,15 @@ public class Player extends Entity
     currentRoom = room;
   }
   
+  //Enters shop, also pushes an interaction onto the blStack
   public void enterShop()
   {
     inShop = true;
-    numPress++;
     String choices[] = {"Buy","Sell","Talk","Leave"};
     blStack.add(new ButtonList(choices, true, new PVector(350, 130), new PVector(150, 45), 4, 60, true));
-    //other stuff here like push BL
   }
   
+  //Exits shop, stops interacting with NPC, pops the blStack
   public void exitShop()
   {
     inShop = false;

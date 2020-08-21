@@ -90,7 +90,7 @@ public class NPC extends Entity
     {
       if (p.getInteractor() == this)
       {
-        //Yhe reason we don't always want to setInteractor to null if not in range is because it could be in range of other NPCs
+        //The reason we don't always want to setInteractor to null if not in range is because it could be in range of other NPCs
         p.setInteractor(null);
       }
     }

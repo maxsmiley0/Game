@@ -1,8 +1,8 @@
 void keyPressed()
 { 
-  if (p.getBlStack().empty())  //Case we can move
+  if (p.getBlStack().empty())  //No interactions
   {
-    if (key == 'x' && p.getInteractor() != null)
+    if (key == 'x' && p.getInteractor() != null)  //If we have someone to interact with
     {
       p.getInteractor().setInteract(true);
       
@@ -59,6 +59,7 @@ void keyPressed()
       }
     }
     
+    //CASE PLAYER IS IN SHOP
     if (p.isInShop())
     {
       if (key == 'x')
@@ -100,6 +101,7 @@ void keyPressed()
     }
   }
   
+  //If not in shop, this progresses the Bubble
   if (key == 'x' && p.getInteractor() != null)
     {
       if (!p.getInteractor().getBubble().atEnd())

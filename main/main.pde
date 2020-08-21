@@ -1,6 +1,7 @@
 import java.util.Stack;
 
 PFont font;
+PFont font0;
 
 PImage friskRestLeft;
 PImage friskRestRight;
@@ -36,6 +37,7 @@ void setup()
   imageMode(CENTER);
   size(1100, 700);
   text = new Text();
+  font0 = createFont("data/fonts/8bitoperator.ttf", 30);
   font = createFont("data/fonts/pusab.ttf", 30);
   textFont(font);
   
@@ -84,22 +86,16 @@ void setup()
   r.addNpc(npc0);
   
   p.setRoom(r);
-  //p.getBlStack().push(bl);
 }
 
-float x = 0;
-float endSize = 1;
-int numPress = 0;
 Text t = new Text();
 void draw()
 {
   pushMatrix();
   
   translate(width/2, height/2);
-  
   background(#CCCCCC);
   
-  //ifn in shop
   if (!p.isInShop())
   {
     p.implementArrowKeys();
@@ -108,46 +104,30 @@ void draw()
   }
   else 
   {
-    //displayShop();
-    image(shopBackground, 0, -130);
-    fill(#000000);
-    stroke(#FFFFFF);
-    strokeWeight(10);
-    rect(-200, 220, 700, 260);
-    
-    fill(#000000);
-    stroke(#FFFFFF);
-    strokeWeight(10);
-    rect(350, 220, 400, 260);
-    
-    if (p.getBlStack().size() == 1)
-    {
-      fill(#FFFFFF);
-      text.display("What can I do for you today?", new PVector(-200, 120), 2);
-    }
-    
-    p.getCurrentBl().display();
+    displayShop();
   }
   
   popMatrix();
-  
-  text(numPress, mouseX, mouseY);
-  
 }
-//shop class?
 
-/*
-Before we implement NPCs, we have to
-Figure out speech mechanics
-Room transitions?
-
-boolean method in Text, true if rolling effect is done
-
-Room spawnpoints?
-make a text file explaining how to use each class
-
-TODO:
-make a displayShop interface... probably a class
-organize key
-comment all classes better
-*/
+void displayShop()
+{
+  image(shopBackground, 0, -130);
+  fill(#000000);
+  stroke(#FFFFFF);
+  strokeWeight(10);
+  rect(-200, 220, 700, 260);
+    
+  fill(#000000);
+  stroke(#FFFFFF);
+  strokeWeight(10);
+  rect(350, 220, 400, 260);
+    
+  if (p.getBlStack().size() == 1)
+  {
+    fill(#FFFFFF);
+    text.display("What can I do for you today?", new PVector(-200, 120), 2);
+  }
+    
+  p.getCurrentBl().display();
+}

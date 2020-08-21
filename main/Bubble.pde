@@ -40,6 +40,7 @@ public class Bubble
     sizeFactor = 0;
   }
   
+  //Returns true if bubble is on its last slide
   public boolean atEnd()
   {
     return currentSlide == numSlides - 1;
