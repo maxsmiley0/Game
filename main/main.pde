@@ -16,6 +16,7 @@ Animation friskWalkRight;
 Animation friskWalkForward;
 
 Animation hP;
+Shop shop;
 
 Text text;
 ButtonList bl;
@@ -29,6 +30,7 @@ int displayPeriods[] = {3, 1};
 
 
 Player p;
+String buttons[] = {"One", "Two", "Three"};
 
 void setup()
 {
@@ -51,6 +53,8 @@ void setup()
   friskWalkRight = new Animation("friskWalkRight", 2, 2);
   friskWalkForward = new Animation("friskWalkForward", 4, 1);
   
+  shop = new Shop();
+  
   hP = new Animation("hP", 8, .5);
   
   b = new Bubble(strs, displayPeriods, new PVector(100, -50), new PVector(200, 100), 2);
@@ -60,7 +64,6 @@ void setup()
   npc.setBubble(b);
   npc0.setBubble(b0);
   
-  String buttons[] = {"One", "Two", "Three"};
   bl = new ButtonList(buttons, true, new PVector(0, 0), new PVector (0, 0), 3, 80, false);
   
   p = new Player(new PVector(-300, 400));
@@ -84,11 +87,10 @@ void setup()
   r.addStruct(s6);
   r.addNpc(npc);
   r.addNpc(npc0);
-  
+  shop.setInventory(buttons);
   p.setRoom(r);
 }
 
-Text t = new Text();
 void draw()
 {
   pushMatrix();
@@ -104,30 +106,20 @@ void draw()
   }
   else 
   {
-    displayShop();
+    shop.display();
   }
   
   popMatrix();
+  text(shop.getShopInterface(), mouseX, mouseY);
 }
 
 void displayShop()
-{
-  image(shopBackground, 0, -130);
-  fill(#000000);
-  stroke(#FFFFFF);
-  strokeWeight(10);
-  rect(-200, 220, 700, 260);
-    
-  fill(#000000);
-  stroke(#FFFFFF);
-  strokeWeight(10);
-  rect(350, 220, 400, 260);
-    
+{   
   if (p.getBlStack().size() == 1)
   {
-    fill(#FFFFFF);
-    text.display("What can I do for you today?", new PVector(-200, 120), 2);
+    //fill(#FFFFFF);
+    //text.display("What can I do for you today?", new PVector(-200, 120), 2);
   }
     
-  p.getCurrentBl().display();
+  
 }

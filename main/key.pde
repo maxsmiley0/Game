@@ -64,36 +64,46 @@ void keyPressed()
     {
       if (key == 'x')
       {
-        switch (p.getBlStack().size())
+        switch (shop.getShopInterface())
         {
-          case 1:
+          case 0:
             switch (p.getCurrentBl().getButton())
             {
               case 0:
-                String choices[] = {"Gun","Sword","Shield"};
-                p.getBlStack().add(new ButtonList(choices, true, new PVector(350, 130), new PVector(150, 45), 3, 60, true));
+                shop.setShopInterface(1);
+                
+                //All this does is add an extra button to the buttonlist, will be easier once we work with arraylists as opposed to 
+                String inventoryInterface[] = new String[shop.getInventory().length + 1];
+                for (int i = 0; i < shop.getInventory().length; i++)
+                {
+                  inventoryInterface[i] = shop.getInventory()[i];
+                }
+                inventoryInterface[shop.getInventory().length] = "Leave";
+                //End
+                
+                p.getBlStack().add(new ButtonList(inventoryInterface, true, new PVector(350, 130), new PVector(150, 45), inventoryInterface.length, 60, true));
                 break;
               case 1:
+                shop.setShopInterface(2);
                 break;
               case 2:
+                shop.setShopInterface(3);
                 break;
               case 3:
                 p.exitShop();
-                //p.getBlStack().pop();
                 break;
             }
               break;
-            case 2:
+            case 1:
             {
-              switch (p.getCurrentBl().getButton())
+              if (p.getCurrentBl().getButton() == shop.getInventory().length)
               {
-                case 0:
-                  break;
-                case 1:
-                  break;
-                case 2:
-                  p.getBlStack().pop();
-             
+                p.getBlStack().pop();
+                shop.setShopInterface(0);
+              }
+              else 
+              {
+                
               }
             }
         }
