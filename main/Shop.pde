@@ -1,6 +1,6 @@
 public class Shop
 {
-  private String[] items;      //Will be an arrayList of objects later
+  private ArrayList<Object> inventory;  //inventory of the shop
   private int shopInterface;   // 0: starting screen | 1: buy screen | 2: sell screen | 3: talk screen |
   private Text text;
   
@@ -8,16 +8,17 @@ public class Shop
   {
     shopInterface = 0;
     text = new Text();
+    inventory = new ArrayList<Object>();
   }
   
-  public void setInventory(String[] items)
+  public void setInventory(ArrayList<Object> inventory)
   {
-    this.items = items;
+    this.inventory = inventory;
   }
   
-  public String[] getInventory()
+  public ArrayList<Object> getInventory()
   {
-    return items;
+    return inventory;
   }
   
   public void display()
@@ -54,6 +55,7 @@ public class Shop
   public void setShopInterface(int i)
   {
     shopInterface = i;
+    text.reset();
   }
   
   public int getShopInterface()

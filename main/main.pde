@@ -15,6 +15,10 @@ Animation friskWalkLeft;
 Animation friskWalkRight;
 Animation friskWalkForward;
 
+Object o1;
+Object o2;
+Object o3;
+
 Animation hP;
 Shop shop;
 
@@ -87,7 +91,19 @@ void setup()
   r.addStruct(s6);
   r.addNpc(npc);
   r.addNpc(npc0);
-  shop.setInventory(buttons);
+  
+  o1 = new Object("Sword", "A sword lol", 100);
+  o2 = new Object("Shield", "Blocks or something idk", 80);
+  o3 = new Object("Potion", "*gurgles*", 25);
+  
+  ArrayList<Object> inventory = new ArrayList<Object>();
+  
+  inventory.add(o1);
+  inventory.add(o2);
+  inventory.add(o3);
+  
+  shop.setInventory(inventory);
+  
   p.setRoom(r);
 }
 

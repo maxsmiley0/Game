@@ -73,12 +73,13 @@ void keyPressed()
                 shop.setShopInterface(1);
                 
                 //All this does is add an extra button to the buttonlist, will be easier once we work with arraylists as opposed to 
-                String inventoryInterface[] = new String[shop.getInventory().length + 1];
-                for (int i = 0; i < shop.getInventory().length; i++)
+                String inventoryInterface[] = new String[shop.getInventory().size() + 1];
+                
+                for (int i = 0; i < shop.getInventory().size(); i++)
                 {
-                  inventoryInterface[i] = shop.getInventory()[i];
+                  inventoryInterface[i] = shop.getInventory().get(i).getName();
                 }
-                inventoryInterface[shop.getInventory().length] = "Leave";
+                inventoryInterface[shop.getInventory().size()] = "Leave";
                 //End
                 
                 p.getBlStack().add(new ButtonList(inventoryInterface, true, new PVector(350, 130), new PVector(150, 45), inventoryInterface.length, 60, true));
@@ -96,7 +97,7 @@ void keyPressed()
               break;
             case 1:
             {
-              if (p.getCurrentBl().getButton() == shop.getInventory().length)
+              if (p.getCurrentBl().getButton() == shop.getInventory().size())
               {
                 p.getBlStack().pop();
                 shop.setShopInterface(0);

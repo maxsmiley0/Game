@@ -10,6 +10,9 @@ public class Player extends Entity
   private boolean inShop;               //If true, displays shop instead of room and character
   private boolean isMoving;             //If true, the moving animation will be displayed instead of the still
   
+  //inventory
+  //moneYY
+  
   /*
   The heiarchy of ButtonLists is implemented as a stack, because if you enter a new interface within a separate interface, we want
   the previous interface to be displayed when we exit out of the new interface (first in  first out). If the stack is empty, e.g.
