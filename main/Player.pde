@@ -10,7 +10,7 @@ public class Player extends Entity
   private boolean inShop;               //If true, displays shop instead of room and character
   private boolean isMoving;             //If true, the moving animation will be displayed instead of the still
   
-  //inventory
+  private ArrayList<Object> inventory;
   //moneYY
   
   /*
@@ -32,12 +32,14 @@ public class Player extends Entity
   {
     super(position);             //Passing position vector to Entity superclass
     camera = new Camera();       //Instantiating a new camera
+    inventory = new ArrayList<Object>();  //Instantiating a new inventory
     
     isMoving = false; 
     inShop = false;
     
     currentInteractor = null;
     currentStill = friskRestForward;     //Need to have a current still setup as soon as player is instantiated for rigidBody reasons
+    currentAnimation = friskWalkForward;
   }
   
   //Sets the Player's current interactor
@@ -49,6 +51,16 @@ public class Player extends Entity
   public NPC getInteractor()
   {
     return currentInteractor;
+  }
+  
+  public void addItem(Object object)
+  {
+    inventory.add(object);
+  }
+  
+  public ArrayList<Object> getInventory()
+  {
+    return inventory;
   }
   
   //Setting the key "keyNum" to boolean b

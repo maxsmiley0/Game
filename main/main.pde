@@ -106,7 +106,7 @@ void setup()
   inventory.add(o3);
   
   shop.setInventory(inventory);
-  
+  p.getInventory().add(o1);
   p.setRoom(r);
 }
 

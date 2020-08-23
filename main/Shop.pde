@@ -55,6 +55,12 @@ public class Shop
         }
         break;
       case 2:
+        fill(#FFFFFF);
+        textSize(25);
+        if (p.getCurrentBl().getButton() != p.getCurrentBl().getMaxButton() - 1)
+        {
+          text.display(shop.getInventory().get(p.getCurrentBl().getButton()).getDescription(), new PVector(350, 220), 18);
+        }
         break;
       case 3:
         break;
