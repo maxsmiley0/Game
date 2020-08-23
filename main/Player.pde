@@ -11,7 +11,7 @@ public class Player extends Entity
   private boolean isMoving;             //If true, the moving animation will be displayed instead of the still
   
   private ArrayList<Object> inventory;
-  //moneYY
+  private int gold;              //Stores how much gold a player has
   
   /*
   The heiarchy of ButtonLists is implemented as a stack, because if you enter a new interface within a separate interface, we want
@@ -40,6 +40,17 @@ public class Player extends Entity
     currentInteractor = null;
     currentStill = friskRestForward;     //Need to have a current still setup as soon as player is instantiated for rigidBody reasons
     currentAnimation = friskWalkForward;
+    gold = 200;
+  }
+  
+  public int getGold()
+  {
+    return gold;
+  }
+  
+  public void gainGold(int i)
+  {
+    gold += i;
   }
   
   //Sets the Player's current interactor
@@ -158,6 +169,7 @@ public class Player extends Entity
     inShop = false;
     currentInteractor.setInteract(false);
     blStack.pop();
+    shop.getText().reset();
   }
   
   public boolean isInShop()
@@ -191,6 +203,12 @@ public class Player extends Entity
   public ButtonList getCurrentBl()
   {
     return blStack.peek();
+  }
+  
+  public ButtonList getPreviousBl()  //Returns previous ButtonList
+  {
+    //Assumes at least two button lists
+    return blStack.get(blStack.size() - 2);
   }
   
   public void display()          //Placeholder sprite

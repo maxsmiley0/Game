@@ -1,7 +1,7 @@
 public class Shop
 {
   private ArrayList<Object> inventory;  //inventory of the shop
-  private int shopInterface;   // 0: starting screen | 1: buy screen | 2: sell screen | 3: talk screen |
+  private int shopInterface;   // 0: starting screen | 1: buy screen | 2: sell screen | 3: talk screen | 4: "are you sure" buy screen | 5: "are you sure" sell screen
   private Text text;
   
   public Shop()
@@ -47,22 +47,52 @@ public class Shop
         text.display("What can I do for you today?", new PVector(-200, 120), 18);
         break;
       case 1:
-        fill(#FFFFFF);
         textSize(25);
+        fill(#C6B323);
+        text("Gold: " + p.getGold(), 230, 320);
+        fill(#00C7FF);
+        text("Buy?", 500, 320);
+        fill(#FFFFFF);
         if (p.getCurrentBl().getButton() != p.getCurrentBl().getMaxButton() - 1)
         {
+          
           text.display(shop.getInventory().get(p.getCurrentBl().getButton()).getDescription(), new PVector(350, 220), 18);
         }
         break;
       case 2:
+        textSize(25);
+        fill(#C6B323);
+        text("Gold: " + p.getGold(), 230, 320);
+        fill(#00C7FF);
+        text("Sell?", 495, 320);
         fill(#FFFFFF);
         textSize(25);
         if (p.getCurrentBl().getButton() != p.getCurrentBl().getMaxButton() - 1)
         {
-          text.display(shop.getInventory().get(p.getCurrentBl().getButton()).getDescription(), new PVector(350, 220), 18);
+          text.display(p.getInventory().get(p.getCurrentBl().getButton()).getDescription(), new PVector(350, 220), 18);
         }
         break;
       case 3:
+        break;
+      case 4:
+        textSize(25);
+        fill(#C6B323);
+        text("Gold: " + p.getGold(), 230, 320);
+        fill(#00C7FF);
+        text("Buy?", 500, 320);
+        fill(#FFFFFF);
+        text("Are you sure you want\nto buy\n\n" + shop.getInventory().get(p.getPreviousBl().getButton()).getName() + "\n\nfor " + shop.getInventory().get(p.getPreviousBl().getButton()).getCost() + "G?", 350, 174);
+        p.getPreviousBl().display();
+        break;
+      case 5:
+        textSize(25);
+        fill(#C6B323);
+        text("Gold: " + p.getGold(), 230, 320);
+        fill(#00C7FF);
+        text("Sell?", 495, 320);
+        fill(#FFFFFF);
+        text("Are you sure you want\nto sell\n\n" + p.getInventory().get(p.getPreviousBl().getButton()).getName() + "\n\nfor " + 4 * p.getInventory().get(p.getPreviousBl().getButton()).getCost() / 5 + "G?", 350, 174);
+        p.getPreviousBl().display();
         break;
     }
     

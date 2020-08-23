@@ -83,7 +83,7 @@ void keyPressed()
                 {
                   buyInterface[i] = shop.getInventory().get(i).getName() + " - " + shop.getInventory().get(i).getCost() + "G";
                 }
-                buyInterface[shop.getInventory().size()] = "Leave";
+                buyInterface[shop.getInventory().size()] = "Back";
                 //End
                 
                 p.getBlStack().add(new ButtonList(buyInterface, false, new PVector(-200, 120), new PVector(150, 45), buyInterface.length, 25, true));
@@ -97,9 +97,9 @@ void keyPressed()
                 
                 for (int i = 0; i < p.getInventory().size(); i++)
                 {
-                  sellInterface[i] = p.getInventory().get(i).getName() + "-" + p.getInventory().get(i).getCost() + "G";
+                  sellInterface[i] = p.getInventory().get(i).getName() + " - " + 4 * p.getInventory().get(i).getCost() / 5 + "G";
                 }
-                sellInterface[p.getInventory().size()] = "Leave";
+                sellInterface[p.getInventory().size()] = "Back";
                 //End
                 
                 p.getBlStack().add(new ButtonList(sellInterface, false, new PVector(-200, 120), new PVector(150, 45), sellInterface.length, 25, true));
@@ -120,7 +120,19 @@ void keyPressed()
               }
               else 
               {
+                //CASE actually buy
+                //Test for inventory space later on
+                if (shop.getInventory().get(p.getCurrentBl().getButton()).getCost() <= p.getGold())
+                {
+                  shop.setShopInterface(4);
                 
+                  String buyInterface[] = {"Yes", "No"};
+                  p.getBlStack().add(new ButtonList(buyInterface, false, new PVector(350, 270), new PVector(150, 45), 2, 25, true));
+                }
+                else 
+                {
+                  //Error sound or "insufficient funds" message
+                }
               }
               break;
             case 2:
@@ -131,8 +143,47 @@ void keyPressed()
               }
               else 
               {
+                //CASE actually sell
+                shop.setShopInterface(5);
                 
+                String sellInterface[] = {"Yes", "No"};
+                p.getBlStack().add(new ButtonList(sellInterface, false, new PVector(350, 270), new PVector(150, 45), 2, 25, true));
               }
+              break;
+            case 3:
+              break;
+            case 4:
+              if (p.getCurrentBl().getButton() == 0)
+              {
+                p.getInventory().add(shop.getInventory().get(p.getPreviousBl().getButton()));
+                p.gainGold(-1 * shop.getInventory().get(p.getPreviousBl().getButton()).getCost());
+              }
+                p.getBlStack().pop();
+                shop.setShopInterface(1);
+              break;
+            case 5:
+              if (p.getCurrentBl().getButton() == 0)
+              {
+                
+                //update?
+                p.gainGold(4 * p.getInventory().get(p.getPreviousBl().getButton()).getCost() / 5);
+                p.getInventory().remove(p.getInventory().get(p.getPreviousBl().getButton()));
+              }
+                p.getBlStack().pop();
+                p.getBlStack().pop();
+                
+                String sellInterface[] = new String[p.getInventory().size() + 1];
+                
+                for (int i = 0; i < p.getInventory().size(); i++)
+                {
+                  sellInterface[i] = p.getInventory().get(i).getName() + " - " + 4 * p.getInventory().get(i).getCost() / 5 + "G";
+                }
+                sellInterface[p.getInventory().size()] = "Back";
+                //End
+                
+                p.getBlStack().add(new ButtonList(sellInterface, false, new PVector(-200, 120), new PVector(150, 45), sellInterface.length, 25, true));
+                
+                shop.setShopInterface(2);
               break;
         }
       }

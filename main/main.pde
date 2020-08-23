@@ -82,7 +82,7 @@ void setup()
   Struct s4 = new Struct("data/images/wall.png", new PVector(100, -900), new PVector(100, 300), false);
   Struct s5 = new Struct("data/images/wall.png", new PVector(700, 200), new PVector(100, 100), false);
   Struct s6 = new Struct("data/images/wall.png", new PVector(-600, 1600), new PVector(100, 100), false);
-  npc.setShopkeeper(true);
+  npc0.setShopkeeper(true);
   Room r = new Room(new PVector(0, 0), new PVector(2000, 2000));
   r.addStruct(s);
   r.addStruct(s1);
@@ -95,8 +95,8 @@ void setup()
   r.addNpc(npc0);
   
   //Definitely need to be able to adjust text size!
-  o1 = new Object("Frog Peasent Sword", "Before sunrise, the Frog\nPeasents roam the grounds,\nslashing and stabbing at\nany unwelcome visitors.", 100);
-  o2 = new Object("Frog Peasent Lederhosen", "Blocks or something idk", 80);
+  o1 = new Object("Frog Peasant Sword", "Before sunrise, the Frog\nPeasants roam the grounds,\nslashing and stabbing at\nany unwelcome visitors.", 100);
+  o2 = new Object("Frog Peasant Lederhosen", "Blocks or something idk", 80);
   o3 = new Object("Potion", "*gurgles*", 25);
   
   ArrayList<Object> inventory = new ArrayList<Object>();
@@ -129,16 +129,4 @@ void draw()
   }
   
   popMatrix();
-  text(shop.getShopInterface(), mouseX, mouseY);
-}
-
-void displayShop()
-{   
-  if (p.getBlStack().size() == 1)
-  {
-    //fill(#FFFFFF);
-    //text.display("What can I do for you today?", new PVector(-200, 120), 2);
-  }
-    
-  
 }
