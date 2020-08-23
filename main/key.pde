@@ -77,12 +77,12 @@ void keyPressed()
                 
                 for (int i = 0; i < shop.getInventory().size(); i++)
                 {
-                  inventoryInterface[i] = shop.getInventory().get(i).getName();
+                  inventoryInterface[i] = shop.getInventory().get(i).getName() + " - " + shop.getInventory().get(i).getCost() + "G";
                 }
                 inventoryInterface[shop.getInventory().size()] = "Leave";
                 //End
                 
-                p.getBlStack().add(new ButtonList(inventoryInterface, true, new PVector(350, 130), new PVector(150, 45), inventoryInterface.length, 60, true));
+                p.getBlStack().add(new ButtonList(inventoryInterface, false, new PVector(-200, 120), new PVector(150, 45), inventoryInterface.length, 25, true));
                 break;
               case 1:
                 shop.setShopInterface(2);

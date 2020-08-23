@@ -105,4 +105,9 @@ public class ButtonList
   {
     return currentButton;
   }
+  
+  public int getMaxButton()
+  {
+    return maxButtons;
+  }
 }

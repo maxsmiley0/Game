@@ -21,6 +21,11 @@ public class Shop
     return inventory;
   }
   
+  public Text getText()
+  {
+    return text;
+  }
+  
   public void display()
   {
     image(shopBackground, 0, -130);  //Background (shop vender image)
@@ -39,9 +44,15 @@ public class Shop
     {
       case 0:
         fill(#FFFFFF);
-        text.display("What can I do for you today?", new PVector(-200, 120), 2);
+        text.display("What can I do for you today?", new PVector(-200, 120), 18);
         break;
       case 1:
+        fill(#FFFFFF);
+        textSize(25);
+        if (p.getCurrentBl().getButton() != p.getCurrentBl().getMaxButton() - 1)
+        {
+          text.display(shop.getInventory().get(p.getCurrentBl().getButton()).getDescription(), new PVector(350, 220), 18);
+        }
         break;
       case 2:
         break;

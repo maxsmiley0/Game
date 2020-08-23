@@ -9,14 +9,14 @@ public class Text
     finished = false;
   }
   
-  //displayPeriod is the total time it will take to display the text
-  public void display(String text, PVector position, int displayPeriod)
+  //cps is the character per second of the display speed (higher -> faster)
+  public void display(String text, PVector position, int cps)
   {
     //In the stage where we haven't yet displayed the whole text
     if (currentLetter < text.length())
     {
-      //Engineered so currentLetter will equal text.length() at the end of displayPeriod seconds running at a certain frameRate
-      float displayDifferential = (float)(text.length()) / (displayPeriod*frameRate);
+      //Engineered so after one second, "cps" characters will be displayed
+      float displayDifferential = (float)(cps) / (frameRate);
       //Condition is the current letter (-1 since index starts at 0)
       switch(text.charAt((int)currentLetter - 1))
       {

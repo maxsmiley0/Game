@@ -1,5 +1,7 @@
 import java.util.Stack;
 
+enum shopInterface {DEFAULT, BUY, SELL, TALK};
+
 PFont font;
 PFont font0;
 
@@ -92,8 +94,9 @@ void setup()
   r.addNpc(npc);
   r.addNpc(npc0);
   
-  o1 = new Object("Sword", "A sword lol", 100);
-  o2 = new Object("Shield", "Blocks or something idk", 80);
+  //Definitely need to be able to adjust text size!
+  o1 = new Object("Frog Peasent Sword", "Before sunrise, the Frog\nPeasents roam the grounds,\nslashing and stabbing at\nany unwelcome visitors.", 100);
+  o2 = new Object("Frog Peasent Lederhosen", "Blocks or something idk", 80);
   o3 = new Object("Potion", "*gurgles*", 25);
   
   ArrayList<Object> inventory = new ArrayList<Object>();
