@@ -106,6 +106,18 @@ void keyPressed()
                 break;
               case 2:
                 shop.setShopInterface(3);
+                
+                //All this does is allocate an extra button to the buttonlist, one for "leave", in addition to the the shop dialogues
+                String shopInterface[] = new String[shop.getDialogue().length + 1];
+                
+                for (int i = 0; i < shop.getDialogue().length; i++)
+                {
+                  shopInterface[i] = shop.getDialogue()[i][0];
+                }
+                shopInterface[shop.getDialogue().length] = "Back";
+                //End
+                
+                p.getBlStack().add(new ButtonList(shopInterface, false, new PVector(-200, 120), new PVector(150, 45), shopInterface.length, 50, true));
                 break;
               case 3:
                 p.exitShop();
@@ -151,6 +163,19 @@ void keyPressed()
               }
               break;
             case 3:
+              if (p.getCurrentBl().getButton() == shop.getDialogue().length)
+              {
+                p.getBlStack().pop();
+                shop.setShopInterface(0);
+              }
+              else 
+              {
+                //CASE actually talk
+                shop.setShopInterface(6);
+                
+                String[] nextButton = {""};
+                p.getBlStack().add(new ButtonList(nextButton, false, new PVector(0, 0), new PVector(0, 0), 1, 0, false));
+              }
               break;
             case 4:
               if (p.getCurrentBl().getButton() == 0)
@@ -184,6 +209,15 @@ void keyPressed()
                 p.getBlStack().add(new ButtonList(sellInterface, false, new PVector(-200, 120), new PVector(150, 45), sellInterface.length, 25, true));
                 
                 shop.setShopInterface(2);
+              break;
+            case 6:
+              //set display here...
+              /*
+              display text over in shop::display
+              if is finished and not at end(tell which one buy prevBlList)
+              then go to next slide
+              if at end and finished go back to shopInterface 3
+              */
               break;
         }
       }

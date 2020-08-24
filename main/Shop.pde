@@ -1,6 +1,8 @@
 public class Shop
 {
   private ArrayList<Object> inventory;  //inventory of the shop
+  private String[][] dialogue;     //Stores dialogue of shopkeeper: 1st dimension represents number of dialogues, 2nd represents number of slides per dialogue
+                                   //Title of dialogue is stored as first index of each sub-array
   private int shopInterface;   // 0: starting screen | 1: buy screen | 2: sell screen | 3: talk screen | 4: "are you sure" buy screen | 5: "are you sure" sell screen
   private Text text;
   
@@ -8,12 +10,21 @@ public class Shop
   {
     shopInterface = 0;
     text = new Text();
-    inventory = new ArrayList<Object>();
+  }
+  
+  public String[][] getDialogue()
+  {
+    return dialogue;
   }
   
   public void setInventory(ArrayList<Object> inventory)
   {
     this.inventory = inventory;
+  }
+  
+  public void setDialogue(String[][] dialogue)
+  {
+    this.dialogue = dialogue;
   }
   
   public ArrayList<Object> getInventory()
@@ -73,6 +84,7 @@ public class Shop
         }
         break;
       case 3:
+        
         break;
       case 4:
         textSize(25);

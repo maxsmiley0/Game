@@ -44,6 +44,14 @@ void setup()
   textAlign(CENTER, CENTER);
   imageMode(CENTER);
   size(1100, 700);
+  
+  String[][] shopDialogue = {
+  {"Introduction","Hi, my name is Torvald.","Nice to meet you!"},
+  {"Beans vs Fruit","I have strong opinions on this subject. Maybe one day I'll tell you them."},
+  {"Where are we?","We're in my shop of course!","Some smart-asses would say we live in a simulation.","Or a computer game.","What idiots!"},
+  {"Favorite zodiac sign","For me, it's a big toss up between Taurus and Capricorn.","I give Taurus a slight edge though."}
+  };
+  
   text = new Text();
   font0 = createFont("data/fonts/8bitoperator.ttf", 30);
   font = createFont("data/fonts/pusab.ttf", 30);
@@ -60,6 +68,7 @@ void setup()
   friskWalkForward = new Animation("friskWalkForward", 4, 1);
   
   shop = new Shop();
+  shop.setDialogue(shopDialogue);
   
   hP = new Animation("hP", 8, .5);
   
