@@ -104,8 +104,9 @@ void keyPressed()
                 
                 p.getBlStack().add(new ButtonList(sellInterface, false, new PVector(-200, 120), new PVector(150, 45), sellInterface.length, 25, true));
                 break;
+              //IF IN MENU SCREEN AND PRESS "TALK"
               case 2:
-                shop.setShopInterface(3);
+                shop.setShopInterface(3);  //go to talk interface
                 
                 //All this does is allocate an extra button to the buttonlist, one for "leave", in addition to the the shop dialogues
                 String shopInterface[] = new String[shop.getDialogue().length + 1];
@@ -119,24 +120,27 @@ void keyPressed()
                 
                 p.getBlStack().add(new ButtonList(shopInterface, false, new PVector(-200, 120), new PVector(150, 45), shopInterface.length, 50, true));
                 break;
+              //IF IN MENY SCREEN AND PRESS "LEAVE"
               case 3:
-                p.exitShop();
+                p.exitShop();  //leaves shop
                 break;
             }
               break;
+            //IN "BUY" SCREEN
             case 1:
+              //If presses "leave"
               if (p.getCurrentBl().getButton() == shop.getInventory().size())
               {
-                p.getBlStack().pop();
+                p.getBlStack().pop();      //go back to shop menu
                 shop.setShopInterface(0);
               }
               else 
               {
                 //CASE actually buy
                 //Test for inventory space later on
-                if (shop.getInventory().get(p.getCurrentBl().getButton()).getCost() <= p.getGold())
+                if (shop.getInventory().get(p.getCurrentBl().getButton()).getCost() <= p.getGold())  //must have enough gold
                 {
-                  shop.setShopInterface(4);
+                  shop.setShopInterface(4);  //go to the "are you sure" buy screen
                 
                   String buyInterface[] = {"Yes", "No"};
                   p.getBlStack().add(new ButtonList(buyInterface, false, new PVector(350, 270), new PVector(150, 45), 2, 25, true));
@@ -147,7 +151,9 @@ void keyPressed()
                 }
               }
               break;
+            //In "sell" screen
             case 2:
+              //If presses leave
               if (p.getCurrentBl().getButton() == p.getInventory().size())
               {
                 p.getBlStack().pop();
@@ -156,13 +162,15 @@ void keyPressed()
               else 
               {
                 //CASE actually sell
-                shop.setShopInterface(5);
+                shop.setShopInterface(5);    //go to the "are you sure" sell screen
                 
                 String sellInterface[] = {"Yes", "No"};
                 p.getBlStack().add(new ButtonList(sellInterface, false, new PVector(350, 270), new PVector(150, 45), 2, 25, true));
               }
               break;
+            //In "talk" screen
             case 3:
+              //If presses leave
               if (p.getCurrentBl().getButton() == shop.getDialogue().length)
               {
                 p.getBlStack().pop();
@@ -171,31 +179,35 @@ void keyPressed()
               else 
               {
                 //CASE actually talk
-                shop.setShopInterface(6);
+                shop.setShopInterface(6);    //sends to dialogue interface
                 
                 String[] nextButton = {""};
                 p.getBlStack().add(new ButtonList(nextButton, false, new PVector(0, 0), new PVector(0, 0), 1, 0, false));
               }
               break;
+            //In "are you sure you want to buy" screen
             case 4:
+              //If presses yes
               if (p.getCurrentBl().getButton() == 0)
               {
-                p.getInventory().add(shop.getInventory().get(p.getPreviousBl().getButton()));
-                p.gainGold(-1 * shop.getInventory().get(p.getPreviousBl().getButton()).getCost());
+                p.getInventory().add(shop.getInventory().get(p.getPreviousBl().getButton()));      //adds item
+                p.gainGold(-1 * shop.getInventory().get(p.getPreviousBl().getButton()).getCost()); //subtracts cost from player balance
               }
                 p.getBlStack().pop();
-                shop.setShopInterface(1);
+                shop.setShopInterface(1);  //sends back to "buy" screen
               break;
+            //In "are you sure you want to sell" screen
             case 5:
+              //If presses yes
               if (p.getCurrentBl().getButton() == 0)
               {
-                
-                //update?
-                p.gainGold(4 * p.getInventory().get(p.getPreviousBl().getButton()).getCost() / 5);
-                p.getInventory().remove(p.getInventory().get(p.getPreviousBl().getButton()));
+                p.gainGold(4 * p.getInventory().get(p.getPreviousBl().getButton()).getCost() / 5);  //add gold to player balance (only 80% of initial worth)
+                p.getInventory().remove(p.getInventory().get(p.getPreviousBl().getButton()));       //remove item from player inventory
               }
-                p.getBlStack().pop();
-                p.getBlStack().pop();
+                p.getBlStack().pop();  //gets out of "are you sure you want to sell" BL, current is "sell choices" BL (associated with shopInterface = 2)
+                
+                //This reallocates the interface for displaying the player's current inventory, since the player may or may not have one less item than previously from selling it
+                p.getBlStack().pop();  
                 
                 String sellInterface[] = new String[p.getInventory().size() + 1];
                 
@@ -207,16 +219,17 @@ void keyPressed()
                 //End
                 
                 p.getBlStack().add(new ButtonList(sellInterface, false, new PVector(-200, 120), new PVector(150, 45), sellInterface.length, 25, true));
-                
-                shop.setShopInterface(2);
+                shop.setShopInterface(2);    //sends back to "sell" interface
               break;
+            //Case in dialogue with the shopkeeper
             case 6:
+              //Can only do anything if the text is fully displayed
               if (shop.getText().isFinished())
               {
                 if (shop.currentSlide() == shop.getDialogue()[p.getPreviousBl().getButton()].length - 1)
                 {
-                  //case at end
-                  shop.setShopInterface(3);
+                  //case last slide
+                  shop.setShopInterface(3);  //sends back to "talk" interface
                   shop.resetSlide();
                   shop.getText().reset();
                   p.getBlStack().pop();
@@ -224,16 +237,10 @@ void keyPressed()
                 }
                 else 
                 {
-                  shop.nextSlide();
+                  //not last slide
+                  shop.nextSlide();          //simply displays next slide
                   shop.getText().reset();
                 }
-                //set display here...
-                /*
-                display text over in shop::display
-                if is finished and not at end(tell which one buy prevBlList)
-                then go to next slide
-                if at end and finished go back to shopInterface 3
-                */
               }
               break;
         }
