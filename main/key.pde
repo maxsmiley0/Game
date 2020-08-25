@@ -211,13 +211,30 @@ void keyPressed()
                 shop.setShopInterface(2);
               break;
             case 6:
-              //set display here...
-              /*
-              display text over in shop::display
-              if is finished and not at end(tell which one buy prevBlList)
-              then go to next slide
-              if at end and finished go back to shopInterface 3
-              */
+              if (shop.getText().isFinished())
+              {
+                if (shop.currentSlide() == shop.getDialogue()[p.getPreviousBl().getButton()].length - 1)
+                {
+                  //case at end
+                  shop.setShopInterface(3);
+                  shop.resetSlide();
+                  shop.getText().reset();
+                  p.getBlStack().pop();
+                  
+                }
+                else 
+                {
+                  shop.nextSlide();
+                  shop.getText().reset();
+                }
+                //set display here...
+                /*
+                display text over in shop::display
+                if is finished and not at end(tell which one buy prevBlList)
+                then go to next slide
+                if at end and finished go back to shopInterface 3
+                */
+              }
               break;
         }
       }

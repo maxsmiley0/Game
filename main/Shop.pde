@@ -3,13 +3,31 @@ public class Shop
   private ArrayList<Object> inventory;  //inventory of the shop
   private String[][] dialogue;     //Stores dialogue of shopkeeper: 1st dimension represents number of dialogues, 2nd represents number of slides per dialogue
                                    //Title of dialogue is stored as first index of each sub-array
+  private int textSlide;           //In a given index of the dialogue "catalog" (i.e. an array of strings), stores which "slide" (index) we are on
+  
   private int shopInterface;   // 0: starting screen | 1: buy screen | 2: sell screen | 3: talk screen | 4: "are you sure" buy screen | 5: "are you sure" sell screen
   private Text text;
   
   public Shop()
   {
     shopInterface = 0;
+    textSlide = 1;
     text = new Text();
+  }
+  
+  public int currentSlide()
+  {
+    return textSlide;
+  }
+  
+  public void nextSlide()
+  {
+    textSlide++;
+  }
+  
+  public void resetSlide()
+  {
+    textSlide = 1;
   }
   
   public String[][] getDialogue()
@@ -105,6 +123,10 @@ public class Shop
         fill(#FFFFFF);
         text("Are you sure you want\nto sell\n\n" + p.getInventory().get(p.getPreviousBl().getButton()).getName() + "\n\nfor " + 4 * p.getInventory().get(p.getPreviousBl().getButton()).getCost() / 5 + "G?", 350, 174);
         p.getPreviousBl().display();
+        break;
+      case 6:
+        fill(#FFFFFF);
+        text.display(dialogue[p.getPreviousBl().getButton()][textSlide], new PVector(-200, 220), 18);
         break;
     }
     

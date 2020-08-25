@@ -47,9 +47,9 @@ void setup()
   
   String[][] shopDialogue = {
   {"Introduction","Hi, my name is Torvald.","Nice to meet you!"},
-  {"Beans vs Fruit","I have strong opinions on this subject. Maybe one day I'll tell you them."},
-  {"Where are we?","We're in my shop of course!","Some smart-asses would say we live in a simulation.","Or a computer game.","What idiots!"},
-  {"Favorite zodiac sign","For me, it's a big toss up between Taurus and Capricorn.","I give Taurus a slight edge though."}
+  {"Beans vs Fruit","I have strong opinions on this subject.\nMaybe one day I'll tell you them."},
+  {"Where are we?","We're in my shop of course!","Some smart-asses would say we live\nin a simulation.","Or a computer game.","What idiots!"},
+  {"Favorite zodiac sign","For me, it's a big toss up between\nTaurus and Capricorn.","I give Taurus a slight edge though."}
   };
   
   text = new Text();
