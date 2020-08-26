@@ -84,7 +84,7 @@ public class Shop
       //"Talk" screen
       case 3:
         //Nothing additional to be displayed here, current button list displays everything we would want to be displayed
-        text.display("", new PVector(350, 220), 18);  //We do this so the AudioPlayer cuts out
+        text.getSound().pause();  //We do this so the AudioPlayer c
         break;
       //"Buy" screen - Player is choosing between yes or no
       case 4:
@@ -98,8 +98,10 @@ public class Shop
         //We want to see the shop inventory (prev BL) in ADDITION to the current BL (yes/no interface)
         p.getPreviousBl().display();
         break;
-      //"Sekk" screen - Player is choosing between yes or no
+      //"Sell" screen - Player is choosing between yes or no
       case 5:
+        text.getSound().pause();
+        
         textSize(25);
         fill(#C6B323);
         text("Gold: " + p.getGold(), 230, 320);

@@ -7,14 +7,11 @@ public class NPC extends Entity
   private boolean isInteracting;       //True if Player interacts with NPC
   private boolean isShopkeeper;        //True if interacting will result in the shop interface, rather than a bubble
   
-  private AudioPlayer sound;
-  
   public NPC(PVector position, PImage currentStill)
   {
     super(position);
     this.currentStill = currentStill;
     
-    sound = null;
     inInteractionRange = false;
     isInteracting = false;
     isShopkeeper = false;

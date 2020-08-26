@@ -52,6 +52,8 @@ void setup()
   minim = new Minim(this);
   talk = minim.loadFile("data/sounds/generic.mp3");
   song = minim.loadFile("data/sounds/shopSong.mp3");
+  talk.setGain(100);
+  song.setGain(-5);
   
   String[][] shopDialogue = {
   {"Introduction","Hi, my name is Torvald.","Nice to meet you!"},
@@ -82,6 +84,7 @@ void setup()
   hP = new Animation("hP", 8, .5);
   
   b = new Bubble(strs, displayCps, new PVector(100, -50), new PVector(200, 100), 2);
+  b.getText().setSound(talk);
   b0 = new Bubble(strs, displayCps, new PVector(400, 250), new PVector(200, 100), 2);
   npc = new NPC(new PVector(100, 100), hPStill);
   npc0 = new NPC(new PVector(400, 400), hPStill);
