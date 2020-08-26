@@ -88,6 +88,8 @@ public class Shop
         break;
       //"Buy" screen - Player is choosing between yes or no
       case 4:
+        text.getSound().pause();
+        
         textSize(25);
         fill(#C6B323);
         text("Gold: " + p.getGold(), 230, 320);
