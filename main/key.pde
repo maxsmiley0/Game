@@ -123,6 +123,9 @@ void keyPressed()
               //IF IN MENY SCREEN AND PRESS "LEAVE"
               case 3:
                 p.exitShop();  //leaves shop
+                shop.getText().getSound().pause();  //we don't want the shopkeeper to keep rambling on once we exit
+                shop.getBackgroundSong().pause();   //rewinding and pausing song when we exit shop
+                shop.getBackgroundSong().rewind();
                 break;
             }
               break;

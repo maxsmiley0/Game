@@ -1,6 +1,10 @@
 import java.util.Stack;
+import ddf.minim.*;
 
-enum shopInterface {DEFAULT, BUY, SELL, TALK};
+Minim minim;
+
+AudioPlayer talk;
+AudioPlayer song;
 
 PFont font;
 PFont font0;
@@ -32,7 +36,7 @@ NPC npc0;
 Bubble b;
 Bubble b0;
 String strs[] = {"Alex Hadidi\nis a gentleman\nand a scholar", "Nice to meet you!"};
-int displayPeriods[] = {3, 1};
+int displayCps[] = {12, 12};
 
 
 Player p;
@@ -44,6 +48,10 @@ void setup()
   textAlign(CENTER, CENTER);
   imageMode(CENTER);
   size(1100, 700);
+  
+  minim = new Minim(this);
+  talk = minim.loadFile("data/sounds/generic.mp3");
+  song = minim.loadFile("data/sounds/shopSong.mp3");
   
   String[][] shopDialogue = {
   {"Introduction","Hi, my name is Torvald.","Nice to meet you!"},
@@ -69,13 +77,15 @@ void setup()
   
   shop = new Shop();
   shop.setDialogue(shopDialogue);
+  shop.setBackgroundSong(song);
   
   hP = new Animation("hP", 8, .5);
   
-  b = new Bubble(strs, displayPeriods, new PVector(100, -50), new PVector(200, 100), 2);
-  b0 = new Bubble(strs, displayPeriods, new PVector(400, 250), new PVector(200, 100), 2);
+  b = new Bubble(strs, displayCps, new PVector(100, -50), new PVector(200, 100), 2);
+  b0 = new Bubble(strs, displayCps, new PVector(400, 250), new PVector(200, 100), 2);
   npc = new NPC(new PVector(100, 100), hPStill);
   npc0 = new NPC(new PVector(400, 400), hPStill);
+  shop.getText().setSound(talk);
   npc.setBubble(b);
   npc0.setBubble(b0);
   
@@ -139,3 +149,28 @@ void draw()
   
   popMatrix();
 }
+
+void loop(AudioPlayer a, int offset) {          //loops a sound effect as long as loop() is in a draw function
+  a.play();
+  if (a.position() >= a.length() - offset) {     //offset = number of miliseconds the soundbyte will cut off. used for soundbytes with extra silence after
+    a.rewind();                                //rewinds the soundbyte
+  }
+}
+
+/*
+TODO:
+Audioplayer - incorporate w/ shop and displayText
+Give shop member functions to support artwork change
+Limit player inventory space, same with shop
+Make room spawnpoint useful
+Figure out how to change rooms / cool transition effect (darkening)
+
+~Battle mechanics
+  -
+  -
+  -
+~Inventory / weapons / armor actually affect battle
+  -
+  -
+  -
+*/

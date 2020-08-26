@@ -2,11 +2,24 @@ public class Text
 {
   private float currentLetter;    //Keeps track of current last letter displayed
   private boolean finished;
+  
+  private AudioPlayer sound;
     
   public Text () 
   {
     currentLetter = 1;    
     finished = false;
+    sound = null;
+  }
+  
+  public AudioPlayer getSound()
+  {
+    return sound;
+  }
+  
+  public void setSound(AudioPlayer a)
+  {
+    sound = a;
   }
   
   //cps is the character per second of the display speed (higher -> faster)
@@ -37,12 +50,20 @@ public class Text
       }
       //Displaying the partial string
       text(text.substring(0, (int)currentLetter), position.x, position.y);
+      if (sound != null)
+      {
+        loop(sound, 0);
+      }
     }
     else 
     {
       //If we want to display the whole text, don't bother calculating displayDifferential, simply display the whole string
       text(text, position.x, position.y);
       finished = true;
+      if (sound != null)
+      {
+        sound.pause();
+      }
     }
   }
   

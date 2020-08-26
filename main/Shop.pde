@@ -5,6 +5,8 @@ public class Shop
                                    //Title of dialogue is stored as first index of each sub-array
   private int textSlide;           //In a given index of the dialogue "catalog" (i.e. an array of strings), stores which "slide" (index) we are on
   
+  private AudioPlayer backgroundSong; //This is the song that will be playing in the background
+  
   private int shopInterface;   // 0: starting screen | 1: buy screen | 2: sell screen | 3: talk screen | 4: "are you sure" buy screen | 5: "are you sure" sell screen | 6: in a given dialogue with the shopkeeper
   private Text text;
   
@@ -13,10 +15,16 @@ public class Shop
     shopInterface = 0;
     textSlide = 1;      //Text slide starts at 1, because 0 holds the place of the title String
     text = new Text();
+    backgroundSong = null;
   }
   
   public void display()
   {
+    if (backgroundSong != null)
+    {
+      loop(backgroundSong, 79);
+    }
+    
     image(shopBackground, 0, -130);  //Background (shop vender image)
     
     fill(#000000);                   //Lefthand box
@@ -49,6 +57,10 @@ public class Shop
         {
           text.display(inventory.get(p.getCurrentBl().getButton()).getDescription(), new PVector(350, 220), 18);
         }
+        else 
+        {
+          text.display("", new PVector(350, 220), 18);  //We do this so the AudioPlayer cuts out
+        }
         break;
       //"Sell" screen
       case 2:
@@ -64,10 +76,15 @@ public class Shop
         {
           text.display(p.getInventory().get(p.getCurrentBl().getButton()).getDescription(), new PVector(350, 220), 18);
         }
+        else 
+        {
+          text.display("", new PVector(350, 220), 18);  //We do this so the AudioPlayer cuts out
+        }
         break;
       //"Talk" screen
       case 3:
         //Nothing additional to be displayed here, current button list displays everything we would want to be displayed
+        text.display("", new PVector(350, 220), 18);  //We do this so the AudioPlayer cuts out
         break;
       //"Buy" screen - Player is choosing between yes or no
       case 4:
@@ -125,6 +142,11 @@ public class Shop
     return text;
   }
   
+  public AudioPlayer getBackgroundSong()
+  {
+    return backgroundSong;
+  }
+  
   public int getShopInterface()
   {
     return shopInterface;
@@ -135,6 +157,11 @@ public class Shop
   public void setInventory(ArrayList<Object> inventory)
   {
     this.inventory = inventory;
+  }
+  
+  public void setBackgroundSong(AudioPlayer a)
+  {
+    backgroundSong = a;
   }
   
   public void setDialogue(String[][] dialogue)
