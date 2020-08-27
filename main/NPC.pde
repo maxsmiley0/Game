@@ -26,7 +26,7 @@ public class NPC extends Entity
   
   public void setShopkeeper(boolean b)
   {
-    isShopkeeper = true;
+    isShopkeeper = b;
   }
 
   public void setBubble(Bubble bubble)

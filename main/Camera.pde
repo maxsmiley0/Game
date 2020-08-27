@@ -5,9 +5,19 @@ public class Camera
   private int roomBorderLeft;
   private int roomBorderRight;
   
+  private int alpha;           //This stores the transparency of the screen, which will change if we fade in / out
+  private boolean isFadingIn;     //Stores if camera is fading in or out, respectively
+  private boolean isFadingOut;
+  private boolean inCycle;        //When this is set to "true", the fading cycle begins
+  
+  private Room isPanningTo;       //Stores which room the camera will pan to
+  
   public Camera()        
   {
-    
+    alpha = 0;
+    isFadingIn = false;
+    isFadingOut = false;
+    inCycle = false;
   }
   
   /*
@@ -92,5 +102,46 @@ public class Camera
     
     //Translating by the offset
     translate(offset.x, offset.y);
+    
+    //The following code executes if the camera pans to a new room, called in Portal::display()
+    
+    if (inCycle)
+    {
+      fill(#000000, alpha);
+      rect(0, 0, p.getRoom().getDimensions().x, p.getRoom().getDimensions().y);
+      
+      if (isFadingOut)
+      {
+        alpha += 4;
+        if (alpha >= 255)
+        {
+          alpha = 255;
+          isFadingOut = false;
+          isFadingIn = true;
+          
+          p.setRoom(isPanningTo);
+          p.setPosition(isPanningTo.getSpawnpoint());
+        }
+      }
+      else if (isFadingIn)
+      {
+        alpha -= 4;
+        if (alpha <= 0)
+        {
+          alpha = 0;
+          isFadingIn = false;
+          inCycle = false;
+        }
+      }
+    }
+  }
+  
+  //Pans to a room "room"
+  
+  public void panTo(Room room)
+  {
+    inCycle = true;
+    isFadingOut = true;
+    isPanningTo = room;
   }
 }

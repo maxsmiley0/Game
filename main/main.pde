@@ -106,6 +106,10 @@ void setup()
   Struct s6 = new Struct("data/images/wall.png", new PVector(-600, 1600), new PVector(100, 100), false);
   npc0.setShopkeeper(true);
   Room r = new Room(new PVector(0, 0), new PVector(2000, 2000));
+  Room r0 = new Room(new PVector(-300, -350), new PVector(800, 700));
+  
+  Portal portal = new Portal(friskRestLeft, new PVector(-300, -400), new PVector(150, 150), r0);
+  
   r.addStruct(s);
   r.addStruct(s1);
   r.addStruct(s2);
@@ -115,6 +119,7 @@ void setup()
   r.addStruct(s6);
   r.addNpc(npc);
   r.addNpc(npc0);
+  r.addPortal(portal);
   
   //Definitely need to be able to adjust text size!
   o1 = new Object("Frog Peasant Sword", "Before sunrise, the Frog\nPeasants roam the grounds,\nslashing and stabbing at\nany unwelcome visitors.", 100);
@@ -128,7 +133,6 @@ void setup()
   inventory.add(o3);
   
   shop.setInventory(inventory);
-  p.getInventory().add(o1);
   p.setRoom(r);
 }
 

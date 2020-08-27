@@ -1,15 +1,17 @@
 public class Room
 {
-  private ArrayList<Struct> li;  //A room is comprised of an arbitrary number of structs
-  private ArrayList<NPC> liNpc;  //A room also has NPC's
+  private ArrayList<Struct> liStruct;  //A room is comprised of an arbitrary number of structs
+  private ArrayList<NPC> liNpc;        //A room also has NPC's
+  private ArrayList<Portal> liPortal;  //A room also has portals
   
   private PVector spawnpoint;    //spawnpoint of Player
   private PVector dimensions;    //dimensions of room
   
   public Room(PVector spawnpoint, PVector dimensions)
   {
-    li = new ArrayList<Struct>();
+    liStruct = new ArrayList<Struct>();
     liNpc = new ArrayList<NPC>();
+    liPortal = new ArrayList<Portal>();
     
     this.spawnpoint = spawnpoint;
     this.dimensions = dimensions;
@@ -18,7 +20,7 @@ public class Room
   //Adds a struct to the room
   public void addStruct(Struct s)
   {
-    li.add(s);
+    liStruct.add(s);
   }
   
   //Adds an NPC to the room
@@ -27,16 +29,25 @@ public class Room
     liNpc.add(npc);
   }
   
+  public void addPortal(Portal portal)
+  {
+    liPortal.add(portal);
+  }
+  
   //Displays the room by displaying each struct of the room
   public void display()
   {
-    for (int i = 0; i < li.size(); i++)
+    for (int i = 0; i < liStruct.size(); i++)
     {
-      li.get(i).display();
+      liStruct.get(i).display();
     }
     for (int i = 0; i < liNpc.size(); i++)
     {
       liNpc.get(i).display();
+    }
+    for (int i = 0; i < liPortal.size(); i++)
+    {
+      liPortal.get(i).display();
     }
   }
   

@@ -12,6 +12,11 @@ public abstract class Entity
    return position; 
   }
   
+  public void setPosition(PVector position)
+  {
+    this.position = position;
+  }
+  
   public void move(PVector p)
   {
     position.add(p);

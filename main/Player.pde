@@ -205,6 +205,11 @@ public class Player extends Entity
     return blStack.peek();
   }
   
+  public Camera getCamera()
+  {
+    return camera;
+  }
+  
   public ButtonList getPreviousBl()  //Returns previous ButtonList
   {
     //Assumes at least two button lists
