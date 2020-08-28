@@ -140,6 +140,14 @@ public class Player extends Entity
     isMoving = false;
   }
   
+  public void resetKeys()
+  {
+    keys[0] = false;
+    keys[1] = false;
+    keys[2] = false;
+    keys[3] = false;
+  }
+  
   public void setAnimation(Animation a)
   {
     currentAnimation = a;
@@ -153,6 +161,7 @@ public class Player extends Entity
   public void setRoom(Room room)
   {
     currentRoom = room;
+    setPosition(room.getSpawnpoint());
   }
   
   //Enters shop, also pushes an interaction onto the blStack

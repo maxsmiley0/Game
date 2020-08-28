@@ -7,10 +7,9 @@ public class Struct            //Structure: To be implemented inside of Rooms
   private boolean rigidBody;   //If true, then entities collide with it
   
   //Constructor for image
-  public Struct(String imgFilePath, PVector position, PVector dimensions, boolean rigidBody)
+  public Struct(PImage img, PVector position, PVector dimensions, boolean rigidBody)
   {
-    img = loadImage(imgFilePath);
-    
+    this.img = img;            //Img can be null, in which case it will function as an invisible barried (like walls)
     this.position = position;
     this.dimensions = dimensions;
     this.rigidBody = rigidBody;
@@ -20,7 +19,10 @@ public class Struct            //Structure: To be implemented inside of Rooms
   public void display()
   {
     //Displays the image associated with the structure
-    image(img, position.x, position.y, dimensions.x, dimensions.y);
+    if (img != null)
+    {
+      image(img, position.x, position.y, dimensions.x, dimensions.y);
+    }
     
     if (rigidBody)
     {

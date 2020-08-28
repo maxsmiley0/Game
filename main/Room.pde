@@ -15,6 +15,12 @@ public class Room
     
     this.spawnpoint = spawnpoint;
     this.dimensions = dimensions;
+    
+    //Auto-adds rigidbodies for the walls
+    liStruct.add(new Struct(null, new PVector(dimensions.x, -dimensions.y / 2), new PVector(dimensions.x, 2*dimensions.y), true));
+    liStruct.add(new Struct(null, new PVector(-dimensions.x, -dimensions.y / 2), new PVector(dimensions.x, 2*dimensions.y), true));
+    liStruct.add(new Struct(null, new PVector(0, dimensions.y), new PVector(2*dimensions.x, dimensions.y), true));
+    liStruct.add(new Struct(null, new PVector(0, -dimensions.y), new PVector(2*dimensions.x, dimensions.y), true));
   }
   
   //Adds a struct to the room

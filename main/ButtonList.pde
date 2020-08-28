@@ -45,6 +45,12 @@ public class ButtonList
     li.get(0).press();
   }
   
+  public ButtonList()  //"Empty" ButtonList, used as a blocker so Player can't move
+  {
+    li = new ArrayList<Button>();
+    li.add(new Button("", false, new PVector(0, 0), new PVector(0, 0)));
+  }
+  
   public void display()
   {
     for (int i = 0; i < maxButtons; i++)

@@ -251,7 +251,7 @@ void keyPressed()
     }
   }
   
-  //If not in shop, this progresses the Bubble
+  //If not in shop or battle, this progresses the Bubble
   if (key == 'x' && p.getInteractor() != null)
     {
       if (!p.getInteractor().getBubble().atEnd())

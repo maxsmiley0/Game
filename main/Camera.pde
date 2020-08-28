@@ -9,6 +9,7 @@ public class Camera
   private boolean isFadingIn;     //Stores if camera is fading in or out, respectively
   private boolean isFadingOut;
   private boolean inCycle;        //When this is set to "true", the fading cycle begins
+  private int fadeSpeed = 7;          //Speed at which the fade transition operates
   
   private Room isPanningTo;       //Stores which room the camera will pan to
   
@@ -102,9 +103,11 @@ public class Camera
     
     //Translating by the offset
     translate(offset.x, offset.y);
-    
+  }
+  
+  public void display()
+  { 
     //The following code executes if the camera pans to a new room, called in Portal::display()
-    
     if (inCycle)
     {
       fill(#000000, alpha);
@@ -112,7 +115,7 @@ public class Camera
       
       if (isFadingOut)
       {
-        alpha += 4;
+        alpha += fadeSpeed;
         if (alpha >= 255)
         {
           alpha = 255;
@@ -121,11 +124,13 @@ public class Camera
           
           p.setRoom(isPanningTo);
           p.setPosition(isPanningTo.getSpawnpoint());
+          p.getBlStack().pop();      //Lets player move again
+          p.resetKeys();             //This is so the keys the player was pressing in the previous room doesn't affect anything in the new room
         }
       }
       else if (isFadingIn)
       {
-        alpha -= 4;
+        alpha -= fadeSpeed;
         if (alpha <= 0)
         {
           alpha = 0;
@@ -143,5 +148,12 @@ public class Camera
     inCycle = true;
     isFadingOut = true;
     isPanningTo = room;
+    
+    if (p.getBlStack().empty())  //only want to push one BL
+    {
+      p.getBlStack().add(new ButtonList());  //"Empty BL"
+    }
+    
+    p.stopMoving();
   }
 }

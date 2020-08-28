@@ -17,6 +17,8 @@ PImage shopBackground;
 
 PImage hPStill;
 
+PImage wall;
+
 Animation friskWalkLeft;
 Animation friskWalkRight;
 Animation friskWalkForward;
@@ -27,6 +29,8 @@ Object o3;
 
 Animation hP;
 Shop shop;
+
+PImage friskRImg;
 
 Text text;
 ButtonList bl;
@@ -67,6 +71,8 @@ void setup()
   font = createFont("data/fonts/pusab.ttf", 30);
   textFont(font);
   
+  wall = loadImage("data/images/wall.png");
+  
   hPStill = loadImage("data/images/hP.png");
   friskRestLeft = loadImage("data/images/friskRestLeft.png");
   friskRestRight = loadImage("data/images/friskRestRight.png");
@@ -97,18 +103,31 @@ void setup()
   p = new Player(new PVector(-300, 400));
   p.setStill(friskRestForward);
   //Big structs lag?
-  Struct s = new Struct("data/images/wall.png", new PVector(0, 0), new PVector(200, 200), false);
-  Struct s1 = new Struct("data/images/wall.png", new PVector(-600, 400), new PVector(100, 200), false);
-  Struct s2 = new Struct("data/images/wall.png", new PVector(-100, 700), new PVector(200, 100), false);
-  Struct s3 = new Struct("data/images/wall.png", new PVector(200, -300), new PVector(300, 100), false);
-  Struct s4 = new Struct("data/images/wall.png", new PVector(100, -900), new PVector(100, 300), false);
-  Struct s5 = new Struct("data/images/wall.png", new PVector(700, 200), new PVector(100, 100), false);
-  Struct s6 = new Struct("data/images/wall.png", new PVector(-600, 1600), new PVector(100, 100), false);
+  Struct s = new Struct(wall, new PVector(0, 0), new PVector(200, 200), false);
+  Struct s1 = new Struct(wall, new PVector(-600, 400), new PVector(100, 200), false);
+  Struct s2 = new Struct(wall, new PVector(-100, 700), new PVector(200, 100), false);
+  Struct s3 = new Struct(wall, new PVector(200, -300), new PVector(300, 100), false);
+  Struct s4 = new Struct(wall, new PVector(100, -900), new PVector(100, 300), false);
+  Struct s5 = new Struct(wall, new PVector(700, 200), new PVector(100, 100), false);
+  Struct s6 = new Struct(wall, new PVector(-600, 1600), new PVector(100, 100), false);
   npc0.setShopkeeper(true);
   Room r = new Room(new PVector(0, 0), new PVector(2000, 2000));
-  Room r0 = new Room(new PVector(-300, -350), new PVector(800, 700));
+  Room r0 = new Room(new PVector(-300, -250), new PVector(800, 700));
   
   Portal portal = new Portal(friskRestLeft, new PVector(-300, -400), new PVector(150, 150), r0);
+  friskRImg = loadImage("data/images/friskRoom.png");
+  Room friskRoom = new Room(new PVector(0, 0), new PVector(800, 650));
+  Struct roomImg = new Struct(friskRImg, new PVector(0, 0), new PVector(800, 650), false);
+  
+  friskRoom.addStruct(roomImg);
+  friskRoom.addStruct(new Struct(null, new PVector(292 - width/2, 141 - height/2), new PVector(282, 220), true));
+  friskRoom.addStruct(new Struct(null, new PVector(685 - width/2, 110 - height/2), new PVector(528, 174), true));
+  friskRoom.addStruct(new Struct(null, new PVector(819 - width/2, 383 - height/2), new PVector(270, 328), true));
+  friskRoom.addStruct(new Struct(null, new PVector(643 - width/2, 495 - height/2), new PVector(100, 100), true));
+  friskRoom.addStruct(new Struct(null, new PVector(624 - width/2, 619 - height/2), new PVector(644, 147), true));
+  friskRoom.addStruct(new Struct(null, new PVector(128 - width/2, 601 - height/2), new PVector(100, 121), true));
+  friskRoom.addPortal(new Portal(null, new PVector(240 - width/2, 673 - height/2), new PVector(126, 100), r));
+  
   
   r.addStruct(s);
   r.addStruct(s1);
@@ -133,8 +152,11 @@ void setup()
   inventory.add(o3);
   
   shop.setInventory(inventory);
-  p.setRoom(r);
+  p.setRoom(friskRoom);
 }
+
+int w = 100;
+int h = 100;
 
 void draw()
 {
@@ -148,6 +170,26 @@ void draw()
     p.implementArrowKeys();
     p.displayRoom();
     p.display();
+    p.getCamera().display();
+    
+    /*rect(mouseX - width/2, mouseY - height/2, w, h);
+    fill(#FFFFFF);
+    text("x: " + (mouseX - width/2), mouseX - width/2, mouseY - height/2);
+    text("y: " + (mouseY - height/2), mouseX - width/2, mouseY + 20 - height/2);
+    text("w: " + w, mouseX - width/2, mouseY + 40 - height/2);
+    text("h: " + h, mouseX - width/2, mouseY + 60 - height/2);*/
+    
+    if (mousePressed)
+    {
+      if (mouseButton == LEFT)
+      {
+        w++;
+      }
+      else 
+      {
+        h++;
+      }
+    }
   }
   else 
   {
