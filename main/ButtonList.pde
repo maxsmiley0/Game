@@ -49,6 +49,8 @@ public class ButtonList
   {
     li = new ArrayList<Button>();
     li.add(new Button("", false, new PVector(0, 0), new PVector(0, 0)));
+    currentButton = 0;
+    maxButtons = 0;
   }
   
   public void display()

@@ -1,27 +1,42 @@
-public class NPC extends Entity
+public class NPC extends GameObject
 {
-  private PImage currentStill;     //Current image of NPC
-  private Bubble bubble;           //Speech bubble
+  private Bubble bubble;               //Speech bubble
   
   private boolean inInteractionRange;  //True if Player is sufficiently close
   private boolean isInteracting;       //True if Player interacts with NPC
   private boolean isShopkeeper;        //True if interacting will result in the shop interface, rather than a bubble
   
-  public NPC(PVector position, PImage currentStill)
+  public NPC(PImage currentStill, PVector position)
   {
-    super(position);
-    this.currentStill = currentStill;
+    super(currentStill, position, new PVector(currentStill.width, currentStill.height));
     
     inInteractionRange = false;
     isInteracting = false;
     isShopkeeper = false;
   }
   
+  //Accessors
   
+  public Bubble getBubble()
+  {
+    return bubble;
+  }
+  
+  public boolean getInteract()
+  {
+    return isInteracting;
+  }
   
   public boolean isShopkeeper()
   {
     return isShopkeeper;
+  }
+  
+  //Mutators
+  
+  public void setBubble(Bubble bubble)
+  {
+    this.bubble = bubble;
   }
   
   public void setShopkeeper(boolean b)
@@ -29,25 +44,22 @@ public class NPC extends Entity
     isShopkeeper = b;
   }
 
-  public void setBubble(Bubble bubble)
+  public void setInteract(boolean b)
   {
-    this.bubble = bubble;
+    isInteracting = b;
   }
-  
-  public Bubble getBubble()
-  {
-    return bubble;
-  }
+    
+  //Implementing abstract function
   
   public void display()
   {
-    image(currentStill, getPosition().x, getPosition().y);
+    image(getImage(), getPosition().x, getPosition().y);  //All NPCs must have an image, so null checking is unneccessary
     
     //Automatic rigidBody applied to NPCs
-    int leftBorder = (int)(getPosition().x - (currentStill.width/2) - (p.getDimensions().x / 2));
-    int rightBorder = (int)(getPosition().x + (currentStill.width/2) + (p.getDimensions().x / 2));
-    int topBorder = (int)(getPosition().y - (currentStill.height/2) - (p.getDimensions().y/2));
-    int bottomBorder = (int)(getPosition().y + (currentStill.height/2) + (p.getDimensions().y/2));
+    int leftBorder = (int)(getPosition().x - (getDimensions().x/2) - (p.getDimensions().x / 2));
+    int rightBorder = (int)(getPosition().x + (getDimensions().x/2) + (p.getDimensions().x / 2));
+    int topBorder = (int)(getPosition().y - (getDimensions().y/2) - (p.getDimensions().y/2));
+    int bottomBorder = (int)(getPosition().y + (getDimensions().y/2) + (p.getDimensions().y/2));
     /*
     This parameter defines how thick the rigid border will be. Note that it must have a nontrivial length, as if 
     it is slower than the player's speed, since this program runs frame by frame, the player will pass through the rigid
@@ -97,13 +109,13 @@ public class NPC extends Entity
       }
     }
   
-    if (isInteracting)
+    if (isInteracting)   //Player is interacting with the NPC
     {
-      if (isShopkeeper)
+      if (isShopkeeper)  //If shopkeeper, enter shop
       {
         p.enterShop();
       }
-      else 
+      else               //Else enter dialogue
       {
         bubble.display();
         if (p.getBlStack().empty())
@@ -114,17 +126,4 @@ public class NPC extends Entity
       }
     }
   }
-  
-  public void setInteract(boolean b)
-  {
-    isInteracting = b;
-  }
-  
-  public boolean getInteract()
-  {
-    return isInteracting;
-  }
 }
-
-//scheme for entering different rooms..?
-//work out text... is it going to be in a bubble, or a window..?

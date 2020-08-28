@@ -92,8 +92,8 @@ void setup()
   b = new Bubble(strs, displayCps, new PVector(100, -50), new PVector(200, 100), 2);
   b.getText().setSound(talk);
   b0 = new Bubble(strs, displayCps, new PVector(400, 250), new PVector(200, 100), 2);
-  npc = new NPC(new PVector(100, 100), hPStill);
-  npc0 = new NPC(new PVector(400, 400), hPStill);
+  npc = new NPC(hPStill, new PVector(100, 100));
+  npc0 = new NPC(hPStill, new PVector(400, 400));
   shop.getText().setSound(talk);
   npc.setBubble(b);
   npc0.setBubble(b0);
@@ -101,7 +101,7 @@ void setup()
   bl = new ButtonList(buttons, true, new PVector(0, 0), new PVector (0, 0), 3, 80, false);
   
   p = new Player(new PVector(-300, 400));
-  p.setStill(friskRestForward);
+  p.setImage(friskRestForward);
   //Big structs lag?
   Struct s = new Struct(wall, new PVector(0, 0), new PVector(200, 200), false);
   Struct s1 = new Struct(wall, new PVector(-600, 400), new PVector(100, 200), false);
@@ -119,26 +119,26 @@ void setup()
   Room friskRoom = new Room(new PVector(0, 0), new PVector(800, 650));
   Struct roomImg = new Struct(friskRImg, new PVector(0, 0), new PVector(800, 650), false);
   
-  friskRoom.addStruct(roomImg);
-  friskRoom.addStruct(new Struct(null, new PVector(292 - width/2, 141 - height/2), new PVector(282, 220), true));
-  friskRoom.addStruct(new Struct(null, new PVector(685 - width/2, 110 - height/2), new PVector(528, 174), true));
-  friskRoom.addStruct(new Struct(null, new PVector(819 - width/2, 383 - height/2), new PVector(270, 328), true));
-  friskRoom.addStruct(new Struct(null, new PVector(643 - width/2, 495 - height/2), new PVector(100, 100), true));
-  friskRoom.addStruct(new Struct(null, new PVector(624 - width/2, 619 - height/2), new PVector(644, 147), true));
-  friskRoom.addStruct(new Struct(null, new PVector(128 - width/2, 601 - height/2), new PVector(100, 121), true));
-  friskRoom.addPortal(new Portal(null, new PVector(240 - width/2, 673 - height/2), new PVector(126, 100), r));
+  friskRoom.addGameObject(roomImg);
+  friskRoom.addGameObject(new Struct(null, new PVector(292 - width/2, 141 - height/2), new PVector(282, 220), true));
+  friskRoom.addGameObject(new Struct(null, new PVector(685 - width/2, 110 - height/2), new PVector(528, 174), true));
+  friskRoom.addGameObject(new Struct(null, new PVector(819 - width/2, 383 - height/2), new PVector(270, 328), true));
+  friskRoom.addGameObject(new Struct(null, new PVector(643 - width/2, 495 - height/2), new PVector(100, 100), true));
+  friskRoom.addGameObject(new Struct(null, new PVector(624 - width/2, 619 - height/2), new PVector(644, 147), true));
+  friskRoom.addGameObject(new Struct(null, new PVector(128 - width/2, 601 - height/2), new PVector(100, 121), true));
+  friskRoom.addGameObject(new Portal(null, new PVector(240 - width/2, 723 - height/2), new PVector(126, 100), r));
   
   
-  r.addStruct(s);
-  r.addStruct(s1);
-  r.addStruct(s2);
-  r.addStruct(s3);
-  r.addStruct(s4);
-  r.addStruct(s5);
-  r.addStruct(s6);
-  r.addNpc(npc);
-  r.addNpc(npc0);
-  r.addPortal(portal);
+  r.addGameObject(s);
+  r.addGameObject(s1);
+  r.addGameObject(s2);
+  r.addGameObject(s3);
+  r.addGameObject(s4);
+  r.addGameObject(s5);
+  r.addGameObject(s6);
+  r.addGameObject(npc);
+  r.addGameObject(npc0);
+  r.addGameObject(portal);
   
   //Definitely need to be able to adjust text size!
   o1 = new Object("Frog Peasant Sword", "Before sunrise, the Frog\nPeasants roam the grounds,\nslashing and stabbing at\nany unwelcome visitors.", 100);
@@ -222,4 +222,5 @@ Figure out how to change rooms / cool transition effect (darkening)
   -
   -
   -
+  Portal can be an interactor too... find out how to work interactor into GameObject
 */

@@ -1,11 +1,9 @@
-public class Player extends Entity
+public class Player extends GameObject
 {
   private Room currentRoom;      //The room the player is currently in
   private Camera camera;         //Camera to keep display and center the player and room
   private Animation currentAnimation;   //Animation to be displayed when moving
   private NPC currentInteractor; //Stores the NPC that the player is currently interacting with
-  
-  private PImage currentStill;          //Image to be displayed when still
   
   private boolean inShop;               //If true, displays shop instead of room and character
   private boolean isMoving;             //If true, the moving animation will be displayed instead of the still
@@ -30,7 +28,8 @@ public class Player extends Entity
   
   public Player(PVector position)
   {
-    super(position);             //Passing position vector to Entity superclass
+    super(friskRestForward, position, new PVector(friskRestForward.width, friskRestForward.height));
+    
     camera = new Camera();       //Instantiating a new camera
     inventory = new ArrayList<Object>();  //Instantiating a new inventory
     
@@ -38,7 +37,6 @@ public class Player extends Entity
     inShop = false;
     
     currentInteractor = null;
-    currentStill = friskRestForward;     //Need to have a current still setup as soon as player is instantiated for rigidBody reasons
     currentAnimation = friskWalkForward;
     gold = 200;
   }
@@ -96,28 +94,28 @@ public class Player extends Entity
       {
         isMoving = true;
         setAnimation(friskWalkForward);
-        setStill(friskRestForward);
+        setImage(friskRestForward);
         velocity.y = -6;
       }
       else if (keys[2])
       {
         isMoving = true;
         setAnimation(friskWalkForward);
-        setStill(friskRestForward);
+        setImage(friskRestForward);
         velocity.y = 6;
       }
       if (keys[1])
       {
         isMoving = true;
         setAnimation(friskWalkRight);
-        setStill(friskRestRight);
+        setImage(friskRestRight);
         velocity.x = 6;
       }
       else if (keys[3])
       {
         isMoving = true;
         setAnimation(friskWalkLeft);
-        setStill(friskRestLeft);
+        setImage(friskRestLeft);
         velocity.x = -6;
       }
       
@@ -153,11 +151,6 @@ public class Player extends Entity
     currentAnimation = a;
   }
   
-  public void setStill(PImage i)
-  {
-    currentStill = i;
-  }
-  
   public void setRoom(Room room)
   {
     currentRoom = room;
@@ -184,11 +177,6 @@ public class Player extends Entity
   public boolean isInShop()
   {
     return inShop;
-  }
-  
-  public PVector getDimensions()
-  {
-    return new PVector(currentStill.width, currentStill.height);
   }
   
   public Room getRoom()
@@ -236,7 +224,7 @@ public class Player extends Entity
     }
     else             //Displays animation if moving
     {
-      image(currentStill, getPosition().x, getPosition().y);
+      image(getImage(), getPosition().x, getPosition().y);
     }
     popMatrix();
   }

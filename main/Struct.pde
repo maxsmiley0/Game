@@ -1,17 +1,11 @@
-public class Struct            //Structure: To be implemented inside of Rooms
+public class Struct extends GameObject            //Structure: To be implemented inside of Rooms
 {
-  private PImage img;          //Has a custom image
-  private PVector position;    //Has both a position, and dimensions
-  private PVector dimensions;
-  
   private boolean rigidBody;   //If true, then entities collide with it
   
-  //Constructor for image
   public Struct(PImage img, PVector position, PVector dimensions, boolean rigidBody)
   {
-    this.img = img;            //Img can be null, in which case it will function as an invisible barried (like walls)
-    this.position = position;
-    this.dimensions = dimensions;
+    super(img, position, dimensions);
+    
     this.rigidBody = rigidBody;
   }
   
@@ -19,9 +13,9 @@ public class Struct            //Structure: To be implemented inside of Rooms
   public void display()
   {
     //Displays the image associated with the structure
-    if (img != null)
+    if (getImage() != null)
     {
-      image(img, position.x, position.y, dimensions.x, dimensions.y);
+      image(getImage(), getPosition().x, getPosition().y, getDimensions().x, getDimensions().y);
     }
     
     if (rigidBody)
@@ -31,10 +25,10 @@ public class Struct            //Structure: To be implemented inside of Rooms
       This is so a player won't be stopped right at the border of the structure, i.e. half of the player's
       sprite won't be inside the rigidBody
       */
-      int leftBorder = (int)(position.x - (dimensions.x/2) - (p.getDimensions().x / 2));
-      int rightBorder = (int)(position.x + (dimensions.x/2) + (p.getDimensions().x / 2));
-      int topBorder = (int)(position.y - (dimensions.y/2) - (p.getDimensions().y/2));
-      int bottomBorder = (int)(position.y + (dimensions.y/2) + (p.getDimensions().y/2));
+      int leftBorder = (int)(getPosition().x - (getDimensions().x/2) - (p.getDimensions().x / 2));
+      int rightBorder = (int)(getPosition().x + (getDimensions().x/2) + (p.getDimensions().x / 2));
+      int topBorder = (int)(getPosition().y - (getDimensions().y/2) - (p.getDimensions().y/2));
+      int bottomBorder = (int)(getPosition().y + (getDimensions().y/2) + (p.getDimensions().y/2));
       /*
       This parameter defines how thick the rigid border will be. Note that it must have a nontrivial length, as if 
       it is slower than the player's speed, since this program runs frame by frame, the player will pass through the rigid

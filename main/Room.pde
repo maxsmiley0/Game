@@ -1,59 +1,36 @@
 public class Room
 {
-  private ArrayList<Struct> liStruct;  //A room is comprised of an arbitrary number of structs
-  private ArrayList<NPC> liNpc;        //A room also has NPC's
-  private ArrayList<Portal> liPortal;  //A room also has portals
+  private ArrayList<GameObject> li;  //A room is comprised of GameObjects
   
   private PVector spawnpoint;    //spawnpoint of Player
   private PVector dimensions;    //dimensions of room
   
   public Room(PVector spawnpoint, PVector dimensions)
   {
-    liStruct = new ArrayList<Struct>();
-    liNpc = new ArrayList<NPC>();
-    liPortal = new ArrayList<Portal>();
+    li = new ArrayList<GameObject>();
     
     this.spawnpoint = spawnpoint;
     this.dimensions = dimensions;
     
     //Auto-adds rigidbodies for the walls
-    liStruct.add(new Struct(null, new PVector(dimensions.x, -dimensions.y / 2), new PVector(dimensions.x, 2*dimensions.y), true));
-    liStruct.add(new Struct(null, new PVector(-dimensions.x, -dimensions.y / 2), new PVector(dimensions.x, 2*dimensions.y), true));
-    liStruct.add(new Struct(null, new PVector(0, dimensions.y), new PVector(2*dimensions.x, dimensions.y), true));
-    liStruct.add(new Struct(null, new PVector(0, -dimensions.y), new PVector(2*dimensions.x, dimensions.y), true));
+    li.add(new Struct(null, new PVector(dimensions.x, -dimensions.y / 2), new PVector(dimensions.x, 2*dimensions.y), true));
+    li.add(new Struct(null, new PVector(-dimensions.x, -dimensions.y / 2), new PVector(dimensions.x, 2*dimensions.y), true));
+    li.add(new Struct(null, new PVector(0, dimensions.y), new PVector(2*dimensions.x, dimensions.y), true));
+    li.add(new Struct(null, new PVector(0, -dimensions.y), new PVector(2*dimensions.x, dimensions.y), true));
   }
   
-  //Adds a struct to the room
-  public void addStruct(Struct s)
+  //Adds a GameObject to the room
+  public void addGameObject(GameObject g)
   {
-    liStruct.add(s);
+    li.add(g);
   }
   
-  //Adds an NPC to the room
-  public void addNpc(NPC npc)
-  {
-    liNpc.add(npc);
-  }
-  
-  public void addPortal(Portal portal)
-  {
-    liPortal.add(portal);
-  }
-  
-  //Displays the room by displaying each struct of the room
+  //Displays the room by displaying each GameObject
   public void display()
   {
-    for (int i = 0; i < liStruct.size(); i++)
+    for (int i = 0; i < li.size(); i++)
     {
-      liStruct.get(i).display();
-    }
-    for (int i = 0; i < liNpc.size(); i++)
-    {
-      liNpc.get(i).display();
-    }
-    for (int i = 0; i < liPortal.size(); i++)
-    {
-      liPortal.get(i).display();
+      li.get(i).display();
     }
   }
   
