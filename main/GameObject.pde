@@ -10,7 +10,7 @@ public abstract class GameObject
   private boolean inInteractionRange;  //True if Player is sufficiently close
   private boolean isInteracting;       //True if Player interacts with NPC
   
-  private Bubble bubble;
+  private Bubble bubble;               //Stores bubble, null if not an interactor (portals, player)
   
   public GameObject(PImage img, PVector position, PVector dimensions, boolean isInteractor)
   {
@@ -90,7 +90,7 @@ public abstract class GameObject
   
   public void setBubble(Bubble bubble)
   {
-    if (isInteractor)
+    if (isInteractor)      //can only set a bubble if the object is an interactor
     {
       this.bubble = bubble;
     }

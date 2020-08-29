@@ -208,6 +208,15 @@ void draw()
   }
   
   popMatrix();
+  
+  if (p.getInteractor() == null)
+  {
+    text("null", mouseX, mouseY);
+  }
+  else 
+  {
+    text(p.getInteractor().toString(), mouseX, mouseY);
+  }
 }
 
 void loop(AudioPlayer a, int offset) {          //loops a sound effect as long as loop() is in a draw function

@@ -78,18 +78,17 @@ public class Struct extends GameObject            //Structure: To be implemented
         setInteractionRange(true);
       }
     }
-    
+    //If structure can be interacted with
     if (isInteractor())
     {
+      //If out of range, set "in interaction range" to false
       if (p.getPosition().x < leftBorder - offset || p.getPosition().x > rightBorder + offset || p.getPosition().y < topBorder - offset || p.getPosition().y > bottomBorder + offset)
       {  
         setInteractionRange(false);
       }
-    
+      //Sets interactor to "this" if in interaction range
       if (inInteractionRange())
       {
-        rect(p.getPosition().x, p.getPosition().y, 55, 126);
-        //Setting Player's interactor to this object
         p.setInteractor(this);
       }
       else
@@ -100,8 +99,8 @@ public class Struct extends GameObject            //Structure: To be implemented
           p.setInteractor(null);
         }
       }
-  
-      if (getInteract())   //Player is interacting with the NPC
+      //Player is interacting with the struct
+      if (getInteract())   
       {
         getBubble().setPosition(new PVector(p.getPosition().x, p.getPosition().y - getBubble().getDimensions().y/2 - p.getDimensions().y/2));
         getBubble().display();

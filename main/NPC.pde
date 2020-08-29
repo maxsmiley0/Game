@@ -71,29 +71,29 @@ public class NPC extends GameObject
       }
     }
     
+    //Case if the NPC is an interactor
     if (isInteractor())
     {
+      //If Player is out of NPC interaction range, set "in interaction range" to false
       if (p.getPosition().x < leftBorder - offset || p.getPosition().x > rightBorder + offset || p.getPosition().y < topBorder - offset || p.getPosition().y > bottomBorder + offset)
       {
         setInteractionRange(false);
       }
-      //Temporary box so we know player is by NPC
+      //If in interaction range, set interactor to this
       if (inInteractionRange())
       {
-        rect(p.getPosition().x, p.getPosition().y, 55, 126);
-        //Setting Player's interactor to this object
         p.setInteractor(this);
       }
       else
       {
+        //The reason we don't always want to setInteractor to null if not in range is because it could be in range of other NPCs
         if (p.getInteractor() == this)
         {
-          //The reason we don't always want to setInteractor to null if not in range is because it could be in range of other NPCs
           p.setInteractor(null);
         }
       }  
-  
-      if (getInteract())   //Player is interacting with the NPC
+      //Player is interacting with the NPC (and ostensibley in range)
+      if (getInteract())   
       {
         if (isShopkeeper)  //If shopkeeper, enter shop
         {
