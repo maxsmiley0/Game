@@ -97,6 +97,16 @@ public class Bubble
   {
     return text;
   }
+  
+  public void setPosition(PVector position)
+  {
+    this.position = position;
+  }
+  
+  public PVector getDimensions()
+  {
+    return dimensions;
+  }
 }
 
 //Other things about buttons:

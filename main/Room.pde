@@ -13,10 +13,10 @@ public class Room
     this.dimensions = dimensions;
     
     //Auto-adds rigidbodies for the walls
-    li.add(new Struct(null, new PVector(dimensions.x, -dimensions.y / 2), new PVector(dimensions.x, 2*dimensions.y), true));
-    li.add(new Struct(null, new PVector(-dimensions.x, -dimensions.y / 2), new PVector(dimensions.x, 2*dimensions.y), true));
-    li.add(new Struct(null, new PVector(0, dimensions.y), new PVector(2*dimensions.x, dimensions.y), true));
-    li.add(new Struct(null, new PVector(0, -dimensions.y), new PVector(2*dimensions.x, dimensions.y), true));
+    li.add(new Struct(null, new PVector(dimensions.x, -dimensions.y / 2), new PVector(dimensions.x, 2*dimensions.y), false, true));
+    li.add(new Struct(null, new PVector(-dimensions.x, -dimensions.y / 2), new PVector(dimensions.x, 2*dimensions.y), false, true));
+    li.add(new Struct(null, new PVector(0, dimensions.y), new PVector(2*dimensions.x, dimensions.y), false, true));
+    li.add(new Struct(null, new PVector(0, -dimensions.y), new PVector(2*dimensions.x, dimensions.y), false, true));
   }
   
   //Adds a GameObject to the room

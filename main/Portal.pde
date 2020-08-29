@@ -4,7 +4,7 @@ public class Portal extends GameObject
   
   public Portal (PImage img, PVector position, PVector dimensions, Room room)
   {
-    super(img, position, dimensions);
+    super(img, position, dimensions, false);
     this.room = room;
   }
   

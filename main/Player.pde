@@ -3,7 +3,7 @@ public class Player extends GameObject
   private Room currentRoom;      //The room the player is currently in
   private Camera camera;         //Camera to keep display and center the player and room
   private Animation currentAnimation;   //Animation to be displayed when moving
-  private NPC currentInteractor; //Stores the NPC that the player is currently interacting with
+  private GameObject currentInteractor; //Stores the GameObject that the player is currently interacting with
   
   private boolean inShop;               //If true, displays shop instead of room and character
   private boolean isMoving;             //If true, the moving animation will be displayed instead of the still
@@ -28,7 +28,7 @@ public class Player extends GameObject
   
   public Player(PVector position)
   {
-    super(friskRestForward, position, new PVector(friskRestForward.width, friskRestForward.height));
+    super(friskRestForward, position, new PVector(friskRestForward.width, friskRestForward.height), false);
     
     camera = new Camera();       //Instantiating a new camera
     inventory = new ArrayList<Object>();  //Instantiating a new inventory
@@ -51,13 +51,13 @@ public class Player extends GameObject
     gold += i;
   }
   
-  //Sets the Player's current interactor
-  public void setInteractor(NPC npc)
+  //Sets the Player's current interactors
+  public void setInteractor(GameObject g)
   {
-    currentInteractor = npc;
+    currentInteractor = g;
   }
   
-  public NPC getInteractor()
+  public GameObject getInteractor()
   {
     return currentInteractor;
   }

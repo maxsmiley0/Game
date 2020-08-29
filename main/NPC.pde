@@ -1,52 +1,22 @@
 public class NPC extends GameObject
 {
-  private Bubble bubble;               //Speech bubble
-  
-  private boolean inInteractionRange;  //True if Player is sufficiently close
-  private boolean isInteracting;       //True if Player interacts with NPC
   private boolean isShopkeeper;        //True if interacting will result in the shop interface, rather than a bubble
   
-  public NPC(PImage currentStill, PVector position)
+  public NPC(PImage currentStill, PVector position, boolean isInteractor)
   {
-    super(currentStill, position, new PVector(currentStill.width, currentStill.height));
+    super(currentStill, position, new PVector(currentStill.width, currentStill.height), isInteractor);
     
-    inInteractionRange = false;
-    isInteracting = false;
     isShopkeeper = false;
   }
   
-  //Accessors
-  
-  public Bubble getBubble()
-  {
-    return bubble;
-  }
-  
-  public boolean getInteract()
-  {
-    return isInteracting;
-  }
-  
-  public boolean isShopkeeper()
+  public boolean isShopkeeper()        //Accessor
   {
     return isShopkeeper;
   }
   
-  //Mutators
-  
-  public void setBubble(Bubble bubble)
-  {
-    this.bubble = bubble;
-  }
-  
-  public void setShopkeeper(boolean b)
+  public void setShopkeeper(boolean b) //Mutator
   {
     isShopkeeper = b;
-  }
-
-  public void setInteract(boolean b)
-  {
-    isInteracting = b;
   }
     
   //Implementing abstract function
@@ -71,57 +41,72 @@ public class NPC extends GameObject
     if (p.getPosition().x > leftBorder && p.getPosition().x < leftBorder + offset && p.getPosition().y > topBorder && p.getPosition().y < bottomBorder)
     {
       p.move(new PVector(-6, 0));
-      inInteractionRange = true;
+      if (isInteractor())
+      {
+        setInteractionRange(true);
+      }
     }
     if (p.getPosition().x > rightBorder - offset && p.getPosition().x < rightBorder && p.getPosition().y > topBorder && p.getPosition().y < bottomBorder)    
     {
       p.move(new PVector(6, 0));
-      inInteractionRange = true;
+      if (isInteractor())
+      {
+        setInteractionRange(true);
+      }
     }
     if (p.getPosition().x > leftBorder && p.getPosition().x < rightBorder && p.getPosition().y > topBorder && p.getPosition().y < topBorder + offset)
     {
       p.move(new PVector(0, -6));
-      inInteractionRange = true;
+      if (isInteractor())
+      {
+        setInteractionRange(true);
+      }
     }
     if (p.getPosition().x > leftBorder && p.getPosition().x < rightBorder && p.getPosition().y > bottomBorder - offset && p.getPosition().y < bottomBorder)
     {
       p.move(new PVector(0, 6));
-      inInteractionRange = true;
+      if (isInteractor())
+      {
+        setInteractionRange(true);
+      }
     }
     
-    if (p.getPosition().x < leftBorder - offset || p.getPosition().x > rightBorder + offset || p.getPosition().y < topBorder - offset || p.getPosition().y > bottomBorder + offset)
+    if (isInteractor())
     {
-      inInteractionRange = false;
-    }
-    //Temporary box so we know player is by NPC
-    if (inInteractionRange)
-    {
-      rect(p.getPosition().x, p.getPosition().y, 55, 126);
-      //Setting Player's interactor to this object
-      p.setInteractor(this);
-    }
-    else
-    {
-      if (p.getInteractor() == this)
+      if (p.getPosition().x < leftBorder - offset || p.getPosition().x > rightBorder + offset || p.getPosition().y < topBorder - offset || p.getPosition().y > bottomBorder + offset)
       {
-        //The reason we don't always want to setInteractor to null if not in range is because it could be in range of other NPCs
-        p.setInteractor(null);
+        setInteractionRange(false);
       }
-    }
-  
-    if (isInteracting)   //Player is interacting with the NPC
-    {
-      if (isShopkeeper)  //If shopkeeper, enter shop
+      //Temporary box so we know player is by NPC
+      if (inInteractionRange())
       {
-        p.enterShop();
+        rect(p.getPosition().x, p.getPosition().y, 55, 126);
+        //Setting Player's interactor to this object
+        p.setInteractor(this);
       }
-      else               //Else enter dialogue
+      else
       {
-        bubble.display();
-        if (p.getBlStack().empty())
+        if (p.getInteractor() == this)
         {
-          p.getBlStack().add(bubble.getBl());
-          p.stopMoving();
+          //The reason we don't always want to setInteractor to null if not in range is because it could be in range of other NPCs
+          p.setInteractor(null);
+        }
+      }  
+  
+      if (getInteract())   //Player is interacting with the NPC
+      {
+        if (isShopkeeper)  //If shopkeeper, enter shop
+        {
+          p.enterShop();
+        }
+        else               //Else enter dialogue
+        {
+          getBubble().display();
+          if (p.getBlStack().empty())
+          {
+            p.getBlStack().add(getBubble().getBl());
+            p.stopMoving();
+          }
         }
       }
     }

@@ -6,7 +6,7 @@ void keyPressed()
     {
       p.getInteractor().setInteract(true);
       
-      if (p.getInteractor().isShopkeeper())
+      if (p.getInteractor() instanceof NPC && ((NPC)p.getInteractor()).isShopkeeper())
       {
         p.enterShop();
       }

@@ -90,10 +90,15 @@ void setup()
   hP = new Animation("hP", 8, .5);
   
   b = new Bubble(strs, displayCps, new PVector(100, -50), new PVector(200, 100), 2);
+  
+  String sw[] = {"This is a cool bed.\nMaybe I should sleep\non it.", "Sike"};
+  Bubble bedB = new Bubble(sw, displayCps, new PVector(100, 50), new PVector(250, 100), 2);
+  bedB.getText().setSound(talk);
+  
   b.getText().setSound(talk);
   b0 = new Bubble(strs, displayCps, new PVector(400, 250), new PVector(200, 100), 2);
-  npc = new NPC(hPStill, new PVector(100, 100));
-  npc0 = new NPC(hPStill, new PVector(400, 400));
+  npc = new NPC(hPStill, new PVector(100, 100), true);
+  npc0 = new NPC(hPStill, new PVector(400, 400), true);
   shop.getText().setSound(talk);
   npc.setBubble(b);
   npc0.setBubble(b0);
@@ -103,13 +108,13 @@ void setup()
   p = new Player(new PVector(-300, 400));
   p.setImage(friskRestForward);
   //Big structs lag?
-  Struct s = new Struct(wall, new PVector(0, 0), new PVector(200, 200), false);
-  Struct s1 = new Struct(wall, new PVector(-600, 400), new PVector(100, 200), false);
-  Struct s2 = new Struct(wall, new PVector(-100, 700), new PVector(200, 100), false);
-  Struct s3 = new Struct(wall, new PVector(200, -300), new PVector(300, 100), false);
-  Struct s4 = new Struct(wall, new PVector(100, -900), new PVector(100, 300), false);
-  Struct s5 = new Struct(wall, new PVector(700, 200), new PVector(100, 100), false);
-  Struct s6 = new Struct(wall, new PVector(-600, 1600), new PVector(100, 100), false);
+  Struct s = new Struct(wall, new PVector(0, 0), new PVector(200, 200), false, false);
+  Struct s1 = new Struct(wall, new PVector(-600, 400), new PVector(100, 200), false, false);
+  Struct s2 = new Struct(wall, new PVector(-100, 700), new PVector(200, 100), false, false);
+  Struct s3 = new Struct(wall, new PVector(200, -300), new PVector(300, 100), false, false);
+  Struct s4 = new Struct(wall, new PVector(100, -900), new PVector(100, 300), false, false);
+  Struct s5 = new Struct(wall, new PVector(700, 200), new PVector(100, 100), false, false);
+  Struct s6 = new Struct(wall, new PVector(-600, 1600), new PVector(100, 100), false, false);
   npc0.setShopkeeper(true);
   Room r = new Room(new PVector(0, 0), new PVector(2000, 2000));
   Room r0 = new Room(new PVector(-300, -250), new PVector(800, 700));
@@ -117,17 +122,23 @@ void setup()
   Portal portal = new Portal(friskRestLeft, new PVector(-300, -400), new PVector(150, 150), r0);
   friskRImg = loadImage("data/images/friskRoom.png");
   Room friskRoom = new Room(new PVector(0, 0), new PVector(800, 650));
-  Struct roomImg = new Struct(friskRImg, new PVector(0, 0), new PVector(800, 650), false);
+  Struct roomImg = new Struct(friskRImg, new PVector(0, 0), new PVector(800, 650), false, false);
+  
+  Struct desk = new Struct(null, new PVector(292 - width/2, 141 - height/2), new PVector(282, 220), true, true);
+  Struct bed = new Struct(null, new PVector(819 - width/2, 383 - height/2), new PVector(270, 328), true, true);
+  bed.setBubble(bedB);
+  desk.setBubble(b);
   
   friskRoom.addGameObject(roomImg);
-  friskRoom.addGameObject(new Struct(null, new PVector(292 - width/2, 141 - height/2), new PVector(282, 220), true));
-  friskRoom.addGameObject(new Struct(null, new PVector(685 - width/2, 110 - height/2), new PVector(528, 174), true));
-  friskRoom.addGameObject(new Struct(null, new PVector(819 - width/2, 383 - height/2), new PVector(270, 328), true));
-  friskRoom.addGameObject(new Struct(null, new PVector(643 - width/2, 495 - height/2), new PVector(100, 100), true));
-  friskRoom.addGameObject(new Struct(null, new PVector(624 - width/2, 619 - height/2), new PVector(644, 147), true));
-  friskRoom.addGameObject(new Struct(null, new PVector(128 - width/2, 601 - height/2), new PVector(100, 121), true));
-  friskRoom.addGameObject(new Portal(null, new PVector(240 - width/2, 723 - height/2), new PVector(126, 100), r));
+  friskRoom.addGameObject(desk);
+  friskRoom.addGameObject(new Struct(null, new PVector(685 - width/2, 110 - height/2), new PVector(528, 174), false, true));
   
+  
+  friskRoom.addGameObject(bed);
+  friskRoom.addGameObject(new Struct(null, new PVector(643 - width/2, 495 - height/2), new PVector(100, 100), false, true));
+  friskRoom.addGameObject(new Struct(null, new PVector(624 - width/2, 619 - height/2), new PVector(644, 147), false, true));
+  friskRoom.addGameObject(new Struct(null, new PVector(128 - width/2, 601 - height/2), new PVector(100, 121), false, true));
+  friskRoom.addGameObject(new Portal(null, new PVector(240 - width/2, 723 - height/2), new PVector(126, 100), r));
   
   r.addGameObject(s);
   r.addGameObject(s1);
