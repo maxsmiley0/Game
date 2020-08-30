@@ -135,6 +135,7 @@ void setup()
   
   
   friskRoom.addGameObject(bed);
+  //Bedside Desk
   friskRoom.addGameObject(new Struct(null, new PVector(643 - width/2, 495 - height/2), new PVector(100, 100), false, true));
   friskRoom.addGameObject(new Struct(null, new PVector(624 - width/2, 619 - height/2), new PVector(644, 147), false, true));
   friskRoom.addGameObject(new Struct(null, new PVector(128 - width/2, 601 - height/2), new PVector(100, 121), false, true));
@@ -183,12 +184,12 @@ void draw()
     p.display();
     p.getCamera().display();
     
-    /*rect(mouseX - width/2, mouseY - height/2, w, h);
+    rect(mouseX - width/2, mouseY - height/2, w, h);
     fill(#FFFFFF);
     text("x: " + (mouseX - width/2), mouseX - width/2, mouseY - height/2);
     text("y: " + (mouseY - height/2), mouseX - width/2, mouseY + 20 - height/2);
     text("w: " + w, mouseX - width/2, mouseY + 40 - height/2);
-    text("h: " + h, mouseX - width/2, mouseY + 60 - height/2);*/
+    text("h: " + h, mouseX - width/2, mouseY + 60 - height/2);
     
     if (mousePressed)
     {

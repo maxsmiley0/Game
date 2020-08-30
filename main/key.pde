@@ -2,6 +2,16 @@ void keyPressed()
 { 
   if (p.getBlStack().empty())  //No interactions
   {
+    if (key == 'c')  //Opening up character interface
+    {
+      p.stopMoving();
+      p.setInOverview(true);
+      
+      String overviewInterface[] = {"Stats", "Inventory", "Map", "Quests", "Back", "Exit Game"};
+      ButtonList bl = new ButtonList(overviewInterface, false, new PVector(-450, 294), new PVector(0, 0), 6, 175, false);
+      p.getBlStack().push(bl);
+    }
+    
     if (key == 'x' && p.getInteractor() != null)  //If we have someone to interact with
     {
       p.getInteractor().setInteract(true);
@@ -144,9 +154,7 @@ void keyPressed()
                 if (shop.getInventory().get(p.getCurrentBl().getButton()).getCost() <= p.getGold())  //must have enough gold
                 {
                   shop.setShopInterface(4);  //go to the "are you sure" buy screen
-                
-                  String buyInterface[] = {"Yes", "No"};
-                  p.getBlStack().add(new ButtonList(buyInterface, false, new PVector(350, 270), new PVector(150, 45), 2, 25, true));
+                  p.getBlStack().add(new ButtonList(new String[]{"Yes","No"}, false, new PVector(350, 270), new PVector(150, 45), 2, 25, true));
                 }
                 else 
                 {
@@ -166,9 +174,7 @@ void keyPressed()
               {
                 //CASE actually sell
                 shop.setShopInterface(5);    //go to the "are you sure" sell screen
-                
-                String sellInterface[] = {"Yes", "No"};
-                p.getBlStack().add(new ButtonList(sellInterface, false, new PVector(350, 270), new PVector(150, 45), 2, 25, true));
+                p.getBlStack().add(new ButtonList(new String[]{"Yes","No"}, false, new PVector(350, 270), new PVector(150, 45), 2, 25, true));
               }
               break;
             //In "talk" screen
@@ -183,9 +189,7 @@ void keyPressed()
               {
                 //CASE actually talk
                 shop.setShopInterface(6);    //sends to dialogue interface
-                
-                String[] nextButton = {""};
-                p.getBlStack().add(new ButtonList(nextButton, false, new PVector(0, 0), new PVector(0, 0), 1, 0, false));
+                p.getBlStack().add(new ButtonList());
               }
               break;
             //In "are you sure you want to buy" screen
@@ -247,6 +251,69 @@ void keyPressed()
               }
               break;
         }
+      }
+    }
+  }
+  
+  //If player is in overview
+  if (p.inOverview())
+  {
+    if (key == 'x')
+    {
+      switch (p.getOverview().getOverviewInterface())
+      {
+        //In default screen
+        case 0:
+          switch (p.getCurrentBl().getButton())
+          {
+            //Pressing the "stats" button
+            case 0:
+              break;
+            //Pressing the "inventory" button
+            case 1:
+              break;
+            //Pressing the "map" button
+            case 2:
+              break;
+            //Pressing the "quests" button
+            case 3:
+              break;
+            //Pressing the "back" button
+            case 4:
+              p.setInOverview(false);
+              p.getBlStack().pop();
+              break;
+            //Pressing the "exit" button
+            case 5:
+              p.getOverview().setOverviewInterface(5);  //send to "are you sure you want to exit" interface
+              p.getBlStack().push(new ButtonList(new String[]{"Yes","No"}, false, new PVector(0, 0), new PVector(0, 0), 2, 50, true));
+              break;
+          }
+          break;
+        //In "stats" overview
+        case 1:
+          break;
+        //In "inventory" overview
+        case 2:
+          break;
+        //In "map" overview
+        case 3:
+          break;
+        //In "quests" overview
+        case 4:
+          break;
+        //In "are you sure you want to exit" overview
+        case 5:
+          if (p.getCurrentBl().getButton() == 0)  //If press yes, then exit
+          {
+            exit();
+          }
+          else 
+          {
+            p.getOverview().setOverviewInterface(0);  //If press no, send back to other interface
+            p.getBlStack().pop();
+          }
+          break;
       }
     }
   }

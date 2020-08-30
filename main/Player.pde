@@ -6,10 +6,13 @@ public class Player extends GameObject
   private GameObject currentInteractor; //Stores the GameObject that the player is currently interacting with
   
   private boolean inShop;               //If true, displays shop instead of room and character
+  private boolean inOverview;
   private boolean isMoving;             //If true, the moving animation will be displayed instead of the still
   
   private ArrayList<Object> inventory;
   private int gold;              //Stores how much gold a player has
+  
+  private Overview overview;
   
   /*
   The heiarchy of ButtonLists is implemented as a stack, because if you enter a new interface within a separate interface, we want
@@ -32,9 +35,11 @@ public class Player extends GameObject
     
     camera = new Camera();       //Instantiating a new camera
     inventory = new ArrayList<Object>();  //Instantiating a new inventory
+    overview = new Overview();
     
     isMoving = false; 
     inShop = false;
+    inOverview = false;
     
     currentInteractor = null;
     currentAnimation = friskWalkForward;
@@ -70,6 +75,11 @@ public class Player extends GameObject
   public ArrayList<Object> getInventory()
   {
     return inventory;
+  }
+  
+  public Overview getOverview()
+  {
+    return overview;
   }
   
   //Setting the key "keyNum" to boolean b
@@ -161,8 +171,7 @@ public class Player extends GameObject
   public void enterShop()
   {
     inShop = true;
-    String choices[] = {"Buy","Sell","Talk","Leave"};
-    blStack.add(new ButtonList(choices, true, new PVector(350, 130), new PVector(150, 45), 4, 60, true));
+    blStack.add(new ButtonList(new String[]{"Buy","Sell","Talk","Leave"}, true, new PVector(350, 130), new PVector(150, 45), 4, 60, true));
   }
   
   //Exits shop, stops interacting with NPC, pops the blStack
@@ -213,6 +222,16 @@ public class Player extends GameObject
     return blStack.get(blStack.size() - 2);
   }
   
+  public boolean inOverview()
+  {
+    return inOverview;
+  }
+  
+  public void setInOverview(boolean b)
+  {
+    inOverview = b;
+  }
+  
   public void display()          //Placeholder sprite
   {
     pushMatrix();
@@ -226,7 +245,13 @@ public class Player extends GameObject
     {
       image(getImage(), getPosition().x, getPosition().y);
     }
+      
     popMatrix();
+    
+    if (inOverview)
+    {
+      overview.display();
+    }
   }
   
   public void displayRoom()

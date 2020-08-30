@@ -101,6 +101,7 @@ public class NPC extends GameObject
         }
         else               //Else enter dialogue
         {
+          getBubble().setPosition(new PVector(getPosition().x, getPosition().y - getBubble().getDimensions().y/2 - getDimensions().y/2));
           getBubble().display();
           if (p.getBlStack().empty())
           {
