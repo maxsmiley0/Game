@@ -19,6 +19,10 @@ public void keyPressed()
       {
         p.enterShop();
       }
+      else if (p.getInteractor() instanceof NPC && ((NPC)p.getInteractor()).isEnemy())
+      {
+        p.enterBattle();
+      }
     }
     
     if (keyCode == LEFT)

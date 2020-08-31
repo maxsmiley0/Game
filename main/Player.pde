@@ -1,19 +1,21 @@
 public class Player extends GameObject
 {
-  private Room currentRoom;      //The room the player is currently in
   private Camera camera;         //Camera to keep display and center the player and room
   private Animation currentAnimation;   //Animation to be displayed when moving
   private GameObject currentInteractor; //Stores the GameObject that the player is currently interacting with
   
   private boolean inShop;               //If true, displays shop instead of room and character
-  private boolean inOverview;
+  private boolean inBattle;             //If true, displays battle
+  private boolean inOverview;           //If true, displays overview
   private boolean isMoving;             //If true, the moving animation will be displayed instead of the still
   
   private ArrayList<Object> inventory;
   private int gold;              //Stores how much gold a player has
   
-  private Overview overview;
-  private Shop shop;
+  private Room currentRoom;      //The room the player is currently inprivate Room currentRoom (displays when not in any other interface)
+  private Overview overview;     //Overview (tracks stats, inventory, map, etc.)
+  private Shop shop;             //Shop, displayed when interacting with an NPC whose "isShopkeeper" member is set to true
+  private Battle battle;         //Battle, to be copied from an NPC whose "isEnemy" tag is set to true, and then displayed
   
   /*
   The heiarchy of ButtonLists is implemented as a stack, because if you enter a new interface within a separate interface, we want
@@ -39,13 +41,29 @@ public class Player extends GameObject
     overview = new Overview();
     shop = new Shop();
     
+    Room r = new Room(new PVector(0, 0), new PVector(100, 100));
+    r.addGameObject(new Struct(wall, new PVector(0, 0), new PVector(200, 200), false, false));
+    
+    battle = new Battle(r, null);
+    
     isMoving = false; 
     inShop = false;
+    inBattle = false;
     inOverview = false;
     
     currentInteractor = null;
     currentAnimation = friskWalkForward;
     gold = 200;
+  }
+  
+  public Battle getBattle()
+  {
+    return battle;
+  }
+  
+  public boolean isInBattle()
+  {
+    return inBattle;
   }
   
   public int getGold()
@@ -178,7 +196,7 @@ public class Player extends GameObject
   public void enterShop()
   {
     inShop = true;
-    blStack.add(new ButtonList(new String[]{"Buy","Sell","Talk","Leave"}, true, new PVector(350, 130), new PVector(150, 45), 4, 60, true));
+    blStack.push(new ButtonList(new String[]{"Buy","Sell","Talk","Leave"}, true, new PVector(350, 130), new PVector(150, 45), 4, 60, true));
   }
   
   //Exits shop, stops interacting with NPC, pops the blStack
@@ -188,6 +206,20 @@ public class Player extends GameObject
     currentInteractor.setInteract(false);
     blStack.pop();
     shop.getText().reset();
+  }
+  
+  public void enterBattle()
+  {
+    inBattle = true;
+    blStack.push(new ButtonList());
+  }
+  
+  public void exitBattle()
+  {
+    inBattle = false;
+    currentInteractor.setInteract(false);
+    blStack.pop();
+    //text reset?
   }
   
   public boolean isInShop()

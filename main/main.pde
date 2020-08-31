@@ -9,6 +9,8 @@ AudioPlayer song;
 PFont font;
 PFont font0;
 
+Room friskRoom;
+
 PImage friskRestLeft;
 PImage friskRestRight;
 PImage friskRestForward;
@@ -101,6 +103,7 @@ void setup()
   npc = new NPC(hPStill, new PVector(100, 100), true);
   npc0 = new NPC(hPStill, new PVector(400, 400), true);
   
+  npc.setEnemy(true);
   npc.setBubble(b);
   npc0.setBubble(b0);
   
@@ -121,7 +124,7 @@ void setup()
   
   Portal portal = new Portal(friskRestLeft, new PVector(-300, -400), new PVector(150, 150), r0);
   friskRImg = loadImage("data/images/friskRoom.png");
-  Room friskRoom = new Room(new PVector(0, 0), new PVector(800, 650));
+  friskRoom = new Room(new PVector(0, 0), new PVector(800, 650));
   Struct roomImg = new Struct(friskRImg, new PVector(0, 0), new PVector(800, 650), false, false);
   
   Struct desk = new Struct(null, new PVector(292 - width/2, 141 - height/2), new PVector(282, 220), true, true);
@@ -178,7 +181,15 @@ void draw()
   translate(width/2, height/2);
   background(#CCCCCC);
   
-  if (!p.isInShop())
+  if (p.isInShop())
+  {
+    p.getShop().display();
+  }
+  else if (p.isInBattle())
+  {
+    p.getBattle().display();
+  }
+  else
   {
     p.implementArrowKeys();
     p.displayRoom();
@@ -205,10 +216,6 @@ void draw()
         h++;
       }
     }
-  }
-  else 
-  {
-    p.getShop().display();
   }
   
   popMatrix();

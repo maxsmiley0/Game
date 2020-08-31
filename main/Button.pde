@@ -62,6 +62,10 @@ public class Button
     {
       p.getShop().getText().reset();
     }
+    else if (p.getOverview().getOverviewInterface() == 2)
+    {
+      p.getOverview().getText().reset();
+    }
   }
 
   public boolean isSelected()

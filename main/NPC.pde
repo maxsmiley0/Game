@@ -1,12 +1,14 @@
 public class NPC extends GameObject
 {
   private boolean isShopkeeper;        //True if interacting will result in the shop interface, rather than a bubble
+  private boolean isEnemy;             //True if interacting will result in the battle interface, rather than a bubble
   
   public NPC(PImage currentStill, PVector position, boolean isInteractor)
   {
     super(currentStill, position, new PVector(currentStill.width, currentStill.height), isInteractor);
     
     isShopkeeper = false;
+    isEnemy = false;
   }
   
   public boolean isShopkeeper()        //Accessor
@@ -14,9 +16,19 @@ public class NPC extends GameObject
     return isShopkeeper;
   }
   
+  public boolean isEnemy()
+  {
+    return isEnemy;
+  }
+  
   public void setShopkeeper(boolean b) //Mutator
   {
     isShopkeeper = b;
+  }
+  
+  public void setEnemy(boolean b)  
+  {
+    isEnemy = b;
   }
     
   //Implementing abstract function
