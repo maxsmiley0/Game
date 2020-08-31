@@ -58,9 +58,9 @@ public class Button
     selected = !selected;      //Reverses the "selected" status of the button
     
     //not a fundamental part of button - extension
-    if (shop.getShopInterface() == 1 || shop.getShopInterface() == 2)  //Resets the description if a player is switching between items in the buy section of shop
+    if (p.getShop().getShopInterface() == 1 || p.getShop().getShopInterface() == 2)  //Resets the description if a player is switching between items in the buy section of shop
     {
-      shop.getText().reset();
+      p.getShop().getText().reset();
     }
   }
 

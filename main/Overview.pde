@@ -30,6 +30,24 @@ public class Overview
         break;
       //Inventory
       case 2:
+        strokeWeight(10);
+        stroke(#FFFFFF);
+        rect(345, 113, 400, 260);
+        rect(-195, 113, 700, 260);
+        
+        textSize(25);
+        
+        fill(#FFFFFF);
+        if (p.getCurrentBl().getButton() != p.getInventory().size())
+        {
+          text.display(p.getInventory().get(p.getCurrentBl().getButton()).getDescription(), new PVector(345, 113), 18);
+        }
+        else 
+        {
+          text.display("", new PVector(350, 220), 18);  //We do this so the AudioPlayer cuts out
+        }
+        
+        p.getPreviousBl().display();
         break;
       //Map
       case 3:
@@ -58,6 +76,10 @@ public class Overview
     this.overviewInterface = overviewInterface;
   }
   
+  public Text getText()
+  {
+    return text;
+  }
   
   //Stats (health, mana, gold, etc)
   //Map

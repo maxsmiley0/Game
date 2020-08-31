@@ -28,7 +28,6 @@ Object o2;
 Object o3;
 
 Animation hP;
-Shop shop;
 
 PImage friskRImg;
 
@@ -83,9 +82,11 @@ void setup()
   friskWalkRight = new Animation("friskWalkRight", 2, 2);
   friskWalkForward = new Animation("friskWalkForward", 4, 1);
   
-  shop = new Shop();
-  shop.setDialogue(shopDialogue);
-  shop.setBackgroundSong(song);
+  p = new Player(new PVector(-300, 400));
+  
+  p.getShop().setDialogue(shopDialogue);
+  p.getShop().setBackgroundSong(song);
+  p.getShop().getText().setSound(talk);
   
   hP = new Animation("hP", 8, .5);
   
@@ -99,13 +100,12 @@ void setup()
   b0 = new Bubble(strs, displayCps, new PVector(400, 250), new PVector(200, 100), 2);
   npc = new NPC(hPStill, new PVector(100, 100), true);
   npc0 = new NPC(hPStill, new PVector(400, 400), true);
-  shop.getText().setSound(talk);
+  
   npc.setBubble(b);
   npc0.setBubble(b0);
   
   bl = new ButtonList(buttons, true, new PVector(0, 0), new PVector (0, 0), 3, 80, false);
   
-  p = new Player(new PVector(-300, 400));
   p.setImage(friskRestForward);
   //Big structs lag?
   Struct s = new Struct(wall, new PVector(0, 0), new PVector(200, 200), false, false);
@@ -163,8 +163,9 @@ void setup()
   inventory.add(o2);
   inventory.add(o3);
   
-  shop.setInventory(inventory);
+  p.getShop().setInventory(inventory);
   p.setRoom(friskRoom);
+  p.getOverview().getText().setSound(talk);
 }
 
 int w = 100;
@@ -184,8 +185,10 @@ void draw()
     p.display();
     p.getCamera().display();
     
-    rect(mouseX - width/2, mouseY - height/2, w, h);
     fill(#FFFFFF);
+    noStroke();
+    rect(mouseX - width/2, mouseY - height/2, w, h);
+    fill(#000000);
     text("x: " + (mouseX - width/2), mouseX - width/2, mouseY - height/2);
     text("y: " + (mouseY - height/2), mouseX - width/2, mouseY + 20 - height/2);
     text("w: " + w, mouseX - width/2, mouseY + 40 - height/2);
@@ -205,7 +208,7 @@ void draw()
   }
   else 
   {
-    shop.display();
+    p.getShop().display();
   }
   
   popMatrix();

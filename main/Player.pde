@@ -13,6 +13,7 @@ public class Player extends GameObject
   private int gold;              //Stores how much gold a player has
   
   private Overview overview;
+  private Shop shop;
   
   /*
   The heiarchy of ButtonLists is implemented as a stack, because if you enter a new interface within a separate interface, we want
@@ -36,6 +37,7 @@ public class Player extends GameObject
     camera = new Camera();       //Instantiating a new camera
     inventory = new ArrayList<Object>();  //Instantiating a new inventory
     overview = new Overview();
+    shop = new Shop();
     
     isMoving = false; 
     inShop = false;
@@ -54,6 +56,11 @@ public class Player extends GameObject
   public void gainGold(int i)
   {
     gold += i;
+  }
+  
+  public Shop getShop()
+  {
+    return shop;
   }
   
   //Sets the Player's current interactors
