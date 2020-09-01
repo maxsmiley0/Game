@@ -16,6 +16,7 @@ PImage friskRestRight;
 PImage friskRestForward;
 
 PImage shopBackground;
+PImage pillar;
 
 PImage hPStill;
 
@@ -73,6 +74,7 @@ void setup()
   textFont(font);
   
   wall = loadImage("data/images/wall.png");
+  pillar = loadImage("data/images/pillar.png");
   
   hPStill = loadImage("data/images/hP.png");
   friskRestLeft = loadImage("data/images/friskRestLeft.png");
@@ -84,13 +86,22 @@ void setup()
   friskWalkRight = new Animation("friskWalkRight", 2, 2);
   friskWalkForward = new Animation("friskWalkForward", 4, 1);
   
+  hP = new Animation("hP", 8, .5);
+  
   p = new Player(new PVector(-300, 400));
   
   p.getShop().setDialogue(shopDialogue);
   p.getShop().setBackgroundSong(song);
   p.getShop().getText().setSound(talk);
   
-  hP = new Animation("hP", 8, .5);
+  Room r1 = new Room(new PVector(0, 0), new PVector(200, 100));
+  r1.addGameObject(new Struct(pillar, new PVector(300, 150), new PVector(210, 500), false, false));
+  r1.addGameObject(new Struct(pillar, new PVector(-300, 400), new PVector(210, 500), false ,false));
+    
+  Fighter enemy = new Fighter(hP);
+  p.setBattle(new Battle(r1, enemy));
+  
+  
   
   b = new Bubble(strs, displayCps, new PVector(100, -50), new PVector(200, 100), 2);
   
@@ -188,6 +199,28 @@ void draw()
   else if (p.isInBattle())
   {
     p.getBattle().display();
+    
+    fill(#000000);
+    stroke(#FFFFFF);
+    strokeWeight(10);
+    rect(mouseX - width/2, mouseY - height/2, w, h);
+    fill(#FFFFFF);
+    text("x: " + (mouseX - width/2), mouseX - width/2, mouseY - height/2);
+    text("y: " + (mouseY - height/2), mouseX - width/2, mouseY + 20 - height/2);
+    text("w: " + w, mouseX - width/2, mouseY + 40 - height/2);
+    text("h: " + h, mouseX - width/2, mouseY + 60 - height/2);
+    
+    if (mousePressed)
+    {
+      if (mouseButton == LEFT)
+      {
+        w++;
+      }
+      else 
+      {
+        h++;
+      }
+    }
   }
   else
   {

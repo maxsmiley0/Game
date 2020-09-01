@@ -1,83 +1,35 @@
 public class Battle
 {
-  Room room;
-  ArrayList<NPC> enemies;
+  private Room battleRoom;      //Room that the battle takes place in, should have dimensions equal to width x height
+  private Fighter enemy;        //Enemy
+  private PGL graphics;
   
-  int r, g, b;
-  boolean ru, gu, bu;
+  int battleInterface;          // 0: Starting screen | 1: Choosing attack | 2: Using item | 3: Talk | 4: Enemy turn 
   
-  int ubound = 200;
-  int lbound = 120;
-  
-  public Battle(Room room, ArrayList<NPC> enemies)
+  public Battle(Room battleRoom, Fighter enemy)
   {
-    r = 0;
-    g = 0;
-    b = 0;
+    battleInterface = 0;
     
-    ru = true;
-    gu = true;
-    bu = true;
+    graphics = new PGL();
     
-    this.room = room;
-    this.enemies = enemies;
+    this.battleRoom = battleRoom;
+    this.enemy = enemy;
   }
   
   public void display()
   {
-    room.display();
+    graphics.rainbowBackground();
+    battleRoom.display();
     
-    if (r > ubound)
-    {
-      ru = false;
-    }
-    else if (r < lbound)
-    {
-      ru = true;
-    }
-    if (g > ubound)
-    {
-      gu = false;
-    }
-    else if (g < lbound)
-    {
-      gu = true;
-    }
-    if (b > ubound)
-    {
-      bu = false;
-    }
-    else if (b < lbound)
-    {
-      bu = true;
-    }
+    enemy.display(new PVector(300, -120));
+    image(friskRestRight, -300, 160);
     
-    if (ru)
-    {
-      r++;
-    }
-    else 
-    {
-      r--;
-    }
+    fill(#000000);
+    stroke(#FFFFFF);
+    strokeWeight(10);
+    rect(-225, -200, 642, 292);
     
-    if (gu)
-    {
-      g+=2;
-    }
-    else 
-    {
-      g-=2;
-    }
-    
-    if (bu)
-    {
-      b+=3;
-    }
-    else 
-    {
-      b-=3;
-    }
+    p.getCurrentBl().display();
   }
 }
 

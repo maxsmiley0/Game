@@ -41,11 +41,6 @@ public class Player extends GameObject
     overview = new Overview();
     shop = new Shop();
     
-    Room r = new Room(new PVector(0, 0), new PVector(100, 100));
-    r.addGameObject(new Struct(wall, new PVector(0, 0), new PVector(200, 200), false, false));
-    
-    battle = new Battle(r, null);
-    
     isMoving = false; 
     inShop = false;
     inBattle = false;
@@ -59,6 +54,11 @@ public class Player extends GameObject
   public Battle getBattle()
   {
     return battle;
+  }
+  
+  public void setBattle(Battle battle)
+  {
+    this.battle = battle;
   }
   
   public boolean isInBattle()
@@ -211,7 +211,7 @@ public class Player extends GameObject
   public void enterBattle()
   {
     inBattle = true;
-    blStack.push(new ButtonList());
+    blStack.push(new ButtonList(new String[]{"Hi","Bye","Cry"}, true, new PVector(-200, -200), new PVector(150, 50), 3, 50, true));
   }
   
   public void exitBattle()
