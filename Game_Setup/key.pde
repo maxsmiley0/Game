@@ -86,6 +86,11 @@ public void keyPressed()
     {
       implementOverview();
     }
+    
+    if (p.isInBattle() && key == 'x')
+    {
+      implementBattle();
+    }
   }
   
   //If not in shop or battle, this progresses the Bubble
@@ -130,6 +135,22 @@ public void keyReleased()
     {
       p.setKey(2, false);
     }
+  }
+}
+
+public void implementBattle()
+{
+  switch (p.getBattle().getBattleInterface())
+  {
+    case 0:
+      switch (p.getCurrentBl().getButton())
+      {
+        case 0:
+          p.getBattle().setBattleInterface(1);
+          p.getBlStack().push(new ButtonList());
+          break;
+      }
+      break;
   }
 }
 

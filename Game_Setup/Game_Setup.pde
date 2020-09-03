@@ -3,6 +3,12 @@ import ddf.minim.*;
 
 Minim minim;
 
+PImage friskRImg;
+
+
+int w = 100;
+int h = 100;
+
 AudioPlayer talk;
 AudioPlayer song;
 
@@ -14,6 +20,8 @@ Room friskRoom;
 PImage friskRestLeft;
 PImage friskRestRight;
 PImage friskRestForward;
+PImage battleBackground;
+PImage shop;
 
 PImage shopBackground;
 PImage pillar;
@@ -32,7 +40,7 @@ Object o3;
 
 Animation hP;
 
-PImage friskRImg;
+
 
 Text text;
 ButtonList bl;
@@ -75,6 +83,8 @@ void setup()
   
   wall = loadImage("data/images/wall.png");
   pillar = loadImage("data/images/pillar.png");
+  battleBackground = loadImage("data/images/battleBackground.png");
+  shop = loadImage("data/images/shop.png");
   
   hPStill = loadImage("data/images/hP.png");
   friskRestLeft = loadImage("data/images/friskRestLeft.png");
@@ -90,18 +100,54 @@ void setup()
   
   p = new Player(new PVector(-300, 400));
   
+  friskRoom = new Room(new PVector(0, 0), new PVector(800, 650));
+  
+  //Room right outside of Frisk's Room
+  
+  PImage grassTile = loadImage("data/images/grass_tile.png");
+  PImage walkway = loadImage("data/images/walkway.png");
+  PImage friskHouse = loadImage("data/images/friskHouse.png");
+  
+  Room forestArea = new Room(new PVector(-200, -1100), new PVector(900, 3000));  //Defining spawnpoint and dimensions
+  
+  forestArea.addGameObject(new Struct(grassTile, new PVector(225, -1250), new PVector(450, 500), false, false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(-225, -1250), new PVector(450, 500), false, false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(225, -750), new PVector(450, 500), false, false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(-225, -750), new PVector(450, 500), false, false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(225, -250), new PVector(450, 500), false, false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(-225, -250), new PVector(450, 500), false, false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(225, 250), new PVector(450, 500), false, false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(-225, 250), new PVector(450, 500), false, false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(225, 750), new PVector(450, 500), false, false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(-225, 750), new PVector(450, 500), false, false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(225, 1250), new PVector(450, 500), false, false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(-225, 1250), new PVector(450, 500), false, false));
+  
+  forestArea.addGameObject(new Struct(friskHouse, new PVector(-252, -1350), new PVector(400, 400), false, true));
+  
+  forestArea.addGameObject(new Portal(null, new PVector(-100, -1250), new PVector(100, 100), friskRoom));
+  
+  forestArea.addGameObject(new Struct(walkway, new PVector(-300, -1300), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-300, -1200), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-300, -1100), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-300, -1000), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-300, -900), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-200, -900), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-100, -900), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(0, -900), new PVector(100, 100), false, false));
+  
+  
   p.getShop().setDialogue(shopDialogue);
   p.getShop().setBackgroundSong(song);
   p.getShop().getText().setSound(talk);
   
   Room r1 = new Room(new PVector(0, 0), new PVector(200, 100));
+  r1.addGameObject(new Struct(battleBackground, new PVector(0, 0), new PVector(1100, 700), false, false));
   r1.addGameObject(new Struct(pillar, new PVector(300, 150), new PVector(210, 500), false, false));
   r1.addGameObject(new Struct(pillar, new PVector(-300, 400), new PVector(210, 500), false ,false));
     
   Fighter enemy = new Fighter(hP);
   p.setBattle(new Battle(r1, enemy));
-  
-  
   
   b = new Bubble(strs, displayCps, new PVector(100, -50), new PVector(200, 100), 2);
   
@@ -112,7 +158,7 @@ void setup()
   b.getText().setSound(talk);
   b0 = new Bubble(strs, displayCps, new PVector(400, 250), new PVector(200, 100), 2);
   npc = new NPC(hPStill, new PVector(100, 100), true);
-  npc0 = new NPC(hPStill, new PVector(400, 400), true);
+  npc0 = new NPC(shop, new PVector(400, 400), true);
   
   npc.setEnemy(true);
   npc.setBubble(b);
@@ -135,7 +181,6 @@ void setup()
   
   Portal portal = new Portal(friskRestLeft, new PVector(-300, -400), new PVector(150, 150), r0);
   friskRImg = loadImage("data/images/friskRoom.png");
-  friskRoom = new Room(new PVector(0, 0), new PVector(800, 650));
   Struct roomImg = new Struct(friskRImg, new PVector(0, 0), new PVector(800, 650), false, false);
   
   Struct desk = new Struct(null, new PVector(292 - width/2, 141 - height/2), new PVector(282, 220), true, true);
@@ -153,7 +198,7 @@ void setup()
   friskRoom.addGameObject(new Struct(null, new PVector(643 - width/2, 495 - height/2), new PVector(100, 100), false, true));
   friskRoom.addGameObject(new Struct(null, new PVector(624 - width/2, 619 - height/2), new PVector(644, 147), false, true));
   friskRoom.addGameObject(new Struct(null, new PVector(128 - width/2, 601 - height/2), new PVector(100, 121), false, true));
-  friskRoom.addGameObject(new Portal(null, new PVector(240 - width/2, 723 - height/2), new PVector(126, 100), r));
+  friskRoom.addGameObject(new Portal(null, new PVector(240 - width/2, 723 - height/2), new PVector(126, 100), forestArea));
   
   r.addGameObject(s);
   r.addGameObject(s1);
@@ -181,110 +226,3 @@ void setup()
   p.setRoom(friskRoom);
   p.getOverview().getText().setSound(talk);
 }
-
-int w = 100;
-int h = 100;
-
-void draw()
-{
-  pushMatrix();
-  
-  translate(width/2, height/2);
-  background(#CCCCCC);
-  
-  if (p.isInShop())
-  {
-    p.getShop().display();
-  }
-  else if (p.isInBattle())
-  {
-    p.getBattle().display();
-    
-    fill(#000000);
-    stroke(#FFFFFF);
-    strokeWeight(10);
-    rect(mouseX - width/2, mouseY - height/2, w, h);
-    fill(#FFFFFF);
-    text("x: " + (mouseX - width/2), mouseX - width/2, mouseY - height/2);
-    text("y: " + (mouseY - height/2), mouseX - width/2, mouseY + 20 - height/2);
-    text("w: " + w, mouseX - width/2, mouseY + 40 - height/2);
-    text("h: " + h, mouseX - width/2, mouseY + 60 - height/2);
-    
-    if (mousePressed)
-    {
-      if (mouseButton == LEFT)
-      {
-        w++;
-      }
-      else 
-      {
-        h++;
-      }
-    }
-  }
-  else
-  {
-    p.implementArrowKeys();
-    p.displayRoom();
-    p.display();
-    p.getCamera().display();
-    
-    fill(#FFFFFF);
-    noStroke();
-    rect(mouseX - width/2, mouseY - height/2, w, h);
-    fill(#000000);
-    text("x: " + (mouseX - width/2), mouseX - width/2, mouseY - height/2);
-    text("y: " + (mouseY - height/2), mouseX - width/2, mouseY + 20 - height/2);
-    text("w: " + w, mouseX - width/2, mouseY + 40 - height/2);
-    text("h: " + h, mouseX - width/2, mouseY + 60 - height/2);
-    
-    if (mousePressed)
-    {
-      if (mouseButton == LEFT)
-      {
-        w++;
-      }
-      else 
-      {
-        h++;
-      }
-    }
-  }
-  
-  popMatrix();
-  
-  if (p.getInteractor() == null)
-  {
-    text("null", mouseX, mouseY);
-  }
-  else 
-  {
-    text(p.getInteractor().toString(), mouseX, mouseY);
-  }
-}
-
-void loop(AudioPlayer a, int offset) {          //loops a sound effect as long as loop() is in a draw function
-  a.play();
-  if (a.position() >= a.length() - offset) {     //offset = number of miliseconds the soundbyte will cut off. used for soundbytes with extra silence after
-    a.rewind();                                //rewinds the soundbyte
-  }
-}
-
-/*
-TODO:
-Audioplayer - incorporate w/ shop and displayText
-Give shop member functions to support artwork change
-Limit player inventory space, same with shop
-Make room spawnpoint useful
-Figure out how to change rooms / cool transition effect (darkening)
-
-~Battle mechanics
-  -
-  -
-  -
-~Inventory / weapons / armor actually affect battle
-  -
-  -
-  -
-  Portal can be an interactor too... find out how to work interactor into GameObject
-*/

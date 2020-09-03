@@ -18,18 +18,40 @@ public class Battle
   
   public void display()
   {
-    graphics.rainbowBackground();
-    battleRoom.display();
+    graphics.rainbowBackground();          //Rainbow background for cool effect
+    battleRoom.display();                  //Display battle room
     
-    enemy.display(new PVector(300, -120));
-    image(friskRestRight, -300, 160);
+    enemy.display(new PVector(300, -120)); //Displaying enemy
+    image(friskRestRight, -300, 160);      //Displaying player
     
-    fill(#000000);
-    stroke(#FFFFFF);
-    strokeWeight(10);
-    rect(-225, -200, 642, 292);
+    switch (battleInterface)
+    {
+      case 0:
+        fill(#000000);                         //Interface in UL corner
+        stroke(#FFFFFF);
+        strokeWeight(10);
+        rect(-225, -200, 642, 292);
+        
+        break;
+      case 1:
+        break;
+    }
+    
+    
+    
+    
     
     p.getCurrentBl().display();
+  }
+  
+  public int getBattleInterface()
+  {
+    return battleInterface;
+  }
+  
+  public void setBattleInterface(int i)
+  {
+    battleInterface = i;
   }
 }
 

@@ -211,7 +211,7 @@ public class Player extends GameObject
   public void enterBattle()
   {
     inBattle = true;
-    blStack.push(new ButtonList(new String[]{"Hi","Bye","Cry"}, true, new PVector(-200, -200), new PVector(150, 50), 3, 50, true));
+    blStack.push(new ButtonList(new String[]{"Attack","Inventory","Talk"}, true, new PVector(-20, -280), new PVector(175, 50), 3, 75, true));
   }
   
   public void exitBattle()
