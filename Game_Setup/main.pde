@@ -25,8 +25,8 @@ void draw()
     
     text("x: " + p.getPosition().x, mouseX - width/2, mouseY - height/2);
     text("y: " + p.getPosition().y, mouseX - width/2, mouseY + 20 - height/2);
-    text("x spawn: " + p.getRoom().getSpawnpoint().x, mouseX - width/2, mouseY + 40 - height/2);
-    text("y spawn: " + p.getRoom().getSpawnpoint().y, mouseX - width/2, mouseY + 60 - height/2);
+    text("x spawn: " + friskRoom.getSpawnpoint().x, mouseX - width/2, mouseY + 40 - height/2);
+    text("y spawn: " + friskRoom.getSpawnpoint().y, mouseX - width/2, mouseY + 60 - height/2);
     
     if (mousePressed)
     {
@@ -70,12 +70,12 @@ void draw()
   }
   
   popMatrix();
-  
+  /*
   fill(255);
   text("x: " + p.getPosition().x, mouseX, mouseY);
     text("y: " + p.getPosition().y, mouseX, mouseY + 20);
-    text("x spawn: " + p.getRoom().getSpawnpoint().x, mouseX, mouseY + 40);
-    text("y spawn: " + p.getRoom().getSpawnpoint().y, mouseX, mouseY + 60);
+    text("x spawn: " + forestArea.getSpawnpoint().x, mouseX, mouseY + 40);
+    text("y spawn: " + forestArea.getSpawnpoint().y, mouseX, mouseY + 60);*/
 }
 
 void loop(AudioPlayer a, int offset) {          //loops a sound effect as long as loop() is in a draw function

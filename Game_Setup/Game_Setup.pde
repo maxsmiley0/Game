@@ -16,6 +16,7 @@ PFont font;
 PFont font0;
 
 Room friskRoom;
+Room forestArea;
 
 PImage friskRestLeft;
 PImage friskRestRight;
@@ -108,7 +109,7 @@ void setup()
   PImage walkway = loadImage("data/images/walkway.png");
   PImage friskHouse = loadImage("data/images/friskHouse.png");
   
-  Room forestArea = new Room(new PVector(-200, -1100), new PVector(900, 3000));  //Defining spawnpoint and dimensions
+  forestArea = new Room(new PVector(-200, -1050), new PVector(900, 3000));  //Defining spawnpoint and dimensions
   
   forestArea.addGameObject(new Struct(grassTile, new PVector(225, -1250), new PVector(450, 500), false, false));
   forestArea.addGameObject(new Struct(grassTile, new PVector(-225, -1250), new PVector(450, 500), false, false));
@@ -123,18 +124,23 @@ void setup()
   forestArea.addGameObject(new Struct(grassTile, new PVector(225, 1250), new PVector(450, 500), false, false));
   forestArea.addGameObject(new Struct(grassTile, new PVector(-225, 1250), new PVector(450, 500), false, false));
   
-  forestArea.addGameObject(new Struct(friskHouse, new PVector(-252, -1350), new PVector(400, 400), false, true));
+  Bubble houseBubble = new Bubble(new String[]{"This is the house I've\ngrown up in over the\nyears","Good 'ol Relief Inn!"}, displayCps, PVector(0, 0), PVector(100, 100), 2);
+  Struct friskHouse = new Struct(friskHouse, new PVector(-252, -1350), new PVector(400, 400), true, true);
+  friskHouse.setBubble(houseBubble);
+  forestArea.addGameObject(friskHouse);
   
-  forestArea.addGameObject(new Portal(null, new PVector(-100, -1250), new PVector(100, 100), friskRoom));
+  forestArea.addGameObject(new Portal(null, new PVector(-200, -1190), new PVector(100, 100), friskRoom, 'd'));
   
-  forestArea.addGameObject(new Struct(walkway, new PVector(-300, -1300), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(-300, -1200), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(-300, -1100), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(-300, -1000), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(-300, -900), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(-200, -900), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(-100, -900), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(0, -900), new PVector(100, 100), false, false));
+  
+  
+  forestArea.addGameObject(new Struct(walkway, new PVector(-300, -1050), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-300, -950), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-300, -850), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-300, -750), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-300, -650), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-200, -550), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-100, -450), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(0, -650), new PVector(100, 100), false, false));
   
   
   p.getShop().setDialogue(shopDialogue);
@@ -177,9 +183,9 @@ void setup()
   Struct s6 = new Struct(wall, new PVector(-600, 1600), new PVector(100, 100), false, false);
   npc0.setShopkeeper(true);
   Room r = new Room(new PVector(0, 0), new PVector(2000, 2000));
-  Room r0 = new Room(new PVector(-300, -250), new PVector(800, 700));
+  //Room r0 = new Room(new PVector(-300, -250), new PVector(800, 700));
   
-  Portal portal = new Portal(friskRestLeft, new PVector(-300, -400), new PVector(150, 150), r0);
+  //Portal portal = new Portal(friskRestLeft, new PVector(-300, -400), new PVector(150, 150), r0);
   friskRImg = loadImage("data/images/friskRoom.png");
   Struct roomImg = new Struct(friskRImg, new PVector(0, 0), new PVector(800, 650), false, false);
   
@@ -198,7 +204,7 @@ void setup()
   friskRoom.addGameObject(new Struct(null, new PVector(643 - width/2, 495 - height/2), new PVector(100, 100), false, true));
   friskRoom.addGameObject(new Struct(null, new PVector(624 - width/2, 619 - height/2), new PVector(644, 147), false, true));
   friskRoom.addGameObject(new Struct(null, new PVector(128 - width/2, 601 - height/2), new PVector(100, 121), false, true));
-  friskRoom.addGameObject(new Portal(null, new PVector(240 - width/2, 723 - height/2), new PVector(126, 100), forestArea));
+  friskRoom.addGameObject(new Portal(null, new PVector(240 - width/2, 723 - height/2), new PVector(126, 100), forestArea, 'u'));
   
   r.addGameObject(s);
   r.addGameObject(s1);
@@ -209,7 +215,7 @@ void setup()
   r.addGameObject(s6);
   r.addGameObject(npc);
   r.addGameObject(npc0);
-  r.addGameObject(portal);
+  //r.addGameObject(portal);
   
   //Definitely need to be able to adjust text size!
   o1 = new Object("Frog Peasant Sword", "Before sunrise, the Frog\nPeasants roam the grounds,\nslashing and stabbing at\nany unwelcome visitors.", 100);
