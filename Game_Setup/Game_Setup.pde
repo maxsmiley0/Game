@@ -112,7 +112,7 @@ void setup()
   AudioPlayer forestSound = minim.loadFile("data/sounds/birds.mp3");
   AudioPlayer homeSound = minim.loadFile("data/sounds/home.mp3");
   
-  forestArea = new Room(new PVector(-200, -1050), new PVector(900, 3000));  //Defining spawnpoint and dimensions
+  forestArea = new Room(new PVector(-180, -1090), new PVector(900, 3000));  //Defining spawnpoint and dimensions
   
   forestArea.setSound(forestSound);
   friskRoom.setSound(homeSound);
@@ -136,18 +136,16 @@ void setup()
   friskHouseStruct.setBubble(houseBubble);
   forestArea.addGameObject(friskHouseStruct);
   
-  forestArea.addGameObject(new Portal(null, new PVector(-200, -1190), new PVector(100, 100), friskRoom, 'd'));
+  forestArea.addGameObject(new Portal(null, new PVector(-180, -1190), new PVector(100, 100), friskRoom, 'd'));
   
-  
-  
-  forestArea.addGameObject(new Struct(walkway, new PVector(-300, -1050), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(-300, -950), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(-300, -850), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(-300, -750), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(-300, -650), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(-200, -550), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(-100, -450), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(0, -650), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -1090), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -990), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -890), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -790), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -690), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -590), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -490), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-80, -590), new PVector(100, 100), false, false));
   
   
   p.getShop().setDialogue(shopDialogue);

@@ -32,7 +32,7 @@ public class Room
   {
     if (roomSong != null)
     {
-      loop(roomSong, 0);
+      loop(roomSong, 1000);
     }
     
     for (int i = 0; i < li.size(); i++)

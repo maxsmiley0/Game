@@ -115,6 +115,8 @@ public class Camera
       
       if (isFadingOut)
       {
+        AudioPlayer previousSound = p.getRoom().getSound();
+        
         alpha += fadeSpeed;
         if (alpha >= 255)
         {
@@ -122,7 +124,7 @@ public class Camera
           isFadingOut = false;
           isFadingIn = true;
           
-          if (p.getRoom().getSound() != null)  //Before changing rooms, song is paused and rewound
+          if (p.getRoom().getSound() != null && isPanningTo.getSound() != null && isPanningTo.getSound() != p.getRoom().getSound())  //Before changing rooms, song is paused and rewound
           {
             p.getRoom().getSound().pause();
             p.getRoom().getSound().rewind();
@@ -134,7 +136,7 @@ public class Camera
           p.getBlStack().pop();      //Lets player move again
           p.resetKeys();             //This is so the keys the player was pressing in the previous room doesn't affect anything in the new room
           
-          if (p.getRoom().getSound() != null) //After changing rooms, the new song fades in
+          if (p.getRoom().getSound() != null && p.getRoom().getSound() != previousSound) //After changing rooms, the new song fades in
           {
             p.getRoom().getSound().shiftGain(-10, 0, 1500);
           }
@@ -164,7 +166,7 @@ public class Camera
     if (p.getBlStack().empty())  //only want to push one BL
     {
       //If Room has a song, we want it to fade out
-      if (p.getRoom().getSound() != null)
+      if (p.getRoom().getSound() != null && isPanningTo.getSound() != null && isPanningTo.getSound() != p.getRoom().getSound())
       {
         p.getRoom().getSound().shiftGain(0, -50, 1500);
       }
