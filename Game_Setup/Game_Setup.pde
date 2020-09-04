@@ -103,13 +103,19 @@ void setup()
   
   friskRoom = new Room(new PVector(0, 0), new PVector(800, 650));
   
-  //Room right outside of Frisk's Room
+  //Forest Area right outside of Frisk's Room
   
   PImage grassTile = loadImage("data/images/grass_tile.png");
   PImage walkway = loadImage("data/images/walkway.png");
   PImage friskHouse = loadImage("data/images/friskHouse.png");
   
+  AudioPlayer forestSound = minim.loadFile("data/sounds/birds.mp3");
+  AudioPlayer homeSound = minim.loadFile("data/sounds/home.mp3");
+  
   forestArea = new Room(new PVector(-200, -1050), new PVector(900, 3000));  //Defining spawnpoint and dimensions
+  
+  forestArea.setSound(forestSound);
+  friskRoom.setSound(homeSound);
   
   forestArea.addGameObject(new Struct(grassTile, new PVector(225, -1250), new PVector(450, 500), false, false));
   forestArea.addGameObject(new Struct(grassTile, new PVector(-225, -1250), new PVector(450, 500), false, false));
@@ -124,10 +130,11 @@ void setup()
   forestArea.addGameObject(new Struct(grassTile, new PVector(225, 1250), new PVector(450, 500), false, false));
   forestArea.addGameObject(new Struct(grassTile, new PVector(-225, 1250), new PVector(450, 500), false, false));
   
-  Bubble houseBubble = new Bubble(new String[]{"This is the house I've\ngrown up in over the\nyears","Good 'ol Relief Inn!"}, displayCps, PVector(0, 0), PVector(100, 100), 2);
-  Struct friskHouse = new Struct(friskHouse, new PVector(-252, -1350), new PVector(400, 400), true, true);
-  friskHouse.setBubble(houseBubble);
-  forestArea.addGameObject(friskHouse);
+  Bubble houseBubble = new Bubble(new String[]{"This is the house I've\ngrown up in over the\nyears","Good 'ol Relief Inn!"}, displayCps, new PVector(0, 0), new PVector(250, 100), 2);
+  houseBubble.getText().setSound(talk);
+  Struct friskHouseStruct = new Struct(friskHouse, new PVector(-252, -1350), new PVector(400, 400), true, true);
+  friskHouseStruct.setBubble(houseBubble);
+  forestArea.addGameObject(friskHouseStruct);
   
   forestArea.addGameObject(new Portal(null, new PVector(-200, -1190), new PVector(100, 100), friskRoom, 'd'));
   

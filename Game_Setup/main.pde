@@ -70,12 +70,8 @@ void draw()
   }
   
   popMatrix();
-  /*
+  
   fill(255);
-  text("x: " + p.getPosition().x, mouseX, mouseY);
-    text("y: " + p.getPosition().y, mouseX, mouseY + 20);
-    text("x spawn: " + forestArea.getSpawnpoint().x, mouseX, mouseY + 40);
-    text("y spawn: " + forestArea.getSpawnpoint().y, mouseX, mouseY + 60);*/
 }
 
 void loop(AudioPlayer a, int offset) {          //loops a sound effect as long as loop() is in a draw function

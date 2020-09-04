@@ -122,10 +122,22 @@ public class Camera
           isFadingOut = false;
           isFadingIn = true;
           
+          if (p.getRoom().getSound() != null)  //Before changing rooms, song is paused and rewound
+          {
+            p.getRoom().getSound().pause();
+            p.getRoom().getSound().rewind();
+          }
+          
+          
           p.setRoom(isPanningTo);
           p.setPosition(isPanningTo.getSpawnpoint());
           p.getBlStack().pop();      //Lets player move again
           p.resetKeys();             //This is so the keys the player was pressing in the previous room doesn't affect anything in the new room
+          
+          if (p.getRoom().getSound() != null) //After changing rooms, the new song fades in
+          {
+            p.getRoom().getSound().shiftGain(-10, 0, 1500);
+          }
         }
       }
       else if (isFadingIn)
@@ -151,6 +163,11 @@ public class Camera
     
     if (p.getBlStack().empty())  //only want to push one BL
     {
+      //If Room has a song, we want it to fade out
+      if (p.getRoom().getSound() != null)
+      {
+        p.getRoom().getSound().shiftGain(0, -50, 1500);
+      }
       p.getBlStack().add(new ButtonList());  //"Empty BL"
     }
     
