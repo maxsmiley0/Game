@@ -5,34 +5,23 @@ public class Bubble
                                 //Perhaps later could also signify responses / choices?
   
   private String[] strings;     //Stores the strings to be displayed, will have "numSlides" objects
-  private int[] displayPeriods; //Stores period of each text slide, will have "numSlides" ints
+  private int displayCps;       //Stores the rate at which text will appear in characters per second
   
   private PVector position;     //Stores midpoint of text bubble
   private PVector dimensions;   //Stores dimensions
   
-  private int numSlides;        //Number of text slides
   private int currentSlide;     //Keeps track of which slide we are on
   private float sizeFactor;     //When the bubble first grows, keeps track of the ratio of current size to max size, where "1" represents full size
   
-  public Bubble (String[] strings, int[] displayPeriods, PVector position, PVector dimensions, int numSlides)
+  public Bubble (String[] strings, int displayCps, PVector dimensions)
   {
-    //Class invariant: length of array of strings / ints must be specified the same as numSlides
-    if (strings.length != numSlides || displayPeriods.length != numSlides)
-    {
-     println("Passing array of different size than numSlides in Bubble.pde"); 
-     exit();
-    }
-    
     String temp[] = {""};
     bl = new ButtonList(temp, false, new PVector(0, 0), new PVector(0, 0), 1, 0, false);
     text = new Text();
     
-    
     this.strings = strings;
-    this.displayPeriods = displayPeriods;
-    this.position = position;
+    this.displayCps = displayCps;
     this.dimensions = dimensions;
-    this.numSlides = numSlides;
     
     //Initialize to first string in strings
     currentSlide = 0;
@@ -43,7 +32,7 @@ public class Bubble
   //Returns true if bubble is on its last slide
   public boolean atEnd()
   {
-    return currentSlide == numSlides - 1;
+    return currentSlide == strings.length - 1;
   }
   
   public void display()
@@ -67,7 +56,7 @@ public class Bubble
     //Displaying the bubble text
     textSize(sizeFactor*20);
     fill(#000000);
-    text.display(strings[currentSlide], position, displayPeriods[currentSlide]);
+    text.display(strings[currentSlide], position, displayCps);
   }
   
   public void nextSlide()

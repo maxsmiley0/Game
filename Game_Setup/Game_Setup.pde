@@ -4,6 +4,7 @@ import ddf.minim.*;
 Minim minim;
 
 PImage friskRImg;
+Room r;
 
 
 int w = 100;
@@ -51,7 +52,7 @@ NPC npc0;
 Bubble b;
 Bubble b0;
 String strs[] = {"Alex Hadidi\nis a gentleman\nand a scholar", "Nice to meet you!"};
-int displayCps[] = {12, 12};
+int displayCps = 12;
 
 
 Player p;
@@ -130,13 +131,13 @@ void setup()
   forestArea.addGameObject(new Struct(grassTile, new PVector(225, 1250), new PVector(450, 500), false, false));
   forestArea.addGameObject(new Struct(grassTile, new PVector(-225, 1250), new PVector(450, 500), false, false));
   
-  Bubble houseBubble = new Bubble(new String[]{"This is the house I've\ngrown up in over the\nyears","Good 'ol Relief Inn!"}, displayCps, new PVector(0, 0), new PVector(250, 100), 2);
+  Bubble houseBubble = new Bubble(new String[]{"This is the house I've\ngrown up in over the\nyears","Good 'ol Relief Inn!"}, displayCps, new PVector(250, 100));
   houseBubble.getText().setSound(talk);
   Struct friskHouseStruct = new Struct(friskHouse, new PVector(-252, -1350), new PVector(400, 400), true, true);
   friskHouseStruct.setBubble(houseBubble);
   forestArea.addGameObject(friskHouseStruct);
   
-  forestArea.addGameObject(new Portal(null, new PVector(-180, -1190), new PVector(100, 100), friskRoom, 'd'));
+  
   
   forestArea.addGameObject(new Struct(walkway, new PVector(-180, -1090), new PVector(100, 100), false, false));
   forestArea.addGameObject(new Struct(walkway, new PVector(-180, -990), new PVector(100, 100), false, false));
@@ -146,6 +147,14 @@ void setup()
   forestArea.addGameObject(new Struct(walkway, new PVector(-180, -590), new PVector(100, 100), false, false));
   forestArea.addGameObject(new Struct(walkway, new PVector(-180, -490), new PVector(100, 100), false, false));
   forestArea.addGameObject(new Struct(walkway, new PVector(-80, -590), new PVector(100, 100), false, false));
+  
+  PImage frogPic = loadImage("data/images/frog.png");
+  NPC frog = new NPC(frogPic, new PVector(150, -800), true);
+  Bubble frogBubble = new Bubble(new String[]{"Hi! I am just a frog.","I am thrilled to meet you :)"}, displayCps, new PVector(300, 50));
+  frogBubble.getText().setSound(talk);
+  frog.setBubble(frogBubble);
+  
+  forestArea.addGameObject(frog);
   
   
   p.getShop().setDialogue(shopDialogue);
@@ -160,14 +169,15 @@ void setup()
   Fighter enemy = new Fighter(hP);
   p.setBattle(new Battle(r1, enemy));
   
-  b = new Bubble(strs, displayCps, new PVector(100, -50), new PVector(200, 100), 2);
+  b = new Bubble(strs, displayCps, new PVector(200, 100));
+  //new PVector(100, -50)
   
   String sw[] = {"This is a cool bed.\nMaybe I should sleep\non it.", "Sike"};
-  Bubble bedB = new Bubble(sw, displayCps, new PVector(100, 50), new PVector(250, 100), 2);
+  Bubble bedB = new Bubble(sw, displayCps, new PVector(250, 100));
   bedB.getText().setSound(talk);
   
   b.getText().setSound(talk);
-  b0 = new Bubble(strs, displayCps, new PVector(400, 250), new PVector(200, 100), 2);
+  b0 = new Bubble(strs, displayCps, new PVector(200, 100));
   npc = new NPC(hPStill, new PVector(100, 100), true);
   npc0 = new NPC(shop, new PVector(400, 400), true);
   
@@ -187,7 +197,7 @@ void setup()
   Struct s5 = new Struct(wall, new PVector(700, 200), new PVector(100, 100), false, false);
   Struct s6 = new Struct(wall, new PVector(-600, 1600), new PVector(100, 100), false, false);
   npc0.setShopkeeper(true);
-  Room r = new Room(new PVector(0, 0), new PVector(2000, 2000));
+  r = new Room(new PVector(0, 0), new PVector(2000, 2000));
   //Room r0 = new Room(new PVector(-300, -250), new PVector(800, 700));
   
   //Portal portal = new Portal(friskRestLeft, new PVector(-300, -400), new PVector(150, 150), r0);
@@ -236,4 +246,8 @@ void setup()
   p.getShop().setInventory(inventory);
   p.setRoom(friskRoom);
   p.getOverview().getText().setSound(talk);
+  
+  forestArea.addGameObject(new Portal(null, new PVector(-180, -1190), new PVector(100, 100), r, 'd'));
 }
+
+//player could actually be displayed before npcs?
