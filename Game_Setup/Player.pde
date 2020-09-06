@@ -196,7 +196,7 @@ public class Player extends GameObject
   public void enterShop()
   {
     inShop = true;
-    blStack.push(new ButtonList(new String[]{"Buy","Sell","Talk","Leave"}, true, new PVector(350, 130), new PVector(150, 45), 4, 60, true));
+    blStack.push(new ButtonList(new String[]{"Buy","Sell","Talk","Leave"}, true, new PVector(350, 130), new PVector(150, 45), 60, true));
   }
   
   //Exits shop, stops interacting with NPC, pops the blStack
@@ -211,7 +211,7 @@ public class Player extends GameObject
   public void enterBattle()
   {
     inBattle = true;
-    blStack.push(new ButtonList(new String[]{"Attack","Inventory","Talk"}, true, new PVector(-20, -280), new PVector(175, 50), 3, 75, true));
+    blStack.push(new ButtonList(new String[]{"Attack","Inventory","Talk"}, true, new PVector(-20, -280), new PVector(175, 50), 75, true));
   }
   
   public void exitBattle()

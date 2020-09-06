@@ -5,24 +5,11 @@ public class ButtonList
   private int maxButtons;
   private boolean expandVert;
   
-  public ButtonList(String[] tags, boolean displayButton,  PVector firstButtonPos, PVector dimensions, int maxButtons, int buttonSpacing, boolean expandVert)        
+  public ButtonList(String[] tags, boolean displayButton,  PVector firstButtonPos, PVector dimensions, int buttonSpacing, boolean expandVert)        
   {
-    //Exits if invalid maxButtons argument
-    if (maxButtons < 1)
-    {
-      println("Invalid maxButtons parameter in ButtonList.pde");
-      exit();
-    }
-    //Exits if invalid tags argument
-    else if (tags.length < maxButtons)
-    {
-      println("Passing a string array of size less than allocated buttons in ButtonList.pde");
-      exit();
-    }
-    
     li = new ArrayList<Button>();
     currentButton = 0;
-    this.maxButtons = maxButtons;
+    this.maxButtons = tags.length;
     this.expandVert = expandVert;
     
     //Inserting the buttons into the button list

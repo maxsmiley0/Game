@@ -185,7 +185,7 @@ void setup()
   npc.setBubble(b);
   npc0.setBubble(b0);
   
-  bl = new ButtonList(buttons, true, new PVector(0, 0), new PVector (0, 0), 3, 80, false);
+  bl = new ButtonList(buttons, true, new PVector(0, 0), new PVector (0, 0), 80, false);
   
   p.setImage(friskRestForward);
   //Big structs lag?

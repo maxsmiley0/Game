@@ -16,7 +16,7 @@ public class Bubble
   public Bubble (String[] strings, int displayCps, PVector dimensions)
   {
     String temp[] = {""};
-    bl = new ButtonList(temp, false, new PVector(0, 0), new PVector(0, 0), 1, 0, false);
+    bl = new ButtonList(temp, false, new PVector(0, 0), new PVector(0, 0), 0, false);
     text = new Text();
     
     this.strings = strings;

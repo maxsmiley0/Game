@@ -1,0 +1,105 @@
+(Non-Class files)
+
+Game_Setup:
+
+-This is where all Rooms, GameObjects, etc. should be defined
+-To make a complete game, you need to define a Player, at least one room, and set that Player's room to that room
+-The Player MUST be named 'p'
+
+
+main:
+
+-Responsible for displaying the game
+
+
+key:
+
+-Responsible for handling events involving key presses
+
+
+(Graphics-Related classes)
+
+
+Animation:
+
+-Displays an animation at a given frequency
+-You must store images to be played in "data/Animations/name"
+-The individual images must be numbered from 00-XX
+-The individual images must be of .png file format
+-For example, if you want to play a 7-frame crocodile running animation, create a folder "crocRun" in data/Animations, and put in the individual images in the folder, named crocRun00.png, crocRun01.png, ... , crocRun06.png
+-Instantiate an Animation object "croc" passing the parameters ("crocRun", 7, frequency)
+-To display the croc running, use "croc.display(PVector position)"
+
+
+PGL:
+
+-An object through which various effects can be accessed by calling its member functions
+-rainbowBackground(): paints the remaining whitespace on the canvas with a changing rainbow/disco effect
+
+
+Text:
+
+-Extension of the regular text() function
+-Displays text, but letter by letter, if you want sentences to spell themselves out, rather than appear all at once
+-Has an AudioPlayer member, if you want a sound to play as the text "rolls", use setSound()
+
+
+Button:
+
+-A part of the "ButtonList" object
+-Is either in a "pressed" or "unpressed" state
+-Never used on its own
+
+
+ButtonList:
+
+-Has an ArrayList of Buttons
+-Takes in an array of strings (to be displayed on each button)
+-A boolean to determine whether the buttons should be displayed in a box, or just as text
+-The position of the first button
+-The dimension of the boxes from individual buttons
+-The spacing between the buttons
+-A boolean to represent if the Buttons are displayed vertically or horizontally
+
+-Represents the current "Task" of a player
+-If the player is in a certain "Task" / ButtonList, the arrow keys control which Button is selected
+
+
+Bubble:
+
+-A Bubble that balloons out during an interaction
+-If Player interacts with a Structure, it balloons above the Player
+-If Player interacts with an NPC, it balloons above the NPC
+-Takes in an array of strings (the messages), the rate at which the text will appear, and the dimensions of the bubble
+-If one wants the Bubble to have an associated sound, they must use "getText().setSound(AudioPlayer a)"
+
+
+(Player-Surroundings based classes)
+
+Camera:
+
+-
+
+
+Room:
+
+-
+
+
+(GameObject classes (the meat of what comprises a "Room")
+
+GameObject:
+Struct
+Portal
+
+Object
+
+Player
+Overview
+Shop
+Battle
+Fighter
+
+NPC
+
+

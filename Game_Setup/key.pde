@@ -7,7 +7,7 @@ public void keyPressed()
       p.resetKeys();
       p.stopMoving();
       p.setInOverview(true);
-      ButtonList bl = new ButtonList(new String[]{"Stats","Inventory","Map","Quests","Back","Exit Game"}, false, new PVector(-450, 294), new PVector(0, 0), 6, 175, false);
+      ButtonList bl = new ButtonList(new String[]{"Stats","Inventory","Map","Quests","Back","Exit Game"}, false, new PVector(-450, 294), new PVector(0, 0), 175, false);
       p.getBlStack().push(bl);
     }
     
@@ -179,7 +179,7 @@ public void implementOverview()
           inventoryInterface[p.getInventory().size()] = "Back";
           //End
                 
-          p.getBlStack().push(new ButtonList(inventoryInterface, false, new PVector(-200, 15), new PVector(150, 45), inventoryInterface.length, 25, true));
+          p.getBlStack().push(new ButtonList(inventoryInterface, false, new PVector(-200, 15), new PVector(150, 45), 25, true));
           break;
         //Pressing the "map" button
         case 2:
@@ -195,7 +195,7 @@ public void implementOverview()
         //Pressing the "exit" button
         case 5:
           p.getOverview().setOverviewInterface(5);  //send to "are you sure you want to exit" interface
-          p.getBlStack().push(new ButtonList(new String[]{"Yes","No"}, false, new PVector(0, 0), new PVector(0, 0), 2, 50, true));
+          p.getBlStack().push(new ButtonList(new String[]{"Yes","No"}, false, new PVector(0, 0), new PVector(0, 0), 50, true));
           break;
       }
       break;
@@ -252,7 +252,7 @@ public void implementShop()
         buyInterface[p.getShop().getInventory().size()] = "Back";
         //End
                 
-       p.getBlStack().push(new ButtonList(buyInterface, false, new PVector(-200, 120), new PVector(150, 45), buyInterface.length, 25, true));
+       p.getBlStack().push(new ButtonList(buyInterface, false, new PVector(-200, 120), new PVector(150, 45), 25, true));
        break;
      //IF IN MENU SCREEN AND PRESS "SELL"
      case 1:
@@ -268,7 +268,7 @@ public void implementShop()
        sellInterface[p.getInventory().size()] = "Back";
        //End
                 
-       p.getBlStack().push(new ButtonList(sellInterface, false, new PVector(-200, 120), new PVector(150, 45), sellInterface.length, 25, true));
+       p.getBlStack().push(new ButtonList(sellInterface, false, new PVector(-200, 120), new PVector(150, 45), 25, true));
        break;
      //IF IN MENU SCREEN AND PRESS "TALK"
      case 2:
@@ -284,7 +284,7 @@ public void implementShop()
        shopInterface[p.getShop().getDialogue().length] = "Back";
        //End
                 
-       p.getBlStack().push(new ButtonList(shopInterface, false, new PVector(-200, 120), new PVector(150, 45), shopInterface.length, 50, true));
+       p.getBlStack().push(new ButtonList(shopInterface, false, new PVector(-200, 120), new PVector(150, 45), 50, true));
        break;
      //IF IN MENY SCREEN AND PRESS "LEAVE"
      case 3:
@@ -311,7 +311,7 @@ public void implementShop()
        if (p.getShop().getInventory().get(p.getCurrentBl().getButton()).getCost() <= p.getGold())  //must have enough gold
        {
          p.getShop().setShopInterface(4);  //go to the "are you sure" buy screen
-         p.getBlStack().push(new ButtonList(new String[]{"Yes","No"}, false, new PVector(350, 270), new PVector(150, 45), 2, 25, true));
+         p.getBlStack().push(new ButtonList(new String[]{"Yes","No"}, false, new PVector(350, 270), new PVector(150, 45), 25, true));
        }
        else 
        {
@@ -331,7 +331,7 @@ public void implementShop()
      {
        //CASE actually sell
        p.getShop().setShopInterface(5);    //go to the "are you sure" sell screen
-       p.getBlStack().push(new ButtonList(new String[]{"Yes","No"}, false, new PVector(350, 270), new PVector(150, 45), 2, 25, true));
+       p.getBlStack().push(new ButtonList(new String[]{"Yes","No"}, false, new PVector(350, 270), new PVector(150, 45), 25, true));
      }
      break;
    //In "talk" screen
@@ -382,7 +382,7 @@ public void implementShop()
      sellInterface[p.getInventory().size()] = "Back";
      //End
                 
-     p.getBlStack().push(new ButtonList(sellInterface, false, new PVector(-200, 120), new PVector(150, 45), sellInterface.length, 25, true));
+     p.getBlStack().push(new ButtonList(sellInterface, false, new PVector(-200, 120), new PVector(150, 45), 25, true));
      p.getShop().setShopInterface(2);    //sends back to "sell" interface
      break;
    //Case in dialogue with the shopkeeper
