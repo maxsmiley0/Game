@@ -1,0 +1,3 @@
+0: Player X
+1: Player Y
+2: Current Room

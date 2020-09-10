@@ -65,6 +65,9 @@ void setup()
   imageMode(CENTER);
   size(1100, 700);
   
+  //SaveFile save = new SaveFile();
+  //save.load();
+  
   minim = new Minim(this);
   talk = minim.loadFile("data/sounds/generic.mp3");
   song = minim.loadFile("data/sounds/shopSong.mp3");
@@ -248,6 +251,11 @@ void setup()
   p.getOverview().getText().setSound(talk);
   
   forestArea.addGameObject(new Portal(null, new PVector(-180, -1190), new PVector(100, 100), r, 'd'));
+  /*
+  HashMap<String, Room> mm = new HashMap<String, Room>();
+  mm.put("forestArea", forestArea);
+  mm.get("forestArea");
+  */
 }
 
 //player could actually be displayed before npcs?
