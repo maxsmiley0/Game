@@ -1,6 +1,6 @@
 public class Player extends GameObject
 {
-  private Camera camera;         //Camera to keep display and center the player and room
+  private Camera camera;                //Camera to keep display and center the player and room
   private Animation currentAnimation;   //Animation to be displayed when moving
   private GameObject currentInteractor; //Stores the GameObject that the player is currently interacting with
   
@@ -12,7 +12,7 @@ public class Player extends GameObject
   private ArrayList<Object> inventory;
   private int gold;              //Stores how much gold a player has
   
-  private Room currentRoom;      //The room the player is currently inprivate Room currentRoom (displays when not in any other interface)
+  private Room currentRoom;      //The room the player is currently in private Room currentRoom (displays when not in any other interface)
   private Overview overview;     //Overview (tracks stats, inventory, map, etc.)
   private Shop shop;             //Shop, displayed when interacting with an NPC whose "isShopkeeper" member is set to true
   private Battle battle;         //Battle, to be copied from an NPC whose "isEnemy" tag is set to true, and then displayed

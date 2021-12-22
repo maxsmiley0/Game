@@ -166,7 +166,7 @@ public class Camera
     if (p.getBlStack().empty())  //only want to push one BL
     {
       //If Room has a song, we want it to fade out
-      if (p.getRoom().getSound() != null && isPanningTo.getSound() != null && isPanningTo.getSound() != p.getRoom().getSound())
+      if (p.getRoom().getSound() != null && isPanningTo.getSound() != p.getRoom().getSound())
       {
         p.getRoom().getSound().shiftGain(0, -50, 1500);
       }

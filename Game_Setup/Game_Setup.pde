@@ -233,6 +233,7 @@ void setup()
   r.addGameObject(s6);
   r.addGameObject(npc);
   r.addGameObject(npc0);
+  r.addGameObject(new Portal(null, new PVector(-100, -100), new PVector(0, 0), friskRoom, 'd'));
   //r.addGameObject(portal);
   
   //Definitely need to be able to adjust text size!

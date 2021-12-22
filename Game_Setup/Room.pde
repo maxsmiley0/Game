@@ -2,6 +2,7 @@ public class Room
 {
   private ArrayList<GameObject> li;  //A room is comprised of GameObjects
   private AudioPlayer roomSong;      //Ambient song that plays in the background, null if no song
+  private double initGain;           //Resets gain to this value upon re-entering room
   
   private PVector spawnpoint;    //spawnpoint of Player
   private PVector dimensions;    //dimensions of room
@@ -50,6 +51,9 @@ public class Room
   public void setSound(AudioPlayer roomSong)
   {
     this.roomSong = roomSong;
+    println(roomSong.getGain());
+    this.initGain = roomSong.getGain();
+    this.roomSong.setVolume(0);
   }
   
   public AudioPlayer getSound()

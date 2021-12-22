@@ -10,7 +10,6 @@ public void keyPressed()
       ButtonList bl = new ButtonList(new String[]{"Stats","Inventory","Map","Quests","Back","Exit Game"}, false, new PVector(-450, 294), new PVector(0, 0), 175, false);
       p.getBlStack().push(bl);
     }
-    
     if (key == 'x' && p.getInteractor() != null)  //If we have someone to interact with
     {
       p.getInteractor().setInteract(true);
