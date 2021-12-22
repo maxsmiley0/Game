@@ -17,6 +17,13 @@ public void keyPressed()
       if (p.getInteractor() instanceof NPC && ((NPC)p.getInteractor()).isShopkeeper())
       {
         p.enterShop();
+        AudioPlayer sound = p.getRoom().getSound();
+        if (sound != null)  //kill music on shop enter
+        {
+          sound.setGain(sound.getGain() - 50);
+          sound.pause();
+          sound.rewind();
+        }
       }
       else if (p.getInteractor() instanceof NPC && ((NPC)p.getInteractor()).isEnemy())
       {
@@ -291,6 +298,13 @@ public void implementShop()
        p.getShop().getText().getSound().pause();  //we don't want the shopkeeper to keep rambling on once we exit
        p.getShop().getBackgroundSong().pause();   //rewinding and pausing song when we exit shop
        p.getShop().getBackgroundSong().rewind();
+       AudioPlayer sound = p.getRoom().getSound();
+       if (sound != null)                         //bring back sound on exit shop
+       {
+         sound.setGain(sound.getGain() + 50);
+         sound.pause();
+         sound.rewind();
+       }
        break;
      }
      break;

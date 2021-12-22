@@ -113,9 +113,10 @@ public class Camera
       fill(#000000, alpha);
       rect(0, 0, p.getRoom().getDimensions().x, p.getRoom().getDimensions().y);
       
+      AudioPlayer previousSound = p.getRoom().getSound();
+      
       if (isFadingOut)
       {
-        AudioPlayer previousSound = p.getRoom().getSound();
         
         alpha += fadeSpeed;
         if (alpha >= 255)
@@ -151,11 +152,41 @@ public class Camera
           isFadingIn = false;
           inCycle = false;
         }
+       if (p.getRoom().getSound() != null && p.getRoom().getSound() != previousSound) //After changing rooms, the new song fades in
+        {
+          p.getRoom().getSound().shiftGain(0, 10, 1500);
+        }
       }
     }
   }
   
   //Pans to a room "room"
+
+  public void displayGrid()
+  {
+    pushMatrix();
+    center(p.getPosition(), p.getRoom());
+    //Displays a grid every 100px in a 10k x 10k area centered at the origin
+    for (int i = -100; i < 100; i++)
+    {
+      //line(-5000, 50 * i, 5000, 50 * i);
+      fill(#000000);
+      strokeWeight(1);
+      rect(i * 50, 0, 1, 10000);
+      rect(0, i * 50, 10000, 1);
+      noFill();
+      stroke(#000000);
+      strokeWeight(10);
+      int idealX = floor(p.getPosition().x / 50) * 50;
+      int idealY = floor(p.getPosition().y / 50) * 50;
+      rect(idealX, idealY, 50, 50);
+      textSize(25);
+      fill(#ffffff);
+      text("X: " + idealX, idealX, idealY - 20);
+      text("Y: " + idealY, idealX, idealY + 20);
+    }
+    popMatrix();
+  }
   
   public void panTo(Room room)
   {
