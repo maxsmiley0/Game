@@ -111,6 +111,17 @@ public class Struct extends GameObject            //Structure: To be implemented
         }
       }
     }
+    if (displayStructs)
+    {
+      stroke(0);
+      strokeWeight(5);
+      noFill();
+      rect(getPosition().x, getPosition().y, getDimensions().x, getDimensions().y);
+      fill(#ffffff);
+      text("Struct", getPosition().x, getPosition().y - 15);
+      text("Interactor: " + isInteractor(), getPosition().x, getPosition().y);
+      text("Rigidbody: " + rigidBody, getPosition().x, getPosition().y + 15);
+    }
   }
     
   //Simple accessor

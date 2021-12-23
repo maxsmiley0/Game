@@ -50,6 +50,15 @@ public class Portal extends GameObject
       }
       
       p.getCamera().panTo(room);  //fades out, switches rooms to room spawnpoint, fades in
+      if (displayPortals)
+      {
+        stroke(0);
+        strokeWeight(5);
+        noFill();
+        rect(getPosition().x, getPosition().y, getDimensions().x, getDimensions().y);
+        fill(#ffffff);
+        text("Portal", getPosition().x, getPosition().y);
+      }
     }
   }
 }

@@ -123,5 +123,17 @@ public class NPC extends GameObject
         }
       }
     }
+    if (displayNPCs)
+    {
+      stroke(0);
+      strokeWeight(5);
+      noFill();
+      rect(getPosition().x, getPosition().y, getDimensions().x, getDimensions().y);
+      fill(#ffffff);
+      text("NPC", getPosition().x, getPosition().y - 30);
+      text("Interactor: " + isInteractor(), getPosition().x, getPosition().y - 10);
+      text("Shopkeeper: " + isShopkeeper, getPosition().x, getPosition().y + 10);
+      text("Enemy: " + isEnemy, getPosition().x, getPosition().y + 30);
+    }
   }
 }

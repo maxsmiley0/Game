@@ -171,17 +171,15 @@ public class Camera
   {
     pushMatrix();
     center(p.getPosition(), p.getRoom());
+    noFill();
+    stroke(#000000);
+    strokeWeight(1);
     //Displays a grid every 100px in a 10k x 10k area centered at the origin
     for (int i = -100; i < 100; i++)
     {
-      //line(-5000, 50 * i, 5000, 50 * i);
-      fill(#000000);
-      strokeWeight(1);
       rect(i * 50, 0, 1, 10000);
       rect(0, i * 50, 10000, 1);
     }
-    noFill();
-    stroke(#000000);
     strokeWeight(10);
     int idealX = floor(p.getPosition().x / 50) * 50;
     int idealY = floor(p.getPosition().y / 50) * 50;
