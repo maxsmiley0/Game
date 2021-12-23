@@ -24,7 +24,8 @@ public class Shop
     {
       loop(backgroundSong, 79);
     }
-    
+    pushMatrix();
+    scale(width / 1100.0, height / 700.0);
     image(shopBackground, 0, -130);  //Background (shop vender image)
     
     fill(#000000);                   //Lefthand box
@@ -122,6 +123,7 @@ public class Shop
     }
     //Displays the current BL (what you see when you press UP/DOWN)
     p.getCurrentBl().display();
+    popMatrix();
   }
   
   //Acessors

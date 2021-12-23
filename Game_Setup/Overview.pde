@@ -13,6 +13,9 @@ public class Overview
   
   public void display()
   {
+    pushMatrix();
+    scale(width / 1100.0, height / 700.0);
+    
     //The box at the bottom of the screen
     strokeWeight(10);
     stroke(255);
@@ -61,9 +64,9 @@ public class Overview
         fill(#FF0000);
         text("Are you sure you want to exit the game?\nAny unsaved progress will be lost.", 0, -200);
         break;
-    }
-    
+     }
     p.getCurrentBl().display();
+    popMatrix();
   }
   
   public int getOverviewInterface()
@@ -79,11 +82,11 @@ public class Overview
   public Text getText()
   {
     return text;
-  }
+  } 
   
   //Stats (health, mana, gold, etc)
   //Map
   //Inventory
   //Quests
-  //Exit
+  //Ex
 }

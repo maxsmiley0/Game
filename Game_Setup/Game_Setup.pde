@@ -64,6 +64,7 @@ void setup()
   textAlign(CENTER, CENTER);
   imageMode(CENTER);
   size(1100, 700);
+  surface.setResizable(true);
   
   //SaveFile save = new SaveFile();
   //save.load();
