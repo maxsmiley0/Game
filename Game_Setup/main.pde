@@ -1,3 +1,9 @@
+//Dev Tools
+boolean displayGrid = true;
+boolean displayNPCs = true;
+boolean displayStructs = true;
+boolean displayPortals = true;
+
 void draw()
 {
   pushMatrix();
@@ -46,7 +52,10 @@ void draw()
     p.displayRoom();
     p.display();
     p.getCamera().display();
-    //p.getCamera().displayGrid();
+    if (displayGrid)
+    {
+      p.getCamera().displayGrid();
+    }
     
     fill(#FFFFFF);
     noStroke();

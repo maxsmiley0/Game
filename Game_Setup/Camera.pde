@@ -179,17 +179,17 @@ public class Camera
       strokeWeight(1);
       rect(i * 50, 0, 1, 10000);
       rect(0, i * 50, 10000, 1);
-      noFill();
-      stroke(#000000);
-      strokeWeight(10);
-      int idealX = floor(p.getPosition().x / 50) * 50;
-      int idealY = floor(p.getPosition().y / 50) * 50;
-      rect(idealX, idealY, 50, 50);
-      textSize(25);
-      fill(#ffffff);
-      text("X: " + idealX, idealX, idealY - 20);
-      text("Y: " + idealY, idealX, idealY + 20);
     }
+    noFill();
+    stroke(#000000);
+    strokeWeight(10);
+    int idealX = floor(p.getPosition().x / 50) * 50;
+    int idealY = floor(p.getPosition().y / 50) * 50;
+    rect(idealX, idealY, 50, 50);
+    textSize(25);
+    fill(#ffffff);
+    text("X: " + idealX, idealX, idealY - 20);
+    text("Y: " + idealY, idealX, idealY + 20);
     popMatrix();
   }
   
