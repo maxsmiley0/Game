@@ -46,7 +46,7 @@ void draw()
     p.displayRoom();
     p.display();
     p.getCamera().display();
-    p.getCamera().displayGrid();
+    //p.getCamera().displayGrid();
     
     fill(#FFFFFF);
     noStroke();

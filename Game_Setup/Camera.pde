@@ -158,6 +158,11 @@ public class Camera
         }
       }
     }
+    //'x' if approaches interactor
+    if (p.getInteractor() != null)
+    {
+     // rect(-100, -100, 100, 100); 
+    }
   }
   
   //Pans to a room "room"
