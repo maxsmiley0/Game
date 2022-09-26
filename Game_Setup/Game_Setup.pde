@@ -1,3 +1,19 @@
+/*
+TO DO:
+
+//Please set bubble position in initializer
+Bubble text should have an auto skip keyword
+Bubble should have an initializer with a GameObject, dimension is kinda sus. This should also be auto generated
+
+Make concept of "state" - shop, transition, battle, walk, overview etc... make "Camera" responsible for that. Too little modularity...
+Take out fields from GameObject and push as much as possible into the derived classes
+
+Get rid of all notion of p.get... we need to decouple. Design game class to handle this
+De spaghettify Shop and key classes
+
+Maybe like a sound countroller too..? SoundSystem?
+*/
+
 import java.util.Stack;
 import ddf.minim.*;
 
@@ -51,7 +67,7 @@ NPC npc0;
 
 Bubble b;
 Bubble b0;
-String strs[] = {"Alex Hadidi\nis a gentleman\nand a scholar", "Nice to meet you!"};
+String strs[] = {"ABCDEFGHIJKLMNOPQRSTUVWXYZ", "Nice to meet you!"};
 int displayCps = 12;
 
 
@@ -135,7 +151,7 @@ void setup()
   forestArea.addGameObject(new Struct(grassTile, new PVector(225, 1250), new PVector(450, 500), false, false));
   forestArea.addGameObject(new Struct(grassTile, new PVector(-225, 1250), new PVector(450, 500), false, false));
   
-  Bubble houseBubble = new Bubble(new String[]{"This is the house I've\ngrown up in over the\nyears","Good 'ol Relief Inn!"}, displayCps, new PVector(250, 100));
+  Bubble houseBubble = new Bubble(new String[]{"This is the house I've grown up in over the years","Good 'ol Relief Inn!"}, displayCps);
   houseBubble.getText().setSound(talk);
   Struct friskHouseStruct = new Struct(friskHouse, new PVector(-252, -1350), new PVector(400, 400), true, true);
   friskHouseStruct.setBubble(houseBubble);
@@ -154,7 +170,7 @@ void setup()
   
   PImage frogPic = loadImage("data/images/frog.png");
   NPC frog = new NPC(frogPic, new PVector(150, -800), true);
-  Bubble frogBubble = new Bubble(new String[]{"Hi! I am just a frog.","I am thrilled to meet you :)"}, displayCps, new PVector(300, 50));
+  Bubble frogBubble = new Bubble(new String[]{"Hi! I am just a frog.","I am thrilled to meet you :)"}, displayCps);
   frogBubble.getText().setSound(talk);
   frog.setBubble(frogBubble);
   
@@ -173,15 +189,15 @@ void setup()
   Fighter enemy = new Fighter(hP);
   p.setBattle(new Battle(r1, enemy));
   
-  b = new Bubble(strs, displayCps, new PVector(200, 100));
+  b = new Bubble(strs, displayCps);
   //new PVector(100, -50)
   
-  String sw[] = {"This is a cool bed.\nMaybe I should sleep\non it.", "Sike"};
-  Bubble bedB = new Bubble(sw, displayCps, new PVector(250, 100));
+  String sw[] = {"My name is Max Smiley and my amazing gf is Isabella Edrada :)", "it's true"};
+  Bubble bedB = new Bubble(sw, displayCps);
   bedB.getText().setSound(talk);
   
   b.getText().setSound(talk);
-  b0 = new Bubble(strs, displayCps, new PVector(200, 100));
+  b0 = new Bubble(strs, displayCps);
   npc = new NPC(hPStill, new PVector(100, 100), true);
   npc0 = new NPC(shop, new PVector(400, 400), true);
   

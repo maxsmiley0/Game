@@ -1,8 +1,8 @@
 //Dev Tools
-boolean displayGrid = true;
-boolean displayNPCs = true;
-boolean displayStructs = true;
-boolean displayPortals = true;
+boolean displayGrid = false;
+boolean displayNPCs = false;
+boolean displayStructs = false;
+boolean displayPortals = false;
 
 void draw()
 {
@@ -68,6 +68,8 @@ void draw()
     
     if (mousePressed)
     {
+      println("X: " + mouseX);
+      println("Y: " + mouseY);
       if (mouseButton == LEFT)
       {
         w++;

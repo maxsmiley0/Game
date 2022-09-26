@@ -36,24 +36,26 @@ public class Text
         //Differences in the denominator because we want these characters to be paused upon
         case ',':
           currentLetter += displayDifferential/3;
+          sound.pause();
           break;
         
         case '.':
         case '?':
         case '!':
           currentLetter += displayDifferential/6;
+          sound.pause();
           break;
         
         default:
           currentLetter += displayDifferential;
+          if (sound != null)
+          {
+            loop(sound, 0);
+          }
           break;
       }
       //Displaying the partial string
       text(text.substring(0, (int)currentLetter), position.x, position.y);
-      if (sound != null)
-      {
-        loop(sound, 0);
-      }
     }
     else 
     {
