@@ -48,6 +48,7 @@ void draw()
   }
   else
   {
+    executeRigidBodyController(p.getRoom());
     p.implementArrowKeys();
     p.displayRoom();
     p.display();

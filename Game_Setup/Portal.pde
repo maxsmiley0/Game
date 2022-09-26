@@ -5,7 +5,7 @@ public class Portal extends GameObject
   
   public Portal (PImage img, PVector position, PVector dimensions, Room room, char spawn)
   {
-    super(img, position, dimensions, false);
+    super(img, position, dimensions);
     
     if (spawn != 'u' && spawn != 'd' && spawn != 'l' && spawn != 'r')
     {

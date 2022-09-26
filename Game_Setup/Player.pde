@@ -33,7 +33,7 @@ public class Player extends GameObject
   
   public Player(PVector position)
   {
-    super(friskRestForward, position, new PVector(friskRestForward.width, friskRestForward.height), false);
+    super(friskRestForward, position, new PVector(friskRestForward.width, friskRestForward.height));
     
     camera = new Camera();       //Instantiating a new camera
     inventory = new ArrayList<Object>();  //Instantiating a new inventory

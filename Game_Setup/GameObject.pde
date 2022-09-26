@@ -1,18 +1,16 @@
 public abstract class GameObject
 {
   private PImage img;        //Image, to be displayed in DerivedClass::display(). A null img means nothing will be displayed
-  
   private PVector position;  //Position of GameObject (x-pos, y-pos)
   private PVector dimensions;//Dimensions of GameObject (width, height)
+  private Bubble bubble;     //Stores bubble, null if not an interactor (portals, player)
   
-  private Bubble bubble;               //Stores bubble, null if not an interactor (portals, player)
-  
-  public GameObject(PImage img, PVector position, PVector dimensions, boolean isInteractor)
+  public GameObject(PImage img, PVector position, PVector dimensions)
   {
     this.img = img;
-    
     this.position = position;
     this.dimensions = dimensions;
+    this.bubble = null;
   }
   
   //Accessors

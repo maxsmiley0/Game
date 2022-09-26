@@ -1,13 +1,8 @@
 /*
 TO DO:
-Map out GameObject hierarchy and decide all fields
-/*
-Wr
-*/
-//New physics object that controls rigid bodies given a Room...
-//Refactor GameObject class
+//Change GameObject image to animation and refactor animation class
+//Separate player from GameObject and make clearer global variable
 //Bubble text should have an auto skip keyword
-//Bubble should have an initializer with a GameObject, dimension is kinda sus. This should also be auto generated
 
 //Make concept of "state" - shop, transition, battle, walk, overview etc... make "Camera" responsible for that. Too little modularity...
 //Take out fields from GameObject and push as much as possible into the derived classes
@@ -141,38 +136,38 @@ void setup()
   forestArea.setSound(forestSound);
   friskRoom.setSound(homeSound);
   
-  forestArea.addGameObject(new Struct(grassTile, new PVector(225, -1250), new PVector(450, 500), false, false));
-  forestArea.addGameObject(new Struct(grassTile, new PVector(-225, -1250), new PVector(450, 500), false, false));
-  forestArea.addGameObject(new Struct(grassTile, new PVector(225, -750), new PVector(450, 500), false, false));
-  forestArea.addGameObject(new Struct(grassTile, new PVector(-225, -750), new PVector(450, 500), false, false));
-  forestArea.addGameObject(new Struct(grassTile, new PVector(225, -250), new PVector(450, 500), false, false));
-  forestArea.addGameObject(new Struct(grassTile, new PVector(-225, -250), new PVector(450, 500), false, false));
-  forestArea.addGameObject(new Struct(grassTile, new PVector(225, 250), new PVector(450, 500), false, false));
-  forestArea.addGameObject(new Struct(grassTile, new PVector(-225, 250), new PVector(450, 500), false, false));
-  forestArea.addGameObject(new Struct(grassTile, new PVector(225, 750), new PVector(450, 500), false, false));
-  forestArea.addGameObject(new Struct(grassTile, new PVector(-225, 750), new PVector(450, 500), false, false));
-  forestArea.addGameObject(new Struct(grassTile, new PVector(225, 1250), new PVector(450, 500), false, false));
-  forestArea.addGameObject(new Struct(grassTile, new PVector(-225, 1250), new PVector(450, 500), false, false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(225, -1250), new PVector(450, 500), false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(-225, -1250), new PVector(450, 500), false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(225, -750), new PVector(450, 500), false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(-225, -750), new PVector(450, 500), false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(225, -250), new PVector(450, 500), false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(-225, -250), new PVector(450, 500), false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(225, 250), new PVector(450, 500), false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(-225, 250), new PVector(450, 500), false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(225, 750), new PVector(450, 500), false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(-225, 750), new PVector(450, 500), false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(225, 1250), new PVector(450, 500), false));
+  forestArea.addGameObject(new Struct(grassTile, new PVector(-225, 1250), new PVector(450, 500), false));
   
   Bubble houseBubble = new Bubble(new String[]{"This is the house I've grown up in over the years","Good 'ol Relief Inn!"}, displayCps);
   houseBubble.getText().setSound(talk);
-  Struct friskHouseStruct = new Struct(friskHouse, new PVector(-252, -1350), new PVector(400, 400), true, true);
+  Struct friskHouseStruct = new Struct(friskHouse, new PVector(-252, -1350), new PVector(400, 400), true);
   friskHouseStruct.setBubble(houseBubble);
   forestArea.addGameObject(friskHouseStruct);
   
   
   
-  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -1090), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -990), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -890), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -790), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -690), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -590), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -490), new PVector(100, 100), false, false));
-  forestArea.addGameObject(new Struct(walkway, new PVector(-80, -590), new PVector(100, 100), false, false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -1090), new PVector(100, 100), false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -990), new PVector(100, 100), false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -890), new PVector(100, 100), false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -790), new PVector(100, 100), false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -690), new PVector(100, 100), false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -590), new PVector(100, 100), false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-180, -490), new PVector(100, 100), false));
+  forestArea.addGameObject(new Struct(walkway, new PVector(-80, -590), new PVector(100, 100), false));
   
   PImage frogPic = loadImage("data/images/frog.png");
-  NPC frog = new NPC(frogPic, new PVector(150, -800), true);
+  NPC frog = new NPC(frogPic, new PVector(150, -800));
   Bubble frogBubble = new Bubble(new String[]{"Hi! I am just a frog.","I am thrilled to meet you :)"}, displayCps);
   frogBubble.getText().setSound(talk);
   frog.setBubble(frogBubble);
@@ -185,9 +180,9 @@ void setup()
   p.getShop().getText().setSound(talk);
   
   Room r1 = new Room(new PVector(0, 0), new PVector(200, 100));
-  r1.addGameObject(new Struct(battleBackground, new PVector(0, 0), new PVector(1100, 700), false, false));
-  r1.addGameObject(new Struct(pillar, new PVector(300, 150), new PVector(210, 500), false, false));
-  r1.addGameObject(new Struct(pillar, new PVector(-300, 400), new PVector(210, 500), false ,false));
+  r1.addGameObject(new Struct(battleBackground, new PVector(0, 0), new PVector(1100, 700), false));
+  r1.addGameObject(new Struct(pillar, new PVector(300, 150), new PVector(210, 500), false));
+  r1.addGameObject(new Struct(pillar, new PVector(-300, 400), new PVector(210, 500), false));
     
   Fighter enemy = new Fighter(hP);
   p.setBattle(new Battle(r1, enemy));
@@ -201,8 +196,8 @@ void setup()
   
   b.getText().setSound(talk);
   b0 = new Bubble(strs, displayCps);
-  npc = new NPC(hPStill, new PVector(100, 100), true);
-  npc0 = new NPC(shop, new PVector(400, 400), true);
+  npc = new NPC(hPStill, new PVector(100, 100));
+  npc0 = new NPC(shop, new PVector(400, 400));
   
   npc.setEnemy(true);
   npc.setBubble(b);
@@ -212,36 +207,36 @@ void setup()
   
   p.setImage(friskRestForward);
   //Big structs lag?
-  Struct s = new Struct(wall, new PVector(0, 0), new PVector(200, 200), false, false);
-  Struct s1 = new Struct(wall, new PVector(-600, 400), new PVector(100, 200), false, false);
-  Struct s2 = new Struct(wall, new PVector(-100, 700), new PVector(200, 100), false, false);
-  Struct s3 = new Struct(wall, new PVector(200, -300), new PVector(300, 100), false, false);
-  Struct s4 = new Struct(wall, new PVector(100, -900), new PVector(100, 300), false, false);
-  Struct s5 = new Struct(wall, new PVector(700, 200), new PVector(100, 100), false, false);
-  Struct s6 = new Struct(wall, new PVector(-600, 1600), new PVector(100, 100), false, false);
+  Struct s = new Struct(wall, new PVector(0, 0), new PVector(200, 200), false);
+  Struct s1 = new Struct(wall, new PVector(-600, 400), new PVector(100, 200), false);
+  Struct s2 = new Struct(wall, new PVector(-100, 700), new PVector(200, 100), false);
+  Struct s3 = new Struct(wall, new PVector(200, -300), new PVector(300, 100), false);
+  Struct s4 = new Struct(wall, new PVector(100, -900), new PVector(100, 300), false);
+  Struct s5 = new Struct(wall, new PVector(700, 200), new PVector(100, 100), false);
+  Struct s6 = new Struct(wall, new PVector(-600, 1600), new PVector(100, 100), false);
   npc0.setShopkeeper(true);
   r = new Room(new PVector(0, 0), new PVector(2000, 2000));
   //Room r0 = new Room(new PVector(-300, -250), new PVector(800, 700));
   
   //Portal portal = new Portal(friskRestLeft, new PVector(-300, -400), new PVector(150, 150), r0);
   friskRImg = loadImage("data/images/friskRoom.png");
-  Struct roomImg = new Struct(friskRImg, new PVector(0, 0), new PVector(800, 650), false, false);
+  Struct roomImg = new Struct(friskRImg, new PVector(0, 0), new PVector(800, 650), false);
   
-  Struct desk = new Struct(null, new PVector(292 - width/2, 141 - height/2), new PVector(282, 220), true, true);
-  Struct bed = new Struct(null, new PVector(819 - width/2, 383 - height/2), new PVector(270, 328), true, true);
+  Struct desk = new Struct(null, new PVector(292 - width/2, 141 - height/2), new PVector(282, 220), true);
+  Struct bed = new Struct(null, new PVector(819 - width/2, 383 - height/2), new PVector(270, 328), true);
   bed.setBubble(bedB);
   desk.setBubble(b);
   
   friskRoom.addGameObject(roomImg);
   friskRoom.addGameObject(desk);
-  friskRoom.addGameObject(new Struct(null, new PVector(685 - width/2, 110 - height/2), new PVector(528, 174), false, true));
+  friskRoom.addGameObject(new Struct(null, new PVector(685 - width/2, 110 - height/2), new PVector(528, 174), true));
   
   
   friskRoom.addGameObject(bed);
   //Bedside Desk
-  friskRoom.addGameObject(new Struct(null, new PVector(643 - width/2, 495 - height/2), new PVector(100, 100), false, true));
-  friskRoom.addGameObject(new Struct(null, new PVector(624 - width/2, 619 - height/2), new PVector(644, 147), false, true));
-  friskRoom.addGameObject(new Struct(null, new PVector(128 - width/2, 601 - height/2), new PVector(100, 121), false, true));
+  friskRoom.addGameObject(new Struct(null, new PVector(643 - width/2, 495 - height/2), new PVector(100, 100), true));
+  friskRoom.addGameObject(new Struct(null, new PVector(624 - width/2, 619 - height/2), new PVector(644, 147), true));
+  friskRoom.addGameObject(new Struct(null, new PVector(128 - width/2, 601 - height/2), new PVector(100, 121), true));
   friskRoom.addGameObject(new Portal(null, new PVector(240 - width/2, 723 - height/2), new PVector(126, 100), forestArea, 'u'));
   
   r.addGameObject(s);
