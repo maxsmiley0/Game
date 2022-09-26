@@ -1,18 +1,21 @@
 /*
 TO DO:
-
-//Please set bubble position in initializer
-Bubble text should have an auto skip keyword
-Bubble should have an initializer with a GameObject, dimension is kinda sus. This should also be auto generated
-
-Make concept of "state" - shop, transition, battle, walk, overview etc... make "Camera" responsible for that. Too little modularity...
-Take out fields from GameObject and push as much as possible into the derived classes
-
-Get rid of all notion of p.get... we need to decouple. Design game class to handle this
-De spaghettify Shop and key classes
-
-Maybe like a sound countroller too..? SoundSystem?
+Map out GameObject hierarchy and decide all fields
+/*
+Wr
 */
+//New physics object that controls rigid bodies given a Room...
+//Refactor GameObject class
+//Bubble text should have an auto skip keyword
+//Bubble should have an initializer with a GameObject, dimension is kinda sus. This should also be auto generated
+
+//Make concept of "state" - shop, transition, battle, walk, overview etc... make "Camera" responsible for that. Too little modularity...
+//Take out fields from GameObject and push as much as possible into the derived classes
+
+//Get rid of all notion of p.get... we need to decouple. Design game class to handle this
+//De spaghettify Shop and key classes
+
+//Maybe like a sound countroller too..? SoundSystem?
 
 import java.util.Stack;
 import ddf.minim.*;

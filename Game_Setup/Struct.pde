@@ -37,10 +37,6 @@ public class Struct extends GameObject            //Structure: To be implemented
       {
         p.move(new PVector(-6, 0));  //Applying an fixed impulse
       }
-      if (isInteractor())
-      {
-        setInteractionRange(true);
-      }
     }
     
     if (p.getPosition().x > rightBorder - offset && p.getPosition().x < rightBorder && p.getPosition().y > topBorder && p.getPosition().y < bottomBorder)
@@ -48,10 +44,6 @@ public class Struct extends GameObject            //Structure: To be implemented
       if (rigidBody)
       {
         p.move(new PVector(6, 0));  //Applying an fixed impulse
-      }
-      if (isInteractor())
-      {
-        setInteractionRange(true);
       }
     }
     
@@ -61,10 +53,6 @@ public class Struct extends GameObject            //Structure: To be implemented
       {
         p.move(new PVector(0, -6));
       }
-      if (isInteractor())
-      {
-        setInteractionRange(true);
-      }
     }
     
     if (p.getPosition().x > leftBorder && p.getPosition().x < rightBorder && p.getPosition().y > bottomBorder - offset && p.getPosition().y < bottomBorder)
@@ -73,44 +61,8 @@ public class Struct extends GameObject            //Structure: To be implemented
       {
         p.move(new PVector(0, 6));
       }
-      if (isInteractor())
-      {
-        setInteractionRange(true);
-      }
     }
-    //If structure can be interacted with
-    if (isInteractor())
-    {
-      //If out of range, set "in interaction range" to false
-      if (p.getPosition().x < leftBorder - offset || p.getPosition().x > rightBorder + offset || p.getPosition().y < topBorder - offset || p.getPosition().y > bottomBorder + offset)
-      {  
-        setInteractionRange(false);
-      }
-      //Sets interactor to "this" if in interaction range
-      if (inInteractionRange())
-      {
-        p.setInteractor(this);
-      }
-      else
-      {
-        if (p.getInteractor() == this)
-        {
-          //The reason we don't always want to setInteractor to null if not in range is because it could be in range of other NPCs
-          p.setInteractor(null);
-        }
-      }
-      //Player is interacting with the struct
-      if (getInteract())   
-      {
-        getBubble().setPosition(new PVector(p.getPosition().x, p.getPosition().y - getBubble().getDimensions().y/2 - p.getDimensions().y/2));
-        getBubble().display();
-        if (p.getBlStack().empty())
-        {
-          p.getBlStack().add(getBubble().getBl());
-          p.stopMoving();
-        }
-      }
-    }
+    
     if (displayStructs)
     {
       stroke(0);
@@ -119,8 +71,7 @@ public class Struct extends GameObject            //Structure: To be implemented
       rect(getPosition().x, getPosition().y, getDimensions().x, getDimensions().y);
       fill(#ffffff);
       text("Struct", getPosition().x, getPosition().y - 15);
-      text("Interactor: " + isInteractor(), getPosition().x, getPosition().y);
-      text("Rigidbody: " + rigidBody, getPosition().x, getPosition().y + 15);
+      text("Rigidbody: " + rigidBody, getPosition().x, getPosition().y);
     }
   }
     

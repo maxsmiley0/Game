@@ -2,7 +2,6 @@ public class Player extends GameObject
 {
   private Camera camera;                //Camera to keep display and center the player and room
   private Animation currentAnimation;   //Animation to be displayed when moving
-  private GameObject currentInteractor; //Stores the GameObject that the player is currently interacting with
   
   private boolean inShop;               //If true, displays shop instead of room and character
   private boolean inBattle;             //If true, displays battle
@@ -46,7 +45,6 @@ public class Player extends GameObject
     inBattle = false;
     inOverview = false;
     
-    currentInteractor = null;
     currentAnimation = friskWalkForward;
     gold = 200;
   }
@@ -81,15 +79,22 @@ public class Player extends GameObject
     return shop;
   }
   
-  //Sets the Player's current interactors
-  public void setInteractor(GameObject g)
-  {
-    currentInteractor = g;
-  }
-  
   public GameObject getInteractor()
   {
-    return currentInteractor;
+    for (GameObject gameObject : currentRoom.li) {
+      int offset = 10;     //Player's speed is tentatively 6, so 10 is okay
+      
+      int leftBorder = (int)(gameObject.getPosition().x - (gameObject.getDimensions().x/2) - (getDimensions().x / 2) - offset);
+      int rightBorder = (int)(gameObject.getPosition().x + (gameObject.getDimensions().x/2) + (getDimensions().x / 2) + offset);
+      int topBorder = (int)(gameObject.getPosition().y - (gameObject.getDimensions().y/2) - (getDimensions().y/2) - offset);
+      int bottomBorder = (int)(gameObject.getPosition().y + (gameObject.getDimensions().y/2) + (getDimensions().y/2) + offset);
+      
+      if (gameObject.getBubble() != null && getPosition().x >= leftBorder && getPosition().x <= rightBorder && getPosition().y >= topBorder && getPosition().y <= bottomBorder)
+      {  
+        return gameObject;
+      }
+    }
+    return null;
   }
   
   public void addItem(Object object)
@@ -203,7 +208,6 @@ public class Player extends GameObject
   public void exitShop()
   {
     inShop = false;
-    currentInteractor.setInteract(false);
     blStack.pop();
     shop.getText().reset();
   }
@@ -217,7 +221,6 @@ public class Player extends GameObject
   public void exitBattle()
   {
     inBattle = false;
-    currentInteractor.setInteract(false);
     blStack.pop();
     //text reset?
   }
@@ -284,7 +287,10 @@ public class Player extends GameObject
     {
       image(getImage(), getPosition().x, getPosition().y);
     }
-      
+
+    if (getBubble() != null) {
+      getBubble().display();
+    }
     popMatrix();
     
     if (inOverview)

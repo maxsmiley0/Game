@@ -10,11 +10,11 @@ public void keyPressed()
       ButtonList bl = new ButtonList(new String[]{"Stats","Inventory","Map","Quests","Back","Exit Game"}, false, new PVector(-450, 294), new PVector(0, 0), 175, false);
       p.getBlStack().push(bl);
     }
-    if (key == 'x' && p.getInteractor() != null)  //If we have someone to interact with
+    GameObject interactor = p.getInteractor();
+    if (key == 'x' && interactor != null)  //If we have someone to interact with
     {
-      p.getInteractor().setInteract(true);
       p.resetKeys();
-      if (p.getInteractor() instanceof NPC && ((NPC)p.getInteractor()).isShopkeeper())
+      if (interactor instanceof NPC && ((NPC)interactor).isShopkeeper())
       {
         p.enterShop();
         AudioPlayer sound = p.getRoom().getSound();
@@ -25,9 +25,22 @@ public void keyPressed()
           sound.rewind();
         }
       }
-      else if (p.getInteractor() instanceof NPC && ((NPC)p.getInteractor()).isEnemy())
+      else if (interactor instanceof NPC && ((NPC)interactor).isEnemy())
       {
         p.enterBattle();
+      }
+      else {
+          Bubble interactorBubble = interactor.getBubble();
+          if (interactor instanceof Struct) {
+            interactorBubble.setPosition(new PVector(p.getPosition().x, p.getPosition().y - interactorBubble.getDimensions().y / 2 - p.getDimensions().y / 2));
+          }
+          else if (interactor instanceof NPC) {
+            interactorBubble.setPosition(new PVector(interactor.getPosition().x, interactor.getPosition().y - interactorBubble.getDimensions().y/2 - interactor.getDimensions().y/2));
+          }
+          //interactorBubble.setPosition(new PVector(p.getPosition().x, p.getPosition().y - interactorBubble.getDimensions().y/2 - p.getDimensions().y/2));
+          p.setBubble(interactorBubble);
+          p.getBlStack().add(interactor.getBubble().getBl());
+          p.stopMoving();
       }
     }
     
@@ -112,7 +125,7 @@ public void keyPressed()
         if (p.getInteractor().getBubble().getText().isFinished())
         {
           //Stops displaying, resets bubble, and pops BL off stack
-          p.getInteractor().setInteract(false);
+          p.setBubble(null);
           p.getInteractor().getBubble().reset();
           p.getBlStack().pop();
         }

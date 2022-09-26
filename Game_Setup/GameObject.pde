@@ -5,11 +5,6 @@ public abstract class GameObject
   private PVector position;  //Position of GameObject (x-pos, y-pos)
   private PVector dimensions;//Dimensions of GameObject (width, height)
   
-  private boolean isInteractor;        //True if Player can interact with it
-  
-  private boolean inInteractionRange;  //True if Player is sufficiently close
-  private boolean isInteracting;       //True if Player interacts with NPC
-  
   private Bubble bubble;               //Stores bubble, null if not an interactor (portals, player)
   
   public GameObject(PImage img, PVector position, PVector dimensions, boolean isInteractor)
@@ -18,10 +13,6 @@ public abstract class GameObject
     
     this.position = position;
     this.dimensions = dimensions;
-    this.isInteractor = isInteractor;
-    
-    inInteractionRange = false;
-    isInteracting = false;
   }
   
   //Accessors
@@ -39,21 +30,6 @@ public abstract class GameObject
   public PVector getDimensions()
   {
     return dimensions;
-  }
-  
-  public boolean getInteract()
-  {
-    return isInteracting;
-  }
-  
-  public boolean inInteractionRange()
-  {
-    return inInteractionRange;
-  }
-  
-  public boolean isInteractor()
-  {
-    return isInteractor;
   }
   
   public Bubble getBubble()
@@ -78,27 +54,9 @@ public abstract class GameObject
     position.add(p);
   }
   
-  public void setInteract(boolean b)
-  {
-   isInteracting = b;
-  }
-  
-  public void setInteractionRange(boolean b)
-  {
-    inInteractionRange = b;
-  }
-  
   public void setBubble(Bubble bubble)
   {
-    if (isInteractor)      //can only set a bubble if the object is an interactor
-    {
-      this.bubble = bubble;
-    }
-    else 
-    {
-      println("Attempting to give a non-interactor " + toString() + " a bubble in GameObject.pde");
-      exit();
-    }
+    this.bubble = bubble;
   }
   
   //Abstract functions
