@@ -68,8 +68,8 @@ Bubble b0;
 String strs[] = {"ABCDEFGHIJKLMNOPQRSTUVWXYZ", "Nice to meet you!"};
 int displayCps = 12;
 
-
-Player p;
+// IMMUTABLE GameController //
+GameController gameController;
 String buttons[] = {"One", "Two", "Three"};
 
 void setup()
@@ -118,7 +118,9 @@ void setup()
   
   hP = new Animation("hP", 8, .5);
   
-  p = new Player(new PVector(-300, 400));
+  //Need to refactor Player so not contigent on all sprites being defined first...
+  gameController = new GameController();
+  gameController.getPlayer().setPosition(new PVector(-300, 400));
   
   friskRoom = new Room(new PVector(0, 0), new PVector(800, 650));
   
@@ -175,9 +177,9 @@ void setup()
   forestArea.addGameObject(frog);
   
   
-  p.getShop().setDialogue(shopDialogue);
-  p.getShop().setBackgroundSong(song);
-  p.getShop().getText().setSound(talk);
+  gameController.getPlayer().getShop().setDialogue(shopDialogue);
+  gameController.getPlayer().getShop().setBackgroundSong(song);
+  gameController.getPlayer().getShop().getText().setSound(talk);
   
   Room r1 = new Room(new PVector(0, 0), new PVector(200, 100));
   r1.addGameObject(new Struct(battleBackground, new PVector(0, 0), new PVector(1100, 700), false));
@@ -185,7 +187,7 @@ void setup()
   r1.addGameObject(new Struct(pillar, new PVector(-300, 400), new PVector(210, 500), false));
     
   Fighter enemy = new Fighter(hP);
-  p.setBattle(new Battle(r1, enemy));
+  gameController.getPlayer().setBattle(new Battle(r1, enemy));
   
   b = new Bubble(strs, displayCps);
   //new PVector(100, -50)
@@ -205,7 +207,7 @@ void setup()
   
   bl = new ButtonList(buttons, true, new PVector(0, 0), new PVector (0, 0), 80, false);
   
-  p.setImage(friskRestForward);
+  gameController.getPlayer().setImage(friskRestForward);
   //Big structs lag?
   Struct s = new Struct(wall, new PVector(0, 0), new PVector(200, 200), false);
   Struct s1 = new Struct(wall, new PVector(-600, 400), new PVector(100, 200), false);
@@ -262,9 +264,9 @@ void setup()
   inventory.add(o2);
   inventory.add(o3);
   
-  p.getShop().setInventory(inventory);
-  p.setRoom(friskRoom);
-  p.getOverview().getText().setSound(talk);
+  gameController.getPlayer().getShop().setInventory(inventory);
+  gameController.getPlayer().setRoom(friskRoom);
+  gameController.getPlayer().getOverview().getText().setSound(talk);
   
   forestArea.addGameObject(new Portal(null, new PVector(-180, -1190), new PVector(100, 100), r, 'd'));
   /*

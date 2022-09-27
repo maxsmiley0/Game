@@ -20,6 +20,8 @@ public class Shop
   
   public void display()
   {
+    Player player = gameController.getPlayer();
+    
     if (backgroundSong != null)
     {
       loop(backgroundSong, 79);
@@ -49,14 +51,14 @@ public class Shop
       case 1:
         textSize(25);
         fill(#C6B323);
-        text("Gold: " + p.getGold(), 230, 320);
+        text("Gold: " + player.getGold(), 230, 320);
         fill(#00C7FF);
         text("Buy?", 500, 320);
         fill(#FFFFFF);
         //Object description displayed here
-        if (p.getCurrentBl().getButton() != p.getCurrentBl().getMaxButton() - 1)
+        if (player.getCurrentBl().getButton() != player.getCurrentBl().getMaxButton() - 1)
         {
-          text.display(inventory.get(p.getCurrentBl().getButton()).getDescription(), new PVector(350, 220), 18);
+          text.display(inventory.get(player.getCurrentBl().getButton()).getDescription(), new PVector(350, 220), 18);
         }
         else 
         {
@@ -67,15 +69,15 @@ public class Shop
       case 2:
         textSize(25);
         fill(#C6B323);
-        text("Gold: " + p.getGold(), 230, 320);
+        text("Gold: " + player.getGold(), 230, 320);
         fill(#00C7FF);
         text("Sell?", 495, 320);
         fill(#FFFFFF);
         textSize(25);
         //Object description displayed here
-        if (p.getCurrentBl().getButton() != p.getCurrentBl().getMaxButton() - 1)
+        if (player.getCurrentBl().getButton() != player.getCurrentBl().getMaxButton() - 1)
         {
-          text.display(p.getInventory().get(p.getCurrentBl().getButton()).getDescription(), new PVector(350, 220), 18);
+          text.display(player.getInventory().get(player.getCurrentBl().getButton()).getDescription(), new PVector(350, 220), 18);
         }
         else 
         {
@@ -93,13 +95,13 @@ public class Shop
         
         textSize(25);
         fill(#C6B323);
-        text("Gold: " + p.getGold(), 230, 320);
+        text("Gold: " + player.getGold(), 230, 320);
         fill(#00C7FF);
         text("Buy?", 500, 320);
         fill(#FFFFFF);
-        text("Are you sure you want\nto buy\n\n" + inventory.get(p.getPreviousBl().getButton()).getName() + "\n\nfor " + inventory.get(p.getPreviousBl().getButton()).getCost() + "G?", 350, 174);
+        text("Are you sure you want\nto buy\n\n" + inventory.get(player.getPreviousBl().getButton()).getName() + "\n\nfor " + inventory.get(player.getPreviousBl().getButton()).getCost() + "G?", 350, 174);
         //We want to see the shop inventory (prev BL) in ADDITION to the current BL (yes/no interface)
-        p.getPreviousBl().display();
+        player.getPreviousBl().display();
         break;
       //"Sell" screen - Player is choosing between yes or no
       case 5:
@@ -107,22 +109,22 @@ public class Shop
         
         textSize(25);
         fill(#C6B323);
-        text("Gold: " + p.getGold(), 230, 320);
+        text("Gold: " + player.getGold(), 230, 320);
         fill(#00C7FF);
         text("Sell?", 495, 320);
         fill(#FFFFFF);
-        text("Are you sure you want\nto sell\n\n" + p.getInventory().get(p.getPreviousBl().getButton()).getName() + "\n\nfor " + 4 * p.getInventory().get(p.getPreviousBl().getButton()).getCost() / 5 + "G?", 350, 174);
+        text("Are you sure you want\nto sell\n\n" + player.getInventory().get(player.getPreviousBl().getButton()).getName() + "\n\nfor " + 4 * player.getInventory().get(player.getPreviousBl().getButton()).getCost() / 5 + "G?", 350, 174);
         //We want to see the player inventory (prev BL) in ADDITION to the current BL (yes/no interface)
-        p.getPreviousBl().display();
+        player.getPreviousBl().display();
         break;
       //Engaging in a dialogue
       case 6:
         fill(#FFFFFF);
-        text.display(dialogue[p.getPreviousBl().getButton()][textSlide], new PVector(-200, 220), 18);
+        text.display(dialogue[player.getPreviousBl().getButton()][textSlide], new PVector(-200, 220), 18);
         break;
     }
     //Displays the current BL (what you see when you press UP/DOWN)
-    p.getCurrentBl().display();
+    player.getCurrentBl().display();
     popMatrix();
   }
   

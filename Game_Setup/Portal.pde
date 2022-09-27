@@ -19,6 +19,8 @@ public class Portal extends GameObject
   
   public void display()
   {
+    Player player = gameController.getPlayer();
+    
     //Displays the image associated with the portal, if it exists
     if (getImage() != null)
     {
@@ -26,30 +28,30 @@ public class Portal extends GameObject
     }
     
     //Same code as rigidbody, detects when Player enters portal
-    int leftBorder = (int)(getPosition().x - (getDimensions().x/2) - (p.getDimensions().x / 2));
-    int rightBorder = (int)(getPosition().x + (getDimensions().x/2) + (p.getDimensions().x / 2));
-    int topBorder = (int)(getPosition().y - (getDimensions().y/2) - (p.getDimensions().y/2));
-    int bottomBorder = (int)(getPosition().y + (getDimensions().y/2) + (p.getDimensions().y/2));
+    int leftBorder = (int)(getPosition().x - (getDimensions().x/2) - (player.getDimensions().x / 2));
+    int rightBorder = (int)(getPosition().x + (getDimensions().x/2) + (player.getDimensions().x / 2));
+    int topBorder = (int)(getPosition().y - (getDimensions().y/2) - (player.getDimensions().y/2));
+    int bottomBorder = (int)(getPosition().y + (getDimensions().y/2) + (player.getDimensions().y/2));
     
-    if (p.getPosition().x > leftBorder && p.getPosition().x < rightBorder && p.getPosition().y > topBorder && p.getPosition().y < bottomBorder)
+    if (player.getPosition().x > leftBorder && player.getPosition().x < rightBorder && player.getPosition().y > topBorder && player.getPosition().y < bottomBorder)
     {
       switch (spawn)
       {
         case 'u':
-          p.getRoom().setSpawnpoint(new PVector(getPosition().x, getPosition().y - getDimensions().y / 2 - p.getImage().height / 2 - 10));
+          player.getRoom().setSpawnpoint(new PVector(getPosition().x, getPosition().y - getDimensions().y / 2 - player.getImage().height / 2 - 10));
           break;
         case 'd':
-          p.getRoom().setSpawnpoint(new PVector(getPosition().x, getPosition().y + getDimensions().y / 2 + p.getImage().height / 2 + 10));
+          player.getRoom().setSpawnpoint(new PVector(getPosition().x, getPosition().y + getDimensions().y / 2 + player.getImage().height / 2 + 10));
           break;
         case 'l':
-          p.getRoom().setSpawnpoint(new PVector(getPosition().x - getDimensions().x / 2 - p.getImage().width / 2 - 10, getPosition().y));
+          player.getRoom().setSpawnpoint(new PVector(getPosition().x - getDimensions().x / 2 - player.getImage().width / 2 - 10, getPosition().y));
           break;
         case 'r':
-          p.getRoom().setSpawnpoint(new PVector(getPosition().x + getDimensions().x / 2 + p.getImage().width / 2 + 10, getPosition().y));
+          player.getRoom().setSpawnpoint(new PVector(getPosition().x + getDimensions().x / 2 + player.getImage().width / 2 + 10, getPosition().y));
           break;
       }
       
-      p.getCamera().panTo(room);  //fades out, switches rooms to room spawnpoint, fades in
+      player.getCamera().panTo(room);  //fades out, switches rooms to room spawnpoint, fades in
       if (displayPortals)
       {
         stroke(0);

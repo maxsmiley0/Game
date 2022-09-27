@@ -13,6 +13,8 @@ public class Overview
   
   public void display()
   {
+    Player player = gameController.getPlayer();
+    
     pushMatrix();
     scale(width / 1100.0, height / 700.0);
     
@@ -41,16 +43,16 @@ public class Overview
         textSize(25);
         
         fill(#FFFFFF);
-        if (p.getCurrentBl().getButton() != p.getInventory().size())
+        if (player.getCurrentBl().getButton() != player.getInventory().size())
         {
-          text.display(p.getInventory().get(p.getCurrentBl().getButton()).getDescription(), new PVector(345, 113), 18);
+          text.display(player.getInventory().get(player.getCurrentBl().getButton()).getDescription(), new PVector(345, 113), 18);
         }
         else 
         {
           text.display("", new PVector(350, 220), 18);  //We do this so the AudioPlayer cuts out
         }
         
-        p.getPreviousBl().display();
+        player.getPreviousBl().display();
         break;
       //Map
       case 3:
@@ -65,7 +67,7 @@ public class Overview
         text("Are you sure you want to exit the game?\nAny unsaved progress will be lost.", 0, -200);
         break;
      }
-    p.getCurrentBl().display();
+    player.getCurrentBl().display();
     popMatrix();
   }
   

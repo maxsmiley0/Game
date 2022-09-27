@@ -41,7 +41,7 @@ public class Battle
     
     
     
-    p.getCurrentBl().display();
+    gameController.getPlayer().getCurrentBl().display();
   }
   
   public int getBattleInterface()

@@ -6,18 +6,20 @@ boolean displayPortals = false;
 
 void draw()
 {
+  Player player = gameController.getPlayer();
+  
   pushMatrix();
   
   translate(width/2, height/2);
   background(#CCCCCC);
   
-  if (p.isInShop())
+  if (player.isInShop())
   {
-    p.getShop().display();
+    player.getShop().display();
   }
-  else if (p.isInBattle())
+  else if (player.isInBattle())
   {
-    p.getBattle().display();
+    player.getBattle().display();
     
     fill(#000000);
     stroke(#FFFFFF);
@@ -29,8 +31,8 @@ void draw()
     //text("w: " + w, mouseX - width/2, mouseY + 40 - height/2);
     //text("h: " + h, mouseX - width/2, mouseY + 60 - height/2);
     
-    text("x: " + p.getPosition().x, mouseX - width/2, mouseY - height/2);
-    text("y: " + p.getPosition().y, mouseX - width/2, mouseY + 20 - height/2);
+    text("x: " + player.getPosition().x, mouseX - width/2, mouseY - height/2);
+    text("y: " + player.getPosition().y, mouseX - width/2, mouseY + 20 - height/2);
     text("x spawn: " + friskRoom.getSpawnpoint().x, mouseX - width/2, mouseY + 40 - height/2);
     text("y spawn: " + friskRoom.getSpawnpoint().y, mouseX - width/2, mouseY + 60 - height/2);
     
@@ -48,24 +50,24 @@ void draw()
   }
   else
   {
-    executeRigidBodyController(p.getRoom());
-    p.implementArrowKeys();
-    p.displayRoom();
-    p.display();
-    p.getCamera().display();
+    executeRigidBodyController(player.getRoom());
+    player.implementArrowKeys();
+    player.displayRoom();
+    player.display();
+    player.getCamera().display();
     if (displayGrid)
     {
-      p.getCamera().displayGrid();
+      player.getCamera().displayGrid();
     }
     
     fill(#FFFFFF);
     noStroke();
     //rect(mouseX - width/2, mouseY - height/2, w, h);
     fill(#FF0000);
-    //text("x: " + p.getPosition().x, mouseX - width/2, mouseY - height/2);
-    //text("y: " + p.getPosition().y, mouseX - width/2, mouseY + 20 - height/2);
-    //text("x spawn: " + p.getRoom().getSpawnpoint().x, mouseX - width/2, mouseY + 40 - height/2);
-    //text("y spawn: " + p.getRoom().getSpawnpoint().y, mouseX - width/2, mouseY + 60 - height/2);
+    //text("x: " + player.getPosition().x, mouseX - width/2, mouseY - height/2);
+    //text("y: " + player.getPosition().y, mouseX - width/2, mouseY + 20 - height/2);
+    //text("x spawn: " + player.getRoom().getSpawnpoint().x, mouseX - width/2, mouseY + 40 - height/2);
+    //text("y spawn: " + player.getRoom().getSpawnpoint().y, mouseX - width/2, mouseY + 60 - height/2);
     
     if (mousePressed)
     {

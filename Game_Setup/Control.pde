@@ -1,23 +1,47 @@
+enum GameState {idle, moving, interacting, roomTransition, inOverview, inShop, inBattle};
+
+//Later add SoundSystem object
+class GameController {
+  private GameState gameState;
+  private Camera camera;
+  private Player player;
+  
+  public GameController() {
+    gameState = GameState.idle;
+    camera = new Camera();
+    player = new Player(new PVector(0, 0));
+  }
+  
+  public Player getPlayer() {
+    return player; 
+  }
+  
+  public Camera getCamera() {
+    return camera;
+  }
+};
+
 public void keyPressed()
 { 
-  GameObject interactor = p.getInteractor();
-  if (p.getBlStack().empty())  //No interactions
+  Player player = gameController.getPlayer();
+  GameObject interactor = player.getInteractor();
+  if (player.getBlStack().empty())  //No interactions
   {
     if (key == 'c')  //Opening up character interface
     {
-      p.resetKeys();
-      p.stopMoving();
-      p.setInOverview(true);
+      player.resetKeys();
+      player.stopMoving();
+      player.setInOverview(true);
       ButtonList bl = new ButtonList(new String[]{"Stats","Inventory","Map","Quests","Back","Exit Game"}, false, new PVector(-450, 294), new PVector(0, 0), 175, false);
-      p.getBlStack().push(bl);
+      player.getBlStack().push(bl);
     }
     if (key == 'x' && interactor != null)  //If we have someone to interact with
     {
-      p.resetKeys();
+      player.resetKeys();
       if (interactor instanceof NPC && ((NPC)interactor).isShopkeeper())
       {
-        p.enterShop();
-        AudioPlayer sound = p.getRoom().getSound();
+        player.enterShop();
+        AudioPlayer sound = player.getRoom().getSound();
         if (sound != null)  //kill music on shop enter
         {
           sound.setGain(sound.getGain() - 50);
@@ -27,86 +51,86 @@ public void keyPressed()
       }
       else if (interactor instanceof NPC && ((NPC)interactor).isEnemy())
       {
-        p.enterBattle();
+        player.enterBattle();
       }
       else {
           Bubble interactorBubble = interactor.getBubble();
           if (interactor instanceof Struct) {
-            interactorBubble.setPosition(new PVector(p.getPosition().x, p.getPosition().y - interactorBubble.getDimensions().y / 2 - p.getDimensions().y / 2));
+            interactorBubble.setPosition(new PVector(player.getPosition().x, player.getPosition().y - interactorBubble.getDimensions().y / 2 - player.getDimensions().y / 2));
           }
           else if (interactor instanceof NPC) {
             interactorBubble.setPosition(new PVector(interactor.getPosition().x, interactor.getPosition().y - interactorBubble.getDimensions().y/2 - interactor.getDimensions().y/2));
           }
-          //interactorBubble.setPosition(new PVector(p.getPosition().x, p.getPosition().y - interactorBubble.getDimensions().y/2 - p.getDimensions().y/2));
-          p.setBubble(interactorBubble);
-          p.getBlStack().add(interactor.getBubble().getBl());
-          p.stopMoving();
+          //interactorBubble.setPosition(new PVector(player.getPosition().x, player.getPosition().y - interactorBubble.getDimensions().y/2 - player.getDimensions().y/2));
+          player.setBubble(interactorBubble);
+          player.getBlStack().add(interactor.getBubble().getBl());
+          player.stopMoving();
       }
     }
     
     if (keyCode == LEFT)
     {
-      p.startMoving();     //Display animation
-      p.setKey(1, false);  //Move left is true
-      p.setKey(3, true);   //Move right is false
+      player.startMoving();     //Display animation
+      player.setKey(1, false);  //Move left is true
+      player.setKey(3, true);   //Move right is false
     }
     else if (keyCode == RIGHT)
     {
-      p.startMoving();     //Display animation
-      p.setKey(1, true);   //Move left is false
-      p.setKey(3, false);  //Move right is true
+      player.startMoving();     //Display animation
+      player.setKey(1, true);   //Move left is false
+      player.setKey(3, false);  //Move right is true
     }
     if (keyCode == UP)
     {
-      p.startMoving();     //Display animation
-      p.setKey(0, true);   //Move up is true
-      p.setKey(2, false);  //Move down is false
+      player.startMoving();     //Display animation
+      player.setKey(0, true);   //Move up is true
+      player.setKey(2, false);  //Move down is false
     }
     else if (keyCode == DOWN)
     {
-      p.startMoving();     //Display animation
-      p.setKey(0, false);  //Move up is false
-      p.setKey(2, true);   //Move down is true
+      player.startMoving();     //Display animation
+      player.setKey(0, false);  //Move up is false
+      player.setKey(2, true);   //Move down is true
     }
   }
   else 
   {
-    if (p.getCurrentBl().isExpandedVert())    //If the button list is expanded vertically
+    if (player.getCurrentBl().isExpandedVert())    //If the button list is expanded vertically
     {
       if (keyCode == UP)                      //Up and down will change the button, while left and right will do nothing
       {
-        p.getCurrentBl().changeButton(false);
+        player.getCurrentBl().changeButton(false);
       }
       else if (keyCode == DOWN)
       {
-        p.getCurrentBl().changeButton(true);
+        player.getCurrentBl().changeButton(true);
       }
     }
     else                                       //Case: horizontal expansion
     {
       if (keyCode == LEFT)                     //Left and right will change the button, while up and down will do nothing
       {
-        p.getCurrentBl().changeButton(false);
+        player.getCurrentBl().changeButton(false);
       }
       else if (keyCode == RIGHT)
       {
-        p.getCurrentBl().changeButton(true);
+        player.getCurrentBl().changeButton(true);
       }
     }
     
     //CASE PLAYER IS IN SHOP
-    if (p.isInShop() && key == 'x')
+    if (player.isInShop() && key == 'x')
     {
       executeShopController();
     }
     
     //CASE PLAYER IS IN OVERVIEW
-    if (p.inOverview() && key == 'x')
+    if (player.inOverview() && key == 'x')
     {
       executeOverviewController();
     }
     
-    if (p.isInBattle() && key == 'x')
+    if (player.isInBattle() && key == 'x')
     {
       executeBattleController();
     }
@@ -125,9 +149,9 @@ public void keyPressed()
         if (interactor.getBubble().getText().isFinished())
         {
           //Stops displaying, resets bubble, and pops BL off stack
-          p.setBubble(null);
+          player.setBubble(null);
           interactor.getBubble().reset();
-          p.getBlStack().pop();
+          player.getBlStack().pop();
         }
       }
     }
@@ -135,38 +159,41 @@ public void keyPressed()
 
 public void keyReleased()
 {
-  if (p.getBlStack().empty())
+  Player player = gameController.getPlayer();
+  if (player.getBlStack().empty())
   {
-    p.stopMoving();       //Display still instead of animation
+    player.stopMoving();       //Display still instead of animation
     if (keyCode == LEFT)
     {
-      p.setKey(3, false);
+      player.setKey(3, false);
     }
     if (keyCode == RIGHT)
     {
-      p.setKey(1, false);
+      player.setKey(1, false);
     }
     if (keyCode == UP)
     {
-      p.setKey(0, false);
+      player.setKey(0, false);
     }
     if (keyCode == DOWN)
     {
-      p.setKey(2, false);
+      player.setKey(2, false);
     }
   }
 }
 
 public void executeBattleController()
 {
-  switch (p.getBattle().getBattleInterface())
+  Player player = gameController.getPlayer();
+  
+  switch (player.getBattle().getBattleInterface())
   {
     case 0:
-      switch (p.getCurrentBl().getButton())
+      switch (player.getCurrentBl().getButton())
       {
         case 0:
-          p.getBattle().setBattleInterface(1);
-          p.getBlStack().push(new ButtonList());
+          player.getBattle().setBattleInterface(1);
+          player.getBlStack().push(new ButtonList());
           break;
       }
       break;
@@ -175,30 +202,32 @@ public void executeBattleController()
 
 public void executeOverviewController()
 {
-  switch (p.getOverview().getOverviewInterface())
+  Player player = gameController.getPlayer();
+  
+  switch (player.getOverview().getOverviewInterface())
   {
     //In default screen
     case 0:
-      switch (p.getCurrentBl().getButton())
+      switch (player.getCurrentBl().getButton())
       {
         //Pressing the "stats" button
         case 0:
           break;
         //Pressing the "inventory" button
         case 1:
-          p.getOverview().setOverviewInterface(2);    //Sending to "inventory" interface
+          player.getOverview().setOverviewInterface(2);    //Sending to "inventory" interface
           
           //All this does is allocate an extra button to the buttonlist, one for "leave", in addition to the player inventory
-          String inventoryInterface[] = new String[p.getInventory().size() + 1];
+          String inventoryInterface[] = new String[player.getInventory().size() + 1];
                 
-          for (int i = 0; i < p.getInventory().size(); i++)
+          for (int i = 0; i < player.getInventory().size(); i++)
           {
-            inventoryInterface[i] = p.getInventory().get(i).getName();
+            inventoryInterface[i] = player.getInventory().get(i).getName();
           }
-          inventoryInterface[p.getInventory().size()] = "Back";
+          inventoryInterface[player.getInventory().size()] = "Back";
           //End
                 
-          p.getBlStack().push(new ButtonList(inventoryInterface, false, new PVector(-200, 15), new PVector(150, 45), 25, true));
+          player.getBlStack().push(new ButtonList(inventoryInterface, false, new PVector(-200, 15), new PVector(150, 45), 25, true));
           break;
         //Pressing the "map" button
         case 2:
@@ -208,13 +237,13 @@ public void executeOverviewController()
           break;
         //Pressing the "back" button
         case 4:
-          p.setInOverview(false);
-          p.getBlStack().pop();
+          player.setInOverview(false);
+          player.getBlStack().pop();
           break;
         //Pressing the "exit" button
         case 5:
-          p.getOverview().setOverviewInterface(5);  //send to "are you sure you want to exit" interface
-          p.getBlStack().push(new ButtonList(new String[]{"Yes","No"}, false, new PVector(0, 0), new PVector(0, 0), 50, true));
+          player.getOverview().setOverviewInterface(5);  //send to "are you sure you want to exit" interface
+          player.getBlStack().push(new ButtonList(new String[]{"Yes","No"}, false, new PVector(0, 0), new PVector(0, 0), 50, true));
           break;
       }
       break;
@@ -223,10 +252,10 @@ public void executeOverviewController()
       break;
     //In "inventory" overview
     case 2:
-      if (p.getCurrentBl().getButton() == p.getInventory().size())  //Only exit if click "back"
+      if (player.getCurrentBl().getButton() == player.getInventory().size())  //Only exit if click "back"
       {
-        p.getOverview().setOverviewInterface(0);
-        p.getBlStack().pop();
+        player.getOverview().setOverviewInterface(0);
+        player.getBlStack().pop();
       }
       break;
     //In "map" overview
@@ -237,14 +266,14 @@ public void executeOverviewController()
       break;
     //In "are you sure you want to exit" overview
     case 5:
-      if (p.getCurrentBl().getButton() == 0)  //If press yes, then exit
+      if (player.getCurrentBl().getButton() == 0)  //If press yes, then exit
       {
         exit();
       }
       else 
       {
-        p.getOverview().setOverviewInterface(0);  //If press no, send back to other interface
-        p.getBlStack().pop();
+        player.getOverview().setOverviewInterface(0);  //If press no, send back to other interface
+        player.getBlStack().pop();
       }
       break;
   }
@@ -252,66 +281,68 @@ public void executeOverviewController()
 
 public void executeShopController()
 {
-  switch (p.getShop().getShopInterface())
+  Player player = gameController.getPlayer();
+  
+  switch (player.getShop().getShopInterface())
   {
     case 0:
-      switch (p.getCurrentBl().getButton())
+      switch (player.getCurrentBl().getButton())
       {
       //IF IN MENU SCREEN AND PRESS "BUY"
       case 0:
-        p.getShop().setShopInterface(1);    //go to buy interface
+        player.getShop().setShopInterface(1);    //go to buy interface
                 
         //All this does is allocate an extra button to the buttonlist, one for "leave", in addition to the shop inventory
-        String buyInterface[] = new String[p.getShop().getInventory().size() + 1];
+        String buyInterface[] = new String[player.getShop().getInventory().size() + 1];
                 
-        for (int i = 0; i < p.getShop().getInventory().size(); i++)
+        for (int i = 0; i < player.getShop().getInventory().size(); i++)
         {
-          buyInterface[i] = p.getShop().getInventory().get(i).getName() + " - " + p.getShop().getInventory().get(i).getCost() + "G";
+          buyInterface[i] = player.getShop().getInventory().get(i).getName() + " - " + player.getShop().getInventory().get(i).getCost() + "G";
         }
-        buyInterface[p.getShop().getInventory().size()] = "Back";
+        buyInterface[player.getShop().getInventory().size()] = "Back";
         //End
                 
-       p.getBlStack().push(new ButtonList(buyInterface, false, new PVector(-200, 120), new PVector(150, 45), 25, true));
+       player.getBlStack().push(new ButtonList(buyInterface, false, new PVector(-200, 120), new PVector(150, 45), 25, true));
        break;
      //IF IN MENU SCREEN AND PRESS "SELL"
      case 1:
-       p.getShop().setShopInterface(2);    //go to sell interface
+       player.getShop().setShopInterface(2);    //go to sell interface
                 
        //All this does is allocate an extra button to the buttonlist, one for "leave", in addition to the player inventory
-       String sellInterface[] = new String[p.getInventory().size() + 1];
+       String sellInterface[] = new String[player.getInventory().size() + 1];
                 
-       for (int i = 0; i < p.getInventory().size(); i++)
+       for (int i = 0; i < player.getInventory().size(); i++)
        {
-         sellInterface[i] = p.getInventory().get(i).getName() + " - " + 4 * p.getInventory().get(i).getCost() / 5 + "G";
+         sellInterface[i] = player.getInventory().get(i).getName() + " - " + 4 * player.getInventory().get(i).getCost() / 5 + "G";
        }
-       sellInterface[p.getInventory().size()] = "Back";
+       sellInterface[player.getInventory().size()] = "Back";
        //End
                 
-       p.getBlStack().push(new ButtonList(sellInterface, false, new PVector(-200, 120), new PVector(150, 45), 25, true));
+       player.getBlStack().push(new ButtonList(sellInterface, false, new PVector(-200, 120), new PVector(150, 45), 25, true));
        break;
      //IF IN MENU SCREEN AND PRESS "TALK"
      case 2:
-       p.getShop().setShopInterface(3);  //go to talk interface
+       player.getShop().setShopInterface(3);  //go to talk interface
                 
        //All this does is allocate an extra button to the buttonlist, one for "leave", in addition to the the shop dialogues
-       String shopInterface[] = new String[p.getShop().getDialogue().length + 1];
+       String shopInterface[] = new String[player.getShop().getDialogue().length + 1];
                 
-       for (int i = 0; i < p.getShop().getDialogue().length; i++)
+       for (int i = 0; i < player.getShop().getDialogue().length; i++)
        {
-         shopInterface[i] = p.getShop().getDialogue()[i][0];
+         shopInterface[i] = player.getShop().getDialogue()[i][0];
        }
-       shopInterface[p.getShop().getDialogue().length] = "Back";
+       shopInterface[player.getShop().getDialogue().length] = "Back";
        //End
                 
-       p.getBlStack().push(new ButtonList(shopInterface, false, new PVector(-200, 120), new PVector(150, 45), 50, true));
+       player.getBlStack().push(new ButtonList(shopInterface, false, new PVector(-200, 120), new PVector(150, 45), 50, true));
        break;
      //IF IN MENY SCREEN AND PRESS "LEAVE"
      case 3:
-       p.exitShop();  //leaves shop
-       p.getShop().getText().getSound().pause();  //we don't want the shopkeeper to keep rambling on once we exit
-       p.getShop().getBackgroundSong().pause();   //rewinding and pausing song when we exit shop
-       p.getShop().getBackgroundSong().rewind();
-       AudioPlayer sound = p.getRoom().getSound();
+       player.exitShop();  //leaves shop
+       player.getShop().getText().getSound().pause();  //we don't want the shopkeeper to keep rambling on once we exit
+       player.getShop().getBackgroundSong().pause();   //rewinding and pausing song when we exit shop
+       player.getShop().getBackgroundSong().rewind();
+       AudioPlayer sound = player.getRoom().getSound();
        if (sound != null)                         //bring back sound on exit shop
        {
          sound.setGain(sound.getGain() + 50);
@@ -325,19 +356,19 @@ public void executeShopController()
    //IN "BUY" SCREEN
    case 1:
      //If presses "leave"
-     if (p.getCurrentBl().getButton() == p.getShop().getInventory().size())
+     if (player.getCurrentBl().getButton() == player.getShop().getInventory().size())
      {
-       p.getBlStack().pop();      //go back to shop menu
-       p.getShop().setShopInterface(0);
+       player.getBlStack().pop();      //go back to shop menu
+       player.getShop().setShopInterface(0);
      }
      else 
      {
        //CASE actually buy
        //Test for inventory space later on
-       if (p.getShop().getInventory().get(p.getCurrentBl().getButton()).getCost() <= p.getGold())  //must have enough gold
+       if (player.getShop().getInventory().get(player.getCurrentBl().getButton()).getCost() <= player.getGold())  //must have enough gold
        {
-         p.getShop().setShopInterface(4);  //go to the "are you sure" buy screen
-         p.getBlStack().push(new ButtonList(new String[]{"Yes","No"}, false, new PVector(350, 270), new PVector(150, 45), 25, true));
+         player.getShop().setShopInterface(4);  //go to the "are you sure" buy screen
+         player.getBlStack().push(new ButtonList(new String[]{"Yes","No"}, false, new PVector(350, 270), new PVector(150, 45), 25, true));
        }
        else 
        {
@@ -348,87 +379,87 @@ public void executeShopController()
    //In "sell" screen
    case 2:
      //If presses leave
-     if (p.getCurrentBl().getButton() == p.getInventory().size())
+     if (player.getCurrentBl().getButton() == player.getInventory().size())
      {
-       p.getBlStack().pop();
-       p.getShop().setShopInterface(0);
+       player.getBlStack().pop();
+       player.getShop().setShopInterface(0);
      }
      else 
      {
        //CASE actually sell
-       p.getShop().setShopInterface(5);    //go to the "are you sure" sell screen
-       p.getBlStack().push(new ButtonList(new String[]{"Yes","No"}, false, new PVector(350, 270), new PVector(150, 45), 25, true));
+       player.getShop().setShopInterface(5);    //go to the "are you sure" sell screen
+       player.getBlStack().push(new ButtonList(new String[]{"Yes","No"}, false, new PVector(350, 270), new PVector(150, 45), 25, true));
      }
      break;
    //In "talk" screen
    case 3:
      //If presses leave
-     if (p.getCurrentBl().getButton() == p.getShop().getDialogue().length)
+     if (player.getCurrentBl().getButton() == player.getShop().getDialogue().length)
      {
-       p.getBlStack().pop();
-       p.getShop().setShopInterface(0);
+       player.getBlStack().pop();
+       player.getShop().setShopInterface(0);
      }
      else 
      {
        //CASE actually talk
-       p.getShop().setShopInterface(6);    //sends to dialogue interface
-       p.getBlStack().push(new ButtonList());
+       player.getShop().setShopInterface(6);    //sends to dialogue interface
+       player.getBlStack().push(new ButtonList());
      }
      break;
    //In "are you sure you want to buy" screen
    case 4:
      //If presses yes
-     if (p.getCurrentBl().getButton() == 0)
+     if (player.getCurrentBl().getButton() == 0)
      {
-       p.getInventory().add(p.getShop().getInventory().get(p.getPreviousBl().getButton()));      //adds item
-       p.gainGold(-1 * p.getShop().getInventory().get(p.getPreviousBl().getButton()).getCost()); //subtracts cost from player balance
+       player.getInventory().add(player.getShop().getInventory().get(player.getPreviousBl().getButton()));      //adds item
+       player.gainGold(-1 * player.getShop().getInventory().get(player.getPreviousBl().getButton()).getCost()); //subtracts cost from player balance
      }
-     p.getBlStack().pop();
-     p.getShop().setShopInterface(1);  //sends back to "buy" screen
+     player.getBlStack().pop();
+     player.getShop().setShopInterface(1);  //sends back to "buy" screen
      break;
    //In "are you sure you want to sell" screen
    case 5:
      //If presses yes
-     if (p.getCurrentBl().getButton() == 0)
+     if (player.getCurrentBl().getButton() == 0)
      {
-       p.gainGold(4 * p.getInventory().get(p.getPreviousBl().getButton()).getCost() / 5);  //add gold to player balance (only 80% of initial worth)
-       p.getInventory().remove(p.getInventory().get(p.getPreviousBl().getButton()));       //remove item from player inventory
+       player.gainGold(4 * player.getInventory().get(player.getPreviousBl().getButton()).getCost() / 5);  //add gold to player balance (only 80% of initial worth)
+       player.getInventory().remove(player.getInventory().get(player.getPreviousBl().getButton()));       //remove item from player inventory
      }
-     p.getBlStack().pop();  //gets out of "are you sure you want to sell" BL, current is "sell choices" BL (associated with shopInterface = 2)
+     player.getBlStack().pop();  //gets out of "are you sure you want to sell" BL, current is "sell choices" BL (associated with shopInterface = 2)
                 
      //This reallocates the interface for displaying the player's current inventory, since the player may or may not have one less item than previously from selling it
-     p.getBlStack().pop();  
+     player.getBlStack().pop();  
                 
-     String sellInterface[] = new String[p.getInventory().size() + 1];
+     String sellInterface[] = new String[player.getInventory().size() + 1];
                 
-     for (int i = 0; i < p.getInventory().size(); i++)
+     for (int i = 0; i < player.getInventory().size(); i++)
      {
-       sellInterface[i] = p.getInventory().get(i).getName() + " - " + 4 * p.getInventory().get(i).getCost() / 5 + "G";
+       sellInterface[i] = player.getInventory().get(i).getName() + " - " + 4 * player.getInventory().get(i).getCost() / 5 + "G";
      }
-     sellInterface[p.getInventory().size()] = "Back";
+     sellInterface[player.getInventory().size()] = "Back";
      //End
                 
-     p.getBlStack().push(new ButtonList(sellInterface, false, new PVector(-200, 120), new PVector(150, 45), 25, true));
-     p.getShop().setShopInterface(2);    //sends back to "sell" interface
+     player.getBlStack().push(new ButtonList(sellInterface, false, new PVector(-200, 120), new PVector(150, 45), 25, true));
+     player.getShop().setShopInterface(2);    //sends back to "sell" interface
      break;
    //Case in dialogue with the shopkeeper
    case 6:
      //Can only do anything if the text is fully displayed
-     if (p.getShop().getText().isFinished())
+     if (player.getShop().getText().isFinished())
      {
-       if (p.getShop().currentSlide() == p.getShop().getDialogue()[p.getPreviousBl().getButton()].length - 1)
+       if (player.getShop().currentSlide() == player.getShop().getDialogue()[player.getPreviousBl().getButton()].length - 1)
        {
          //case last slide
-         p.getShop().setShopInterface(3);  //sends back to "talk" interface
-         p.getShop().resetSlide();
-         p.getShop().getText().reset();
-         p.getBlStack().pop();
+         player.getShop().setShopInterface(3);  //sends back to "talk" interface
+         player.getShop().resetSlide();
+         player.getShop().getText().reset();
+         player.getBlStack().pop();
        }
        else 
        {
          //not last slide
-         p.getShop().nextSlide();          //simply displays next slide
-         p.getShop().getText().reset();
+         player.getShop().nextSlide();          //simply displays next slide
+         player.getShop().getText().reset();
        }
      }
      break;
@@ -437,6 +468,8 @@ public void executeShopController()
 
 //Controls Game State
 void executeRigidBodyController(Room room) {
+  Player player = gameController.getPlayer();
+  
   for (GameObject gameObject : room.li) {
     /*
     Defining the borders of the rigidBody, with an extra term in relation to the player's dimensions
@@ -445,32 +478,32 @@ void executeRigidBodyController(Room room) {
     */
     if ((gameObject instanceof Struct && ((Struct)gameObject).hasRigidBody()) || gameObject instanceof NPC) {
       
-      int leftBorder = (int)(gameObject.getPosition().x - (gameObject.getDimensions().x/2) - (p.getDimensions().x / 2));
-      int rightBorder = (int)(gameObject.getPosition().x + (gameObject.getDimensions().x/2) + (p.getDimensions().x / 2));
-      int topBorder = (int)(gameObject.getPosition().y - (gameObject.getDimensions().y/2) - (p.getDimensions().y/2));
-      int bottomBorder = (int)(gameObject.getPosition().y + (gameObject.getDimensions().y/2) + (p.getDimensions().y/2));
+      int leftBorder = (int)(gameObject.getPosition().x - (gameObject.getDimensions().x/2) - (player.getDimensions().x / 2));
+      int rightBorder = (int)(gameObject.getPosition().x + (gameObject.getDimensions().x/2) + (player.getDimensions().x / 2));
+      int topBorder = (int)(gameObject.getPosition().y - (gameObject.getDimensions().y/2) - (player.getDimensions().y/2));
+      int bottomBorder = (int)(gameObject.getPosition().y + (gameObject.getDimensions().y/2) + (player.getDimensions().y/2));
       
       int offset = 10;     //Player's speed is tentatively 6, so 10 is okay
       
       //Applying an fixed impulse
-      if (p.getPosition().x > leftBorder && p.getPosition().x < leftBorder + offset && p.getPosition().y > topBorder && p.getPosition().y < bottomBorder)
+      if (player.getPosition().x > leftBorder && player.getPosition().x < leftBorder + offset && player.getPosition().y > topBorder && player.getPosition().y < bottomBorder)
       {
-        p.move(new PVector(-6, 0));  
+        player.move(new PVector(-6, 0));  
       }
       
-      if (p.getPosition().x > rightBorder - offset && p.getPosition().x < rightBorder && p.getPosition().y > topBorder && p.getPosition().y < bottomBorder)
+      if (player.getPosition().x > rightBorder - offset && player.getPosition().x < rightBorder && player.getPosition().y > topBorder && player.getPosition().y < bottomBorder)
       {
-        p.move(new PVector(6, 0));
+        player.move(new PVector(6, 0));
       }
       
-      if (p.getPosition().x > leftBorder && p.getPosition().x < rightBorder && p.getPosition().y > topBorder && p.getPosition().y < topBorder + offset)
+      if (player.getPosition().x > leftBorder && player.getPosition().x < rightBorder && player.getPosition().y > topBorder && player.getPosition().y < topBorder + offset)
       {
-        p.move(new PVector(0, -6));
+        player.move(new PVector(0, -6));
       }
       
-      if (p.getPosition().x > leftBorder && p.getPosition().x < rightBorder && p.getPosition().y > bottomBorder - offset && p.getPosition().y < bottomBorder)
+      if (player.getPosition().x > leftBorder && player.getPosition().x < rightBorder && player.getPosition().y > bottomBorder - offset && player.getPosition().y < bottomBorder)
       {
-        p.move(new PVector(0, 6));
+        player.move(new PVector(0, 6));
       }
     }
   }

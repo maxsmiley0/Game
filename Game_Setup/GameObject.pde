@@ -18,7 +18,7 @@ public abstract class GameObject
   public PImage getImage()
   {
     return img;
-  }
+  } 
   
   public PVector getPosition()
   {

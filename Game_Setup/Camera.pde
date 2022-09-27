@@ -108,12 +108,13 @@ public class Camera
   public void display()
   { 
     //The following code executes if the camera pans to a new room, called in Portal::display()
+    Player player = gameController.getPlayer();
     if (inCycle)
     {
       fill(#000000, alpha);
-      rect(0, 0, p.getRoom().getDimensions().x, p.getRoom().getDimensions().y);
+      rect(0, 0, player.getRoom().getDimensions().x, player.getRoom().getDimensions().y);
       
-      AudioPlayer previousSound = p.getRoom().getSound();
+      AudioPlayer previousSound = player.getRoom().getSound();
       
       if (isFadingOut)
       {
@@ -125,21 +126,21 @@ public class Camera
           isFadingOut = false;
           isFadingIn = true;
           
-          if (p.getRoom().getSound() != null && isPanningTo.getSound() != null && isPanningTo.getSound() != p.getRoom().getSound())  //Before changing rooms, song is paused and rewound
+          if (player.getRoom().getSound() != null && isPanningTo.getSound() != null && isPanningTo.getSound() != player.getRoom().getSound())  //Before changing rooms, song is paused and rewound
           {
-            p.getRoom().getSound().pause();
-            p.getRoom().getSound().rewind();
+            player.getRoom().getSound().pause();
+            player.getRoom().getSound().rewind();
           }
           
           
-          p.setRoom(isPanningTo);
-          p.setPosition(isPanningTo.getSpawnpoint());
-          p.getBlStack().pop();      //Lets player move again
-          p.resetKeys();             //This is so the keys the player was pressing in the previous room doesn't affect anything in the new room
+          player.setRoom(isPanningTo);
+          player.setPosition(isPanningTo.getSpawnpoint());
+          player.getBlStack().pop();      //Lets player move again
+          player.resetKeys();             //This is so the keys the player was pressing in the previous room doesn't affect anything in the new room
           
-          if (p.getRoom().getSound() != null && p.getRoom().getSound() != previousSound) //After changing rooms, the new song fades in
+          if (player.getRoom().getSound() != null && player.getRoom().getSound() != previousSound) //After changing rooms, the new song fades in
           {
-            p.getRoom().getSound().shiftGain(-10, 0, 1500);
+            player.getRoom().getSound().shiftGain(-10, 0, 1500);
           }
         }
       }
@@ -152,14 +153,14 @@ public class Camera
           isFadingIn = false;
           inCycle = false;
         }
-       if (p.getRoom().getSound() != null && p.getRoom().getSound() != previousSound) //After changing rooms, the new song fades in
+       if (player.getRoom().getSound() != null && player.getRoom().getSound() != previousSound) //After changing rooms, the new song fades in
         {
-          p.getRoom().getSound().shiftGain(0, 10, 1500);
+          player.getRoom().getSound().shiftGain(0, 10, 1500);
         }
       }
     }
     //'x' if approaches interactor
-    if (p.getInteractor() != null)
+    if (player.getInteractor() != null)
     {
      // rect(-100, -100, 100, 100); 
     }
@@ -170,7 +171,8 @@ public class Camera
   public void displayGrid()
   {
     pushMatrix();
-    center(p.getPosition(), p.getRoom());
+    Player player = gameController.getPlayer();
+    center(player.getPosition(), player.getRoom());
     noFill();
     stroke(#000000);
     strokeWeight(1);
@@ -181,8 +183,8 @@ public class Camera
       rect(0, i * 50, 10000, 1);
     }
     strokeWeight(10);
-    int idealX = floor(p.getPosition().x / 50) * 50;
-    int idealY = floor(p.getPosition().y / 50) * 50;
+    int idealX = floor(player.getPosition().x / 50) * 50;
+    int idealY = floor(player.getPosition().y / 50) * 50;
     rect(idealX, idealY, 50, 50);
     textSize(25);
     fill(#ffffff);
@@ -196,17 +198,18 @@ public class Camera
     inCycle = true;
     isFadingOut = true;
     isPanningTo = room;
+    Player player = gameController.getPlayer();
     
-    if (p.getBlStack().empty())  //only want to push one BL
+    if (player.getBlStack().empty())  //only want to push one BL
     {
       //If Room has a song, we want it to fade out
-      if (p.getRoom().getSound() != null && isPanningTo.getSound() != p.getRoom().getSound())
+      if (player.getRoom().getSound() != null && isPanningTo.getSound() != player.getRoom().getSound())
       {
-        p.getRoom().getSound().shiftGain(0, -50, 1500);
+        player.getRoom().getSound().shiftGain(0, -50, 1500);
       }
-      p.getBlStack().add(new ButtonList());  //"Empty BL"
+      player.getBlStack().add(new ButtonList());  //"Empty BL"
     }
     
-    p.stopMoving();
+    player.stopMoving();
   }
 }
