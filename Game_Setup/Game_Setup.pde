@@ -1,9 +1,10 @@
 /*
 TO DO:
-//Get rid of Player Camera member and cleanup visualizations...
+//Fix cycling bugs
+//Put camera and room into GameController
 //Re evaluate button stack
 //R&D audioController and visualController
-//Change GameObject image to animation and refactor animation class
+//Change GameObject image to animation and refactor animation class - generalize motion / animation in Player...
 //Bubble text should have an auto skip keyword
 //De spaghettify Shop and key classes
 */
@@ -172,9 +173,9 @@ void setup()
   forestArea.addGameObject(frog);
   
   
-  gameController.getPlayer().getShop().setDialogue(shopDialogue);
-  gameController.getPlayer().getShop().setBackgroundSong(song);
-  gameController.getPlayer().getShop().getText().setSound(talk);
+  gameController.getShop().setDialogue(shopDialogue);
+  gameController.getShop().setBackgroundSong(song);
+  gameController.getShop().getText().setSound(talk);
   
   Room r1 = new Room(new PVector(0, 0), new PVector(200, 100));
   r1.addGameObject(new Struct(battleBackground, new PVector(0, 0), new PVector(1100, 700), false));
@@ -182,7 +183,7 @@ void setup()
   r1.addGameObject(new Struct(pillar, new PVector(-300, 400), new PVector(210, 500), false));
     
   Fighter enemy = new Fighter(hP);
-  gameController.getPlayer().setBattle(new Battle(r1, enemy));
+  gameController.setBattle(new Battle(r1, enemy));
   
   b = new Bubble(strs, displayCps);
   //new PVector(100, -50)
@@ -259,9 +260,9 @@ void setup()
   inventory.add(o2);
   inventory.add(o3);
   
-  gameController.getPlayer().getShop().setInventory(inventory);
-  gameController.getPlayer().setRoom(friskRoom);
-  gameController.getPlayer().getOverview().getText().setSound(talk);
+  gameController.getShop().setInventory(inventory);
+  gameController.setRoom(friskRoom);
+  gameController.getOverview().getText().setSound(talk);
   
   forestArea.addGameObject(new Portal(null, new PVector(-180, -1200), new PVector(100, 100), r, 'd'));
   /*

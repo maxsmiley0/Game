@@ -1,6 +1,6 @@
 public class Room
 {
-  private ArrayList<GameObject> li;  //A room is comprised of GameObjects
+  private ArrayList<GameObject> gameObjects;  //A room is comprised of GameObjects
   private AudioPlayer roomSong;      //Ambient song that plays in the background, null if no song
   
   private PVector spawnpoint;    //spawnpoint of Player
@@ -8,37 +8,55 @@ public class Room
   
   public Room(PVector spawnpoint, PVector dimensions)
   {
-    li = new ArrayList<GameObject>();
+    gameObjects = new ArrayList<GameObject>();
     
     this.spawnpoint = spawnpoint;
     this.dimensions = dimensions;
     this.roomSong = null;
     
     //Auto-adds rigidbodies for the walls
-    li.add(new Struct(null, new PVector(dimensions.x, -dimensions.y / 2), new PVector(dimensions.x, 2*dimensions.y), true));
-    li.add(new Struct(null, new PVector(-dimensions.x, -dimensions.y / 2), new PVector(dimensions.x, 2*dimensions.y), true));
-    li.add(new Struct(null, new PVector(0, dimensions.y), new PVector(2*dimensions.x, dimensions.y), true));
-    li.add(new Struct(null, new PVector(0, -dimensions.y), new PVector(2*dimensions.x, dimensions.y), true));
+    gameObjects.add(new Struct(null, new PVector(dimensions.x, -dimensions.y / 2), new PVector(dimensions.x, 2*dimensions.y), true));
+    gameObjects.add(new Struct(null, new PVector(-dimensions.x, -dimensions.y / 2), new PVector(dimensions.x, 2*dimensions.y), true));
+    gameObjects.add(new Struct(null, new PVector(0, dimensions.y), new PVector(2*dimensions.x, dimensions.y), true));
+    gameObjects.add(new Struct(null, new PVector(0, -dimensions.y), new PVector(2*dimensions.x, dimensions.y), true));
   }
   
   //Adds a GameObject to the room
-  public void addGameObject(GameObject g)
+  public void addGameObject(GameObject gameObject)
   {
-    li.add(g);
+    gameObjects.add(gameObject);
+  }
+  
+  public ArrayList<GameObject> getGameObjects() {
+    return gameObjects;
   }
   
   //Displays the room by displaying each GameObject
   public void display()
   {
+    pushMatrix();
+    
+    gameController.getCamera().center(gameController.getPlayer().getPosition(), this);
+    fill(#000000);
+    
+    rectMode(CORNER);
+    rect(getDimensions().x / 2, -getDimensions().y, getDimensions().x, 2*getDimensions().y);
+    rect(-getDimensions().x / 2, -getDimensions().y, -getDimensions().x, 2*getDimensions().y);
+    rect(-getDimensions().x, getDimensions().y / 2, 2*getDimensions().x, getDimensions().y);
+    rect(-getDimensions().x, -getDimensions().y / 2, 2*getDimensions().x, -getDimensions().y);
+    rectMode(CENTER);
+    
     if (roomSong != null)
     {
       loop(roomSong, 1000);
     }
     
-    for (int i = 0; i < li.size(); i++)
+    for (int i = 0; i < gameObjects.size(); i++)
     {
-      li.get(i).display();
+      gameObjects.get(i).display();
     }
+    
+    popMatrix();
   }
   
   //Spawnpoint mutator method - may be called if a Player leaves a room via different doors

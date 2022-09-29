@@ -1,20 +1,10 @@
 public class Player extends GameObject
 {
-  private Camera camera;                //Camera to keep display and center the player and room
-  private Animation currentAnimation;   //Animation to be displayed when moving
-  
-  private boolean inShop;               //If true, displays shop instead of room and character
-  private boolean inBattle;             //If true, displays battle
-  private boolean inOverview;           //If true, displays overview
-  private boolean isMoving;             //If true, the moving animation will be displayed instead of the still
+  private Animation currentAnimation;
+  private boolean isMoving;
   
   private ArrayList<Object> inventory;
-  private int gold;              //Stores how much gold a player has
-  
-  private Room currentRoom;      //The room the player is currently in private Room currentRoom (displays when not in any other interface)
-  private Overview overview;     //Overview (tracks stats, inventory, map, etc.)
-  private Shop shop;             //Shop, displayed when interacting with an NPC whose "isShopkeeper" member is set to true
-  private Battle battle;         //Battle, to be copied from an NPC whose "isEnemy" tag is set to true, and then displayed
+  private int gold;
   
   /*
   The heiarchy of ButtonLists is implemented as a stack, because if you enter a new interface within a separate interface, we want
@@ -34,34 +24,10 @@ public class Player extends GameObject
   public Player(PVector position)
   {
     super(friskRestForward, position, new PVector(friskRestForward.width, friskRestForward.height));
-    
-    camera = new Camera();       //Instantiating a new camera
     inventory = new ArrayList<Object>();  //Instantiating a new inventory
-    overview = new Overview();
-    shop = new Shop();
-    
     isMoving = false; 
-    inShop = false;
-    inBattle = false;
-    inOverview = false;
-    
     currentAnimation = friskWalkForward;
     gold = 200;
-  }
-  
-  public Battle getBattle()
-  {
-    return battle;
-  }
-  
-  public void setBattle(Battle battle)
-  {
-    this.battle = battle;
-  }
-  
-  public boolean isInBattle()
-  {
-    return inBattle;
   }
   
   public int getGold()
@@ -74,14 +40,9 @@ public class Player extends GameObject
     gold += i;
   }
   
-  public Shop getShop()
-  {
-    return shop;
-  }
-  
   public GameObject getInteractor()
   {
-    for (GameObject gameObject : currentRoom.li) {
+    for (GameObject gameObject : gameController.getRoom().getGameObjects()) {
       int offset = 10;     //Player's speed is tentatively 6, so 10 is okay
       
       int leftBorder = (int)(gameObject.getPosition().x - (gameObject.getDimensions().x/2) - (getDimensions().x / 2) - offset);
@@ -98,7 +59,7 @@ public class Player extends GameObject
   }
   
   public Portal getPortal() {
-    for (GameObject gameObject : currentRoom.li) {
+    for (GameObject gameObject : gameController.getRoom().getGameObjects()) {
       if (gameObject instanceof Portal) {
         int offset = 10;     //Player's speed is tentatively 6, so 10 is okay
         
@@ -116,7 +77,7 @@ public class Player extends GameObject
     return null;
   }
   
-  public void addItem(Object object)
+  public void addObject(Object object)
   {
     inventory.add(object);
   }
@@ -124,11 +85,6 @@ public class Player extends GameObject
   public ArrayList<Object> getInventory()
   {
     return inventory;
-  }
-  
-  public Overview getOverview()
-  {
-    return overview;
   }
   
   //Setting the key "keyNum" to boolean b
@@ -206,48 +162,28 @@ public class Player extends GameObject
     currentAnimation = a;
   }
   
-  public void setRoom(Room room)
-  {
-    currentRoom = room;
-    setPosition(room.getSpawnpoint());
-  }
-  
   //Enters shop, also pushes an interaction onto the blStack
   public void enterShop()
   {
-    inShop = true;
     blStack.push(new ButtonList(new String[]{"Buy","Sell","Talk","Leave"}, true, new PVector(350, 130), new PVector(150, 45), 60, true));
   }
   
   //Exits shop, stops interacting with NPC, pops the blStack
   public void exitShop()
   {
-    inShop = false;
     blStack.pop();
-    shop.getText().reset();
+    gameController.getShop().getText().reset();
   }
   
   public void enterBattle()
   {
-    inBattle = true;
     blStack.push(new ButtonList(new String[]{"Attack","Inventory","Talk"}, true, new PVector(-20, -280), new PVector(175, 50), 75, true));
   }
   
   public void exitBattle()
   {
-    inBattle = false;
     blStack.pop();
     //text reset?
-  }
-  
-  public boolean isInShop()
-  {
-    return inShop;
-  }
-  
-  public Room getRoom()
-  {
-    return currentRoom;
   }
   
   public Stack getBlStack()
@@ -268,31 +204,16 @@ public class Player extends GameObject
     return blStack.peek();
   }
   
-  public Camera getCamera()
-  {
-    return camera;
-  }
-  
   public ButtonList getPreviousBl()  //Returns previous ButtonList
   {
     //Assumes at least two button lists
     return blStack.get(blStack.size() - 2);
   }
   
-  public boolean inOverview()
-  {
-    return inOverview;
-  }
-  
-  public void setInOverview(boolean b)
-  {
-    inOverview = b;
-  }
-  
   public void display()          //Placeholder sprite
   {
     pushMatrix();
-    camera.center(getPosition(), currentRoom);
+    gameController.getCamera().center(getPosition(), gameController.getRoom());
     
     if (isMoving)    //Displays still image if not moving
     {
@@ -306,29 +227,6 @@ public class Player extends GameObject
     if (getBubble() != null) {
       getBubble().display();
     }
-    popMatrix();
-    
-    if (inOverview)
-    {
-      overview.display();
-    }
-  }
-  
-  public void displayRoom()
-  { 
-    pushMatrix();
-    
-    camera.center(getPosition(), currentRoom);
-    fill(#000000);
-    
-    rectMode(CORNER);
-    rect(currentRoom.getDimensions().x / 2, -currentRoom.getDimensions().y, currentRoom.getDimensions().x, 2*currentRoom.getDimensions().y);
-    rect(-currentRoom.getDimensions().x / 2, -currentRoom.getDimensions().y, -currentRoom.getDimensions().x, 2*currentRoom.getDimensions().y);
-    rect(-currentRoom.getDimensions().x, currentRoom.getDimensions().y / 2, 2*currentRoom.getDimensions().x, currentRoom.getDimensions().y);
-    rect(-currentRoom.getDimensions().x, -currentRoom.getDimensions().y / 2, 2*currentRoom.getDimensions().x, -currentRoom.getDimensions().y);
-    rectMode(CENTER);
-    
-    currentRoom.display();
     popMatrix();
   }
 }

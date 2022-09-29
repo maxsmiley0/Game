@@ -58,14 +58,16 @@ public class Button
     selected = !selected;      //Reverses the "selected" status of the button
     
     //not a fundamental part of button - extension
-    Player player = gameController.getPlayer();
-    if (player.getShop().getShopInterface() == 1 || player.getShop().getShopInterface() == 2)  //Resets the description if a player is switching between items in the buy section of shop
+    Shop shop = gameController.getShop();
+    int shopInterface = shop.getShopInterface();
+    int overviewInterface = gameController.getOverview().getOverviewInterface();
+    if (shopInterface == 1 || shopInterface == 2)  //Resets the description if a player is switching between items in the buy section of shop
     {
-      player.getShop().getText().reset();
+      shop.getText().reset();
     }
-    else if (player.getOverview().getOverviewInterface() == 2)
+    else if (overviewInterface == 2)
     {
-      player.getOverview().getText().reset();
+      shop.getText().reset();
     }
   }
 

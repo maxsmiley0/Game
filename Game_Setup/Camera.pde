@@ -112,9 +112,9 @@ public class Camera
     if (inCycle)
     {
       fill(#000000, alpha);
-      rect(0, 0, player.getRoom().getDimensions().x, player.getRoom().getDimensions().y);
+      rect(0, 0, gameController.getRoom().getDimensions().x, gameController.getRoom().getDimensions().y);
       
-      AudioPlayer previousSound = player.getRoom().getSound();
+      AudioPlayer previousSound = gameController.getRoom().getSound();
       
       if (isFadingOut)
       {
@@ -126,21 +126,21 @@ public class Camera
           isFadingOut = false;
           isFadingIn = true;
           
-          if (player.getRoom().getSound() != null && isPanningTo.getSound() != null && isPanningTo.getSound() != player.getRoom().getSound())  //Before changing rooms, song is paused and rewound
+          if (gameController.getRoom().getSound() != null && isPanningTo.getSound() != null && isPanningTo.getSound() != gameController.getRoom().getSound())  //Before changing rooms, song is paused and rewound
           {
-            player.getRoom().getSound().pause();
-            player.getRoom().getSound().rewind();
+            gameController.getRoom().getSound().pause();
+            gameController.getRoom().getSound().rewind();
           }
           
           
-          player.setRoom(isPanningTo);
+          gameController.setRoom(isPanningTo);
           player.setPosition(isPanningTo.getSpawnpoint());
           player.getBlStack().pop();      //Lets player move again
           player.resetKeys();             //This is so the keys the player was pressing in the previous room doesn't affect anything in the new room
           
-          if (player.getRoom().getSound() != null && player.getRoom().getSound() != previousSound) //After changing rooms, the new song fades in
+          if (gameController.getRoom().getSound() != null && gameController.getRoom().getSound() != previousSound) //After changing rooms, the new song fades in
           {
-            player.getRoom().getSound().shiftGain(-10, 0, 1500);
+            gameController.getRoom().getSound().shiftGain(-10, 0, 1500);
           }
         }
       }
@@ -153,9 +153,9 @@ public class Camera
           isFadingIn = false;
           inCycle = false;
         }
-       if (player.getRoom().getSound() != null && player.getRoom().getSound() != previousSound) //After changing rooms, the new song fades in
+       if (gameController.getRoom().getSound() != null && gameController.getRoom().getSound() != previousSound) //After changing rooms, the new song fades in
         {
-          player.getRoom().getSound().shiftGain(0, 10, 1500);
+          gameController.getRoom().getSound().shiftGain(0, 10, 1500);
         }
       }
     }
@@ -176,7 +176,7 @@ public class Camera
   {
     pushMatrix();
     Player player = gameController.getPlayer();
-    center(player.getPosition(), player.getRoom());
+    center(player.getPosition(), gameController.getRoom());
     noFill();
     stroke(#000000);
     strokeWeight(1);
@@ -207,9 +207,9 @@ public class Camera
     if (player.getBlStack().empty())  //only want to push one BL
     {
       //If Room has a song, we want it to fade out
-      if (player.getRoom().getSound() != null && isPanningTo.getSound() != player.getRoom().getSound())
+      if (gameController.getRoom().getSound() != null && isPanningTo.getSound() != gameController.getRoom().getSound())
       {
-        player.getRoom().getSound().shiftGain(0, -50, 1500);
+        gameController.getRoom().getSound().shiftGain(0, -50, 1500);
       }
       player.getBlStack().add(new ButtonList());  //"Empty BL"
     }
