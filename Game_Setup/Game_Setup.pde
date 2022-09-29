@@ -1,12 +1,15 @@
 /*
 TO DO:
-//Fix cycling bugs
-//Put camera and room into GameController
 //Re evaluate button stack
 //R&D audioController and visualController
-//Change GameObject image to animation and refactor animation class - generalize motion / animation in Player...
+//Change GameObject image to animation and refactor animation class - generalize motion / animation in Player... - initialize with some images / animations so we don't have to hard code..?
 //Bubble text should have an auto skip keyword
 //De spaghettify Shop and key classes
+//Tune dev tools
+//Final pass codebase cleanup
+//Game Setup organization
+//Brainstorm for next chapter!
+//Save states, fighters
 */
 import java.util.Stack;
 import ddf.minim.*;

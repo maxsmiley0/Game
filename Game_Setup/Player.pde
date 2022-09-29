@@ -162,24 +162,6 @@ public class Player extends GameObject
     currentAnimation = a;
   }
   
-  //Enters shop, also pushes an interaction onto the blStack
-  public void enterShop()
-  {
-    blStack.push(new ButtonList(new String[]{"Buy","Sell","Talk","Leave"}, true, new PVector(350, 130), new PVector(150, 45), 60, true));
-  }
-  
-  //Exits shop, stops interacting with NPC, pops the blStack
-  public void exitShop()
-  {
-    blStack.pop();
-    gameController.getShop().getText().reset();
-  }
-  
-  public void enterBattle()
-  {
-    blStack.push(new ButtonList(new String[]{"Attack","Inventory","Talk"}, true, new PVector(-20, -280), new PVector(175, 50), 75, true));
-  }
-  
   public void exitBattle()
   {
     blStack.pop();

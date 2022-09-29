@@ -107,18 +107,24 @@ class GameController {
     popMatrix();
   }
   
+  private void setState(GameState gameState) {
+    this.gameState = gameState;
+    player.resetKeys();
+    player.stopMoving();
+    keyPressed = false;
+  }
+  
   private void executeVanillaStateController() {
-    executeRigidBodyController(room);
+    executeRigidBodyController();
     player.implementArrowKeys();
     if (keyPressed) {
       GameObject interactor = player.getInteractor();
       if (key == 'x') {
         if (interactor != null)  //If we have someone to interact with
         {
-          player.resetKeys();
           if (interactor instanceof NPC && ((NPC)interactor).isShopkeeper())
           {
-            player.enterShop();
+            player.getBlStack().push(new ButtonList(new String[]{"Buy","Sell","Talk","Leave"}, true, new PVector(350, 130), new PVector(150, 45), 60, true));
             AudioPlayer sound = room.getSound();
             if (sound != null)  //kill music on shop enter
             {
@@ -126,14 +132,12 @@ class GameController {
               sound.pause();
               sound.rewind();
             }
-            gameState = GameState.shop;
-            keyPressed = false;
+            setState(GameState.shop);
           }
           else if (interactor instanceof NPC && ((NPC)interactor).isEnemy())
           {
-            player.enterBattle();
-            gameState = GameState.battle;
-            keyPressed = false;
+            player.getBlStack().push(new ButtonList(new String[]{"Attack","Inventory","Talk"}, true, new PVector(-20, -280), new PVector(175, 50), 75, true));
+            setState(GameState.battle);
           }
           else {
               Bubble interactorBubble = interactor.getBubble();
@@ -143,48 +147,47 @@ class GameController {
               else if (interactor instanceof NPC) {
                 interactorBubble.setPosition(new PVector(interactor.getPosition().x, interactor.getPosition().y - interactorBubble.getDimensions().y/2 - interactor.getDimensions().y/2));
               }
-              //interactorBubble.setPosition(new PVector(player.getPosition().x, player.getPosition().y - interactorBubble.getDimensions().y/2 - player.getDimensions().y/2));
               player.setBubble(interactorBubble);
               player.getBlStack().add(interactor.getBubble().getBl());
-              player.stopMoving();
-              gameState = GameState.interacting;
+              setState(GameState.interacting);
           }
         }
       }
       else if (key == 'c') {
-        player.resetKeys();
-        player.stopMoving();
-        gameState = GameState.overview;
         ButtonList bl = new ButtonList(new String[]{"Stats","Inventory","Map","Quests","Back","Exit Game"}, false, new PVector(-450, 294), new PVector(0, 0), 175, false);
         player.getBlStack().push(bl);
+        setState(GameState.overview);
       }
     }
     Portal portal = player.getPortal();
     if (portal != null) {
-      gameState = GameState.transition;
       char spawn = portal.getSpawn();
       switch (spawn)
       {
         case 'u':
-          room.setSpawnpoint(new PVector(portal.getPosition().x, portal.getPosition().y - portal.getDimensions().y / 2 - player.getImage().height / 2 - 10));
+          room.setSpawnpoint(new PVector(portal.getPosition().x, portal.getPosition().y - portal.getDimensions().y / 2 - player.getImage().height / 2 - 15));
           break;
         case 'd':
-          room.setSpawnpoint(new PVector(portal.getPosition().x, portal.getPosition().y + portal.getDimensions().y / 2 + player.getImage().height / 2 + 10));
+          room.setSpawnpoint(new PVector(portal.getPosition().x, portal.getPosition().y + portal.getDimensions().y / 2 + player.getImage().height / 2 + 15));
           break;
         case 'l':
-          room.setSpawnpoint(new PVector(portal.getPosition().x - portal.getDimensions().x / 2 - player.getImage().width / 2 - 10, portal.getPosition().y));
+          room.setSpawnpoint(new PVector(portal.getPosition().x - portal.getDimensions().x / 2 - player.getImage().width / 2 - 15, portal.getPosition().y));
           break;
         case 'r':
-          room.setSpawnpoint(new PVector(portal.getPosition().x + portal.getDimensions().x / 2 + player.getImage().width / 2 + 10, portal.getPosition().y));
+          room.setSpawnpoint(new PVector(portal.getPosition().x + portal.getDimensions().x / 2 + player.getImage().width / 2 + 15, portal.getPosition().y));
           break;
       }
       camera.panTo(portal.getRoom());  //fades out, switches rooms to room spawnpoint, fades in
+      setState(GameState.transition);
     }
   }
   
   private void displayInteracting() {
+    pushMatrix();
+    camera.center(player.getPosition(), room);
     room.display();
     player.display();
+    popMatrix();
   }
   
   private void executeInteractingStateController() {
@@ -200,11 +203,9 @@ class GameController {
         if (player.getBubble().getText().isFinished())
         {
           player.getBubble().reset();
-          //Stops displaying, resets bubble, and pops BL off stack
           player.setBubble(null);
           player.getBlStack().pop();
-          keyPressed = false;
-          gameState = GameState.vanilla;
+          setState(GameState.vanilla);
         }
       }
     }
@@ -255,7 +256,7 @@ class GameController {
             //Pressing the "back" button
             case 4:
               player.getBlStack().pop();
-              gameState = GameState.vanilla;
+              setState(GameState.vanilla);
               break;
             //Pressing the "exit" button
             case 5:
@@ -309,7 +310,7 @@ class GameController {
   
   private void executeTransitionStateController() {
     if (!camera.inTransition()) {
-      gameState = GameState.vanilla;
+      setState(GameState.vanilla);
     }
   }
   
@@ -374,7 +375,8 @@ class GameController {
              break;
            //IF IN MENY SCREEN AND PRESS "LEAVE"
            case 3:
-             player.exitShop();  //leaves shop
+             player.getBlStack().pop();
+             gameController.getShop().getText().reset();
              shop.getText().getSound().pause();  //we don't want the shopkeeper to keep rambling on once we exit
              shop.getBackgroundSong().pause();   //rewinding and pausing song when we exit shop
              shop.getBackgroundSong().rewind();
@@ -385,7 +387,7 @@ class GameController {
                sound.pause();
                sound.rewind();
              }
-             gameState = GameState.vanilla;
+             setState(GameState.vanilla);
              break;
            }
            break;
@@ -526,8 +528,50 @@ class GameController {
       keyPressed = false;
     }
   }
+  
+  //Controls Game State
+  private void executeRigidBodyController() {
+    for (GameObject gameObject : room.getGameObjects()) {
+      /*
+      Defining the borders of the rigidBody, with an extra term in relation to the player's dimensions
+      This is so a player won't be stopped right at the border of the structure, i.e. half of the player's
+      sprite won't be inside the rigidBody
+      */
+      if ((gameObject instanceof Struct && ((Struct)gameObject).hasRigidBody()) || gameObject instanceof NPC) {
+        
+        int leftBorder = (int)(gameObject.getPosition().x - (gameObject.getDimensions().x/2) - (player.getDimensions().x / 2));
+        int rightBorder = (int)(gameObject.getPosition().x + (gameObject.getDimensions().x/2) + (player.getDimensions().x / 2));
+        int topBorder = (int)(gameObject.getPosition().y - (gameObject.getDimensions().y/2) - (player.getDimensions().y/2));
+        int bottomBorder = (int)(gameObject.getPosition().y + (gameObject.getDimensions().y/2) + (player.getDimensions().y/2));
+        
+        int offset = 10;     //Player's speed is tentatively 6, so 10 is okay
+        
+        //Applying an fixed impulse
+        if (player.getPosition().x > leftBorder && player.getPosition().x < leftBorder + offset && player.getPosition().y > topBorder && player.getPosition().y < bottomBorder)
+        {
+          player.move(new PVector(-6, 0));  
+        }
+        
+        if (player.getPosition().x > rightBorder - offset && player.getPosition().x < rightBorder && player.getPosition().y > topBorder && player.getPosition().y < bottomBorder)
+        {
+          player.move(new PVector(6, 0));
+        }
+        
+        if (player.getPosition().x > leftBorder && player.getPosition().x < rightBorder && player.getPosition().y > topBorder && player.getPosition().y < topBorder + offset)
+        {
+          player.move(new PVector(0, -6));
+        }
+        
+        if (player.getPosition().x > leftBorder && player.getPosition().x < rightBorder && player.getPosition().y > bottomBorder - offset && player.getPosition().y < bottomBorder)
+        {
+          player.move(new PVector(0, 6));
+        }
+      }
+    }
+  }
 };
 
+//ARROW KEY IMPLEMENTATIONS
 public void keyPressed()
 { 
   Player player = gameController.getPlayer();
@@ -606,49 +650,6 @@ public void keyReleased()
     if (keyCode == DOWN)
     {
       player.setKey(2, false);
-    }
-  }
-}
-
-//Controls Game State
-void executeRigidBodyController(Room room) {
-  Player player = gameController.getPlayer();
-  
-  for (GameObject gameObject : room.getGameObjects()) {
-    /*
-    Defining the borders of the rigidBody, with an extra term in relation to the player's dimensions
-    This is so a player won't be stopped right at the border of the structure, i.e. half of the player's
-    sprite won't be inside the rigidBody
-    */
-    if ((gameObject instanceof Struct && ((Struct)gameObject).hasRigidBody()) || gameObject instanceof NPC) {
-      
-      int leftBorder = (int)(gameObject.getPosition().x - (gameObject.getDimensions().x/2) - (player.getDimensions().x / 2));
-      int rightBorder = (int)(gameObject.getPosition().x + (gameObject.getDimensions().x/2) + (player.getDimensions().x / 2));
-      int topBorder = (int)(gameObject.getPosition().y - (gameObject.getDimensions().y/2) - (player.getDimensions().y/2));
-      int bottomBorder = (int)(gameObject.getPosition().y + (gameObject.getDimensions().y/2) + (player.getDimensions().y/2));
-      
-      int offset = 10;     //Player's speed is tentatively 6, so 10 is okay
-      
-      //Applying an fixed impulse
-      if (player.getPosition().x > leftBorder && player.getPosition().x < leftBorder + offset && player.getPosition().y > topBorder && player.getPosition().y < bottomBorder)
-      {
-        player.move(new PVector(-6, 0));  
-      }
-      
-      if (player.getPosition().x > rightBorder - offset && player.getPosition().x < rightBorder && player.getPosition().y > topBorder && player.getPosition().y < bottomBorder)
-      {
-        player.move(new PVector(6, 0));
-      }
-      
-      if (player.getPosition().x > leftBorder && player.getPosition().x < rightBorder && player.getPosition().y > topBorder && player.getPosition().y < topBorder + offset)
-      {
-        player.move(new PVector(0, -6));
-      }
-      
-      if (player.getPosition().x > leftBorder && player.getPosition().x < rightBorder && player.getPosition().y > bottomBorder - offset && player.getPosition().y < bottomBorder)
-      {
-        player.move(new PVector(0, 6));
-      }
     }
   }
 }
