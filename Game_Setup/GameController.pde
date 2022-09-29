@@ -100,8 +100,11 @@ class GameController {
   }
   
   private void displayVanilla() {
+    pushMatrix();
+    camera.center(player.getPosition(), room);
     room.display();
     player.display();
+    popMatrix();
   }
   
   private void executeVanillaStateController() {
@@ -208,8 +211,11 @@ class GameController {
   }
   
   private void displayOverview() {
+    pushMatrix();
+    camera.center(player.getPosition(), room);
     room.display();
     player.display();
+    popMatrix();
     overview.display();
   }
   
@@ -293,8 +299,11 @@ class GameController {
   }
   
   private void displayTransition() {
+    pushMatrix();
+    camera.center(player.getPosition(), room);
     room.display();
     player.display();
+    popMatrix();
     camera.display();
   }
   

@@ -31,12 +31,9 @@ public class Room
     return gameObjects;
   }
   
-  //Displays the room by displaying each GameObject
+  //Displays each GameObject and walls
   public void display()
   {
-    pushMatrix();
-    
-    gameController.getCamera().center(gameController.getPlayer().getPosition(), this);
     fill(#000000);
     
     rectMode(CORNER);
@@ -55,8 +52,6 @@ public class Room
     {
       gameObjects.get(i).display();
     }
-    
-    popMatrix();
   }
   
   //Spawnpoint mutator method - may be called if a Player leaves a room via different doors

@@ -210,16 +210,13 @@ public class Player extends GameObject
     return blStack.get(blStack.size() - 2);
   }
   
-  public void display()          //Placeholder sprite
+  public void display()
   {
-    pushMatrix();
-    gameController.getCamera().center(getPosition(), gameController.getRoom());
-    
-    if (isMoving)    //Displays still image if not moving
+    if (isMoving)
     {
       currentAnimation.display(getPosition());
     }
-    else             //Displays animation if moving
+    else
     {
       image(getImage(), getPosition().x, getPosition().y);
     }
@@ -227,6 +224,5 @@ public class Player extends GameObject
     if (getBubble() != null) {
       getBubble().display();
     }
-    popMatrix();
   }
 }
