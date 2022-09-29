@@ -7,6 +7,7 @@ boolean displayPortals = false;
 void draw()
 {
   gameController.runGame();
+  println(gameController.gameState);
 }
 
 void loop(AudioPlayer a, int offset) {          //loops a sound effect as long as loop() is in a draw function

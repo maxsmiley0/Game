@@ -1,16 +1,11 @@
 /*
 TO DO:
+//Get rid of Player Camera member and cleanup visualizations...
+//Re evaluate button stack
+//R&D audioController and visualController
 //Change GameObject image to animation and refactor animation class
-//Separate player from GameObject and make clearer global variable
 //Bubble text should have an auto skip keyword
-
-//Make concept of "state" - shop, transition, battle, walk, overview etc... make "Camera" responsible for that. Too little modularity...
-//Take out fields from GameObject and push as much as possible into the derived classes
-
-//Get rid of all notion of p.get... we need to decouple. Design game class to handle this
 //De spaghettify Shop and key classes
-
-//Maybe like a sound countroller too..? SoundSystem?
 */
 import java.util.Stack;
 import ddf.minim.*;
@@ -268,7 +263,7 @@ void setup()
   gameController.getPlayer().setRoom(friskRoom);
   gameController.getPlayer().getOverview().getText().setSound(talk);
   
-  forestArea.addGameObject(new Portal(null, new PVector(-180, -1190), new PVector(100, 100), r, 'd'));
+  forestArea.addGameObject(new Portal(null, new PVector(-180, -1200), new PVector(100, 100), r, 'd'));
   /*
   HashMap<String, Room> mm = new HashMap<String, Room>();
   mm.put("forestArea", forestArea);

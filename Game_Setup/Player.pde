@@ -97,6 +97,25 @@ public class Player extends GameObject
     return null;
   }
   
+  public Portal getPortal() {
+    for (GameObject gameObject : currentRoom.li) {
+      if (gameObject instanceof Portal) {
+        int offset = 10;     //Player's speed is tentatively 6, so 10 is okay
+        
+        int leftBorder = (int)(gameObject.getPosition().x - (gameObject.getDimensions().x/2) - (getDimensions().x / 2) - offset);
+        int rightBorder = (int)(gameObject.getPosition().x + (gameObject.getDimensions().x/2) + (getDimensions().x / 2) + offset);
+        int topBorder = (int)(gameObject.getPosition().y - (gameObject.getDimensions().y/2) - (getDimensions().y/2) - offset);
+        int bottomBorder = (int)(gameObject.getPosition().y + (gameObject.getDimensions().y/2) + (getDimensions().y/2) + offset);
+        
+        if (getPosition().x >= leftBorder && getPosition().x <= rightBorder && getPosition().y >= topBorder && getPosition().y <= bottomBorder)
+        {  
+          return (Portal)gameObject;
+        }
+      }
+    }
+    return null;
+  }
+  
   public void addItem(Object object)
   {
     inventory.add(object);
@@ -160,10 +179,6 @@ public class Player extends GameObject
       }
       
       move(velocity);
-    }
-    else  //Player cannot move, is in at least on interface
-    {
-      
     }
   }
   

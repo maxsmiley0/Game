@@ -166,6 +166,10 @@ public class Camera
     }
   }
   
+  public boolean inTransition() {
+    return isFadingIn || isFadingOut;
+  }
+  
   //Pans to a room "room"
 
   public void displayGrid()
